@@ -3,7 +3,7 @@ package work.hungrygnu.thefreebird.client;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
-import work.hungrygnu.thefreebird.MyGdxGame;
+import work.hungrygnu.thefreebird.TheFreeBirdGame;
 
 public class HtmlLauncher extends GwtApplication {
 
@@ -14,6 +14,6 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public ApplicationListener createApplicationListener () {
-                return new MyGdxGame();
+                return new TheFreeBirdGame();
         }
 }
