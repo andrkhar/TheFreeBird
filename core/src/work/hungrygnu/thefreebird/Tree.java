@@ -9,16 +9,17 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Tree extends Drawable{
+public class Tree extends StaticDrawable {
 
-
+    // The position of the nest
+    public final Vector2 nestPosition;
 
     // The centers of the leaves circles
     private final Vector2 leavesLeftCenter;
     private final Vector2 leavesRightCenter;
     // The radiuses of the circles
-    private float leavesLeftR;
-    private float leavesRightR;
+    private final float leavesLeftR;
+    private final float leavesRightR;
 
     // The points of the trunk the tree
     private final Vector2 trunk1;
@@ -29,8 +30,6 @@ public class Tree extends Drawable{
     private final Vector2 root1;
     private final Vector2 root2;
     private final Vector2 root3;
-
-
 
     // The points to draw Left Branch as a triangle
     private final Vector2 branchL1;
@@ -45,37 +44,37 @@ public class Tree extends Drawable{
     public Tree(ShapeRenderer renderer) {
         super(renderer, TREE_POSITION);
 
+        leavesLeftCenter = (new Vector2(TREE_POSITION)).add(-SCALE, 9f * SCALE);
+        leavesRightCenter = (new Vector2(TREE_POSITION)).add(4f * SCALE, 7f * SCALE);
+        leavesLeftR = 5f * SCALE;
+        leavesRightR = 3.5f * SCALE;
 
+        root1 = (new Vector2(TREE_POSITION)).add(-1.5f * SCALE, 0f);
+        root2 = (new Vector2(TREE_POSITION)).add(0f, 5f * SCALE);
+        root3 = (new Vector2(TREE_POSITION)).add(2f * SCALE, 0f);
 
-        leavesLeftCenter = (new Vector2(TREE_POSITION)).add(-TREE_C, 9f *TREE_C);
-        leavesRightCenter = (new Vector2(TREE_POSITION)).add(4f * TREE_C, 7f * TREE_C);
-        leavesLeftR = 5f * TREE_C;
-        leavesRightR = 3.5f * TREE_C;
+        trunk1 = (new Vector2(TREE_POSITION)).add(-SCALE, SCALE);
+        trunk2 = (new Vector2(TREE_POSITION)).add(0f, 11f * SCALE);
+        trunk3 = (new Vector2(TREE_POSITION)).add(SCALE, 2f * SCALE);
 
-        root1 = (new Vector2(TREE_POSITION)).add(-1.5f * TREE_C, 0f);
-        root2 = (new Vector2(TREE_POSITION)).add(0f, 5f * TREE_C);
-        root3 = (new Vector2(TREE_POSITION)).add(2f * TREE_C, 0f);
+        branchL1 = (new Vector2(TREE_POSITION)).add(-2f * SCALE, 9f * SCALE);
+        branchL2 = (new Vector2(TREE_POSITION)).add(0f, 8.5f * SCALE);
+        branchL3 = (new Vector2(TREE_POSITION)).add(0f, 8f * SCALE);
 
-        trunk1 = (new Vector2(TREE_POSITION)).add(-TREE_C, TREE_C);
-        trunk2 = (new Vector2(TREE_POSITION)).add(0f, 11f * TREE_C);
-        trunk3 = (new Vector2(TREE_POSITION)).add(TREE_C, 2f * TREE_C);
+        branchR1 = (new Vector2(TREE_POSITION)).add(0f, 7f * SCALE);
+        branchR2 = (new Vector2(TREE_POSITION)).add(6f * SCALE, 7f * SCALE);
+        branchR3 = (new Vector2(TREE_POSITION)).add(0f, 6f * SCALE);
 
-        branchL1 = (new Vector2(TREE_POSITION)).add(-2f * TREE_C, 9f *TREE_C);
-        branchL2 = (new Vector2(TREE_POSITION)).add(0f, 8.5f *TREE_C);
-        branchL3 = (new Vector2(TREE_POSITION)).add(0f, 8f *TREE_C);
-
-        branchR1 = (new Vector2(TREE_POSITION)).add(0f, 7f *TREE_C);
-        branchR2 = (new Vector2(TREE_POSITION)).add(6f * TREE_C, 7f *TREE_C);
-        branchR3 = (new Vector2(TREE_POSITION)).add(0f, 6f *TREE_C);
+        nestPosition = (new Vector2(TREE_POSITION)).add(3f * SCALE, 7f * SCALE);
     }
 
     public void render(){
         renderer.set(ShapeRenderer.ShapeType.Filled);
 
         renderer.setColor(TREE_COLOR_GREEN1);
-        renderer.circle(leavesLeftCenter.x, leavesLeftCenter.y, leavesLeftR, TREE_S);
+        renderer.circle(leavesLeftCenter.x, leavesLeftCenter.y, leavesLeftR, TREE_SEGMENTS);
         renderer.setColor(TREE_COLOR_GREEN2);
-        renderer.circle(leavesRightCenter.x, leavesRightCenter.y, leavesRightR, TREE_S);
+        renderer.circle(leavesRightCenter.x, leavesRightCenter.y, leavesRightR, TREE_SEGMENTS);
 
         renderer.setColor(TREE_COLOR_BROWN);
         renderer.triangle(trunk1.x, trunk1.y, trunk2.x, trunk2.y, trunk3.x, trunk3.y);

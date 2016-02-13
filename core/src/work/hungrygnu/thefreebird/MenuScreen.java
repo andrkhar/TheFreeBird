@@ -3,7 +3,6 @@ package work.hungrygnu.thefreebird;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -15,13 +14,14 @@ import static work.hungrygnu.thefreebird.Constants.*;
  */
 public class MenuScreen extends InputAdapter implements Screen {
 
-    TheFreeBirdGame game;
-    ShapeRenderer renderer;
-    FitViewport viewport;
-    Button buttonFly;
-    Land land;
-    Sky sky;
-    Tree tree;
+    private TheFreeBirdGame game;
+    private ShapeRenderer renderer;
+    private FitViewport viewport;
+    private Button buttonFly;
+    private Land land;
+    private Sky sky;
+    private Tree tree;
+    private Nest nest;
 
     public MenuScreen(TheFreeBirdGame game){
         this.game = game;
@@ -37,6 +37,7 @@ public class MenuScreen extends InputAdapter implements Screen {
         land = new Land(renderer);
         sky = new Sky(renderer);
         tree = new Tree(renderer);
+        nest = new Nest(renderer, tree.nestPosition);
 
 
     }
@@ -58,7 +59,9 @@ public class MenuScreen extends InputAdapter implements Screen {
         land.render();
         sky.render();
         tree.render();
+        nest.render();
         buttonFly.render();
+
 
         renderer.end();
     }

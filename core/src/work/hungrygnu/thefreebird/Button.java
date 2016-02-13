@@ -7,15 +7,10 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Button {
-
-    private ShapeRenderer renderer;
-    public final Vector2 position;
+public class Button extends StaticDrawable{
 
     public Button(ShapeRenderer renderer, Vector2 position){
-        this.renderer = renderer;
-        this.position = position;
-
+        super(renderer, position);
     }
 
     public void render(){
