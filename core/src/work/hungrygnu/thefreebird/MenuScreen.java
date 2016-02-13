@@ -19,6 +19,9 @@ public class MenuScreen extends InputAdapter implements Screen {
     ShapeRenderer renderer;
     FitViewport viewport;
     Button buttonFly;
+    Land land;
+    Sky sky;
+    Tree tree;
 
     public MenuScreen(TheFreeBirdGame game){
         this.game = game;
@@ -27,10 +30,15 @@ public class MenuScreen extends InputAdapter implements Screen {
     public void show() {
         renderer = new ShapeRenderer();
         renderer.setAutoShapeType(true);
-        viewport = new FitViewport(WORLD_SIZE, WORLD_SIZE);
+        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
         Gdx.input.setInputProcessor(this);
 
         buttonFly = new Button(renderer,new Vector2(viewport.getWorldWidth()/2f, viewport.getWorldHeight()/2f));
+        land = new Land(renderer);
+        sky = new Sky(renderer);
+        tree = new Tree(renderer);
+
+
     }
 
     @Override
@@ -46,6 +54,10 @@ public class MenuScreen extends InputAdapter implements Screen {
 
         renderer.begin();
 
+
+        land.render();
+        sky.render();
+        tree.render();
         buttonFly.render();
 
         renderer.end();
