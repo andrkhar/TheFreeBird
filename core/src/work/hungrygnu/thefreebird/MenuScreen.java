@@ -6,6 +6,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import static work.hungrygnu.thefreebird.Constants.*;
@@ -28,8 +29,8 @@ public class MenuScreen extends InputAdapter implements Screen {
         renderer.setAutoShapeType(true);
         viewport = new FitViewport(WORLD_SIZE, WORLD_SIZE);
         Gdx.input.setInputProcessor(this);
-        // TODO ButtonFly extends Button and has "FLY" label on it
-        //buttonFly = new Button(renderer, new)
+
+        buttonFly = new Button(renderer,new Vector2(viewport.getWorldWidth()/2f, viewport.getWorldHeight()/2f));
     }
 
     @Override
@@ -43,7 +44,9 @@ public class MenuScreen extends InputAdapter implements Screen {
 
         renderer.setProjectionMatrix(viewport.getCamera().combined);
 
+        renderer.begin();
 
+        buttonFly.render();
 
         renderer.end();
     }

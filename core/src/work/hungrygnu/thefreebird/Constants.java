@@ -13,7 +13,9 @@ public class Constants {
 
     // Button parameters
     public static final float BUTTON_RADIUS = 100f;
+    public static final int BUTTON_SEGMENTS = 128;
     public static final Color BUTTON_COLOR = Color.CORAL;
+    public static final Color BUTTON_TEXT_COLOR = Color.WHITE;
 
 
 }

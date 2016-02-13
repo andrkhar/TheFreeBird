@@ -21,6 +21,29 @@ public class Button {
     public void render(){
         renderer.set(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(BUTTON_COLOR);
-        renderer.circle(position.x, position.y, BUTTON_RADIUS);
+        renderer.circle(position.x, position.y, BUTTON_RADIUS, BUTTON_SEGMENTS);
+        flyWordRender();
+    }
+
+    private void flyWordRender(){
+        renderer.setColor(BUTTON_TEXT_COLOR);
+        float x = position.x;
+        float y = position.y;
+        float r = BUTTON_RADIUS;
+        float c = r/3f; // cell size, for drawing on paper
+        float w = c/4f; // width of letter stick
+        //F
+        renderer.rectLine(x-c*2.5f, y-c, x-c*2.5f, y+c, w);
+        renderer.rectLine(x-c*2.5f, y, x-c*1.5f, y, w);
+        renderer.rectLine(x-c*2.5f, y+c, x-c*1.5f, y+c, w );
+        //L
+        renderer.rectLine(x-c/2f, y-c, x-c/2f, y+c, w);
+        renderer.rectLine(x-c/2f, y-c, x+c/2f, y-c, w);
+        //Y
+        renderer.rectLine(x+c*1.5f, y+c, x+c*2f, y, w);
+        renderer.rectLine(x+c*2.5f, y+c, x+c*2f, y, w);
+        renderer.rectLine(x+c*2f, y, x+c*2f, y-c, w);
+
+
     }
 }
