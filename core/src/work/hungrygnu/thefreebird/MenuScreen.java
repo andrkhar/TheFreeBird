@@ -22,6 +22,7 @@ public class MenuScreen extends InputAdapter implements Screen {
     private Sky sky;
     private Tree tree;
     private Nest nest;
+    private Bird bird;
 
     public MenuScreen(TheFreeBirdGame game){
         this.game = game;
@@ -38,6 +39,7 @@ public class MenuScreen extends InputAdapter implements Screen {
         sky = new Sky(renderer);
         tree = new Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
+        bird = new Bird(renderer, tree.nestPosition.add(0f,4f*BIRD_SCALE));
 
 
     }
@@ -55,13 +57,12 @@ public class MenuScreen extends InputAdapter implements Screen {
 
         renderer.begin();
 
-
         land.render();
         sky.render();
         tree.render();
         nest.render();
         buttonFly.render();
-
+        bird.render();
 
         renderer.end();
     }

@@ -35,6 +35,15 @@ public class Constants {
     public static final Color NEST_COLOR_TOP = Color.FIREBRICK;
     public static final int NEST_SEGMENTS = TREE_SEGMENTS;
 
+    // Bird parameters
+    public static final float BIRD_SCALE = 0.15f * SCALE;
+    public static final Color BIRD_COLOR_BODY = Color.RED;
+    public static final Color BIRD_COLOR_BEAK = Color.CORAL;
+    public static final Color BIRD_COLOR_EYE = Color.BLACK;
+    public static final Color BIRD_COLOR_WINGS = Color.SCARLET;
+    public static final Color BIRD_COLOR_TAIL = Color.SCARLET;
+    public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
+
     // Button parameters
     public static final float BUTTON_RADIUS = 100f;
     public static final int BUTTON_SEGMENTS = 128;
