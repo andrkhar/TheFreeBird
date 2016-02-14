@@ -8,6 +8,6 @@ Goals
 
 3. It is free for all game.
 
-4. Graphics in the game is done by using simple shapes like triangles, rectangles, poligons of ShapeRenderer only.
+4. Graphics in the game is done by using simple shapes like triangles, rectangles, circles, ellipses of ShapeRenderer only.
 
 5. The game is fun.
