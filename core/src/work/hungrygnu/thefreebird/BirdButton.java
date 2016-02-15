@@ -31,9 +31,9 @@ public class BirdButton extends Bird {
     public void update(float delta){
         super.update(delta);
         if (visible && alpha < 1){
-            alpha += delta/4f;
-            button.colorBody.a -= delta/4f;
-            button.colorText.a -= delta/4f;
+            alpha += delta;
+            button.colorBody.a -= delta;
+            button.colorText.a -= delta;
         }
         if (alpha > 1f) alpha = 1f;
         if (button.colorBody.a < 0f) button.colorBody.a = 0f;

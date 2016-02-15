@@ -1,16 +1,17 @@
 package work.hungrygnu.thefreebird;
 
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Bird extends DynamicDrawable{
+public class Bird extends DynamicDrawable {
 
-    protected Vector2 velocity;
-
+    // Parameters to draw the bird -------
     protected Vector2 beakB;
 
     protected Vector2 eyeL;
@@ -29,8 +30,17 @@ public class Bird extends DynamicDrawable{
 
     protected final float bodyRadius;
     protected final float eyeRadius;
+    // -----------------------------------
+
+    // Other parameters ------------------
+    protected Vector2 velocity;
 
     protected boolean isFlying;
+
+    protected float moveTargetX;
+    // -----------------------------------
+
+    //protected Mode status;
 
     public Bird(ShapeRenderer renderer, Vector2 position) {
         super(renderer, position);
@@ -53,6 +63,8 @@ public class Bird extends DynamicDrawable{
         isFlying = false;
         recalculateVectors();
         velocity = new Vector2();
+        //status = Mode.SIT;
+        moveTargetX = position.x;
     }
 
     @Override
@@ -94,10 +106,33 @@ public class Bird extends DynamicDrawable{
     public void update(float delta) {
         super.update(delta);
 
+////        switch (status){
+////            case FLYUP:
+//
+//        }
+        float distanceToTargetX = position.x - moveTargetX;
+        if (Math.abs(distanceToTargetX) < BIRD_FLY_X_DEADZONE )
+            velocity.x = 0f;
+
         if (isFlying){
+
+
             if (position.y > LAND_HEIGHT) {
-                velocity.add(0f, delta * 100 * GRAVITY / BIRD_WINDAGE);
-                position.add(velocity.scl(delta*10));// // TODO: 15.02.16  
+
+
+
+
+
+                float speedYChange = delta * GRAVITY;
+                if (velocity.y > 0){
+                    velocity.add(0f, speedYChange);
+
+                }
+                else {
+                    velocity.add(0f, speedYChange / BIRD_WINDAGE);
+                }
+                position.mulAdd(velocity, delta);
+
             }
             else{
                 isFlying = false;
@@ -130,4 +165,39 @@ public class Bird extends DynamicDrawable{
         renderer.triangle(wingRT.x, wingRT.y, wingRB.x, wingRB.y, wingRR.x, wingRR.y);
 
     }
+
+    public void flyUP(){
+        isFlying = true;
+        velocity.add(0f, BIRD_FLYUP_SPEED);
+        position.add(0,1f);
+    }
+
+    public void flyToX(float x){
+        moveTargetX = x;
+        float distanceToTargetX = position.x - moveTargetX;
+        if (Math.abs(distanceToTargetX) > BIRD_FLY_X_DEADZONE ){
+            if (distanceToTargetX > 0)
+                velocity.x =-BIRD_FLY_X_SPEED;
+            else
+                velocity.x = BIRD_FLY_X_SPEED;
+        }
+        else velocity.x = 0f;
+
+    }
+
+//    public static enum Mode{
+//        FLYUP,
+//        SOAR,
+//        SIT
+//
+//
+////        FALLDOWN,
+////        WALK,
+////        RUN,
+////        JUMP,
+////        STAY,
+////        SIT,
+////        DEAD
+//
+//    }
 }

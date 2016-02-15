@@ -20,6 +20,7 @@ public class MenuScreen extends InputAdapter implements Screen {
     private FitViewport viewportFar;
     private FitViewport viewportClose;
     private Button buttonFly;
+    private Underground underground;
     private Land land;
     private Sky sky;
     private Tree tree;
@@ -40,6 +41,7 @@ public class MenuScreen extends InputAdapter implements Screen {
         Gdx.input.setInputProcessor(this);
 
         buttonFly = new Button(renderer,new Vector2(WORLD_WIDTH/2f, WORLD_HEIGHT/2f));
+        underground = new Underground(renderer);
         land = new Land(renderer);
         sky = new Sky(renderer);
         tree = new Tree(renderer);
@@ -50,11 +52,16 @@ public class MenuScreen extends InputAdapter implements Screen {
 
 
     }
+    public void update(float delta){
+        // Logic
+        viewportClose.getCamera().position.set(bird.position.x, bird.position.y, 0f);
+        bird.update(delta);
+    }
 
     @Override
     public void render(float delta) {
-        // Logic
-        bird.update(delta);
+
+        update(delta);
 
         // Drawing
         if (closeUpView) viewportClose.apply();
@@ -70,6 +77,7 @@ public class MenuScreen extends InputAdapter implements Screen {
 
         renderer.begin();
 
+        underground.render();
         land.render();
         sky.render();
         tree.render();
@@ -116,11 +124,13 @@ public class MenuScreen extends InputAdapter implements Screen {
         return true;
     }
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
-        if (bird.position.dst(viewportClose.unproject(new Vector2(screenX,screenY))) < bird.bodyRadius) {
+        Vector2 unprojectedXY = viewportClose.unproject(new Vector2(screenX,screenY));
+        if (bird.position.dst(unprojectedXY) < bird.bodyRadius) {
             bird.visible = true;
-            bird.isFlying = true;
-            bird.velocity.add(0f, 2000f);
+            bird.flyUP();
+
         }
+        else bird.flyToX(unprojectedXY.x);
         return true;
     }
 }

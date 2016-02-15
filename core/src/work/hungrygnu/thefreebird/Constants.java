@@ -15,11 +15,16 @@ public class Constants {
     public static final float CLOSEUP_HEIGHT = 1080f;
     public static final Color BACKCOLOR = Color.BLACK;
     public static final float SCALE = WORLD_HEIGHT/48f;
-    public static final float GRAVITY = -10f;
+    public static final float GRAVITY = -500f;
+    // Underground parameters
+    public static final float UNDERGROUND_HEIGHT = WORLD_HEIGHT/16f;
+    public static final Color UNDERGROUND_FRONTCOLOR = Color.BLACK;
+    public static final Color UNDERGROUND_BACKCOLOR = Color.DARK_GRAY;
     // Land parameters
-    public static final float LAND_HEIGHT = WORLD_HEIGHT/4f;
-    public static final Color LAND_FRONTCOLOR = Color.FOREST;
-    public static final Color LAND_BACKCOLOR = Color.GRAY;
+    public static final float LAND_HEIGHT = WORLD_HEIGHT/8f;
+    public static final Color LAND_FRONTCOLOR = Color.OLIVE;
+    public static final Color LAND_BACKCOLOR = Color.FOREST;
+
     // Sky parameters
     public static final Color SKY_COLOR = Color.SKY;
 
@@ -46,7 +51,12 @@ public class Constants {
     public static final Color BIRD_COLOR_WINGS = Color.SCARLET;
     public static final Color BIRD_COLOR_TAIL = Color.SCARLET;
     public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
-    public static final float BIRD_WINDAGE = 10f;
+    public static final float BIRD_WINDAGE = 100f;
+    public static final float BIRD_FLYUP_SPEED = 300f;
+    public static final float BIRD_FLY_X_SPEED = 200f;
+    public static final float BIRD_FLY_X_DEADZONE = 1f;
+
+
 
     // Button parameters
     public static final float BUTTON_RADIUS = 100f;

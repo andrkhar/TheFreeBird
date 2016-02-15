@@ -1,5 +1,6 @@
 package work.hungrygnu.thefreebird;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -22,14 +23,14 @@ public class Tree extends StaticDrawable {
     private final float leavesRightR;
 
     // The points of the trunk the tree
-    private final Vector2 trunk1;
-    private final Vector2 trunk2;
-    private final Vector2 trunk3;
+    private final Vector2 trunkL;
+    private final Vector2 trunkT;
+    private final Vector2 trunkR;
 
     // The points of the tree base;
-    private final Vector2 root1;
-    private final Vector2 root2;
-    private final Vector2 root3;
+    private final Vector2 rootL;
+    private final Vector2 rootT;
+    private final Vector2 rootR;
 
     // The points to draw Left Branch as a triangle
     private final Vector2 branchL1;
@@ -41,6 +42,11 @@ public class Tree extends StaticDrawable {
     private final Vector2 branchR2;
     private final Vector2 branchR3;
 
+    // The root ellipse parameters
+    private final Vector2 rootEllipseXY;
+    private final float rootEllipseW;
+    private final float rootEllipseH;
+
     public Tree(ShapeRenderer renderer) {
         super(renderer, TREE_POSITION);
 
@@ -49,13 +55,13 @@ public class Tree extends StaticDrawable {
         leavesLeftR = 5f * SCALE;
         leavesRightR = 3.5f * SCALE;
 
-        root1 = (new Vector2(TREE_POSITION)).add(-1.5f * SCALE, 0f);
-        root2 = (new Vector2(TREE_POSITION)).add(0f, 5f * SCALE);
-        root3 = (new Vector2(TREE_POSITION)).add(2f * SCALE, 0f);
+        rootL = (new Vector2(TREE_POSITION)).add(-1.5f * SCALE, 0f);
+        rootT = (new Vector2(TREE_POSITION)).add(0f, 5f * SCALE);
+        rootR = (new Vector2(TREE_POSITION)).add(2f * SCALE, 0f);
 
-        trunk1 = (new Vector2(TREE_POSITION)).add(-SCALE, SCALE);
-        trunk2 = (new Vector2(TREE_POSITION)).add(0f, 11f * SCALE);
-        trunk3 = (new Vector2(TREE_POSITION)).add(SCALE, 2f * SCALE);
+        trunkL = (new Vector2(TREE_POSITION)).add(-SCALE, SCALE);
+        trunkT = (new Vector2(TREE_POSITION)).add(0f, 11f * SCALE);
+        trunkR = (new Vector2(TREE_POSITION)).add(SCALE, 2f * SCALE);
 
         branchL1 = (new Vector2(TREE_POSITION)).add(-2f * SCALE, 9f * SCALE);
         branchL2 = (new Vector2(TREE_POSITION)).add(0f, 8.5f * SCALE);
@@ -66,6 +72,10 @@ public class Tree extends StaticDrawable {
         branchR3 = (new Vector2(TREE_POSITION)).add(0f, 6f * SCALE);
 
         nestPosition = (new Vector2(TREE_POSITION)).add(3f * SCALE, 7f * SCALE);
+        rootEllipseXY = (new Vector2(rootL)).add(0f, -0.5f * SCALE);
+        rootEllipseW = rootR.x - rootL.x;
+        rootEllipseH = SCALE;
+
     }
 
     public void render(){
@@ -77,10 +87,14 @@ public class Tree extends StaticDrawable {
         renderer.circle(leavesRightCenter.x, leavesRightCenter.y, leavesRightR, TREE_SEGMENTS);
 
         renderer.setColor(TREE_COLOR_BROWN);
-        renderer.triangle(trunk1.x, trunk1.y, trunk2.x, trunk2.y, trunk3.x, trunk3.y);
-        renderer.triangle(root1.x, root1.y, root2.x, root2.y, root3.x, root3.y);
+        renderer.triangle(trunkL.x, trunkL.y, trunkT.x, trunkT.y, trunkR.x, trunkR.y);
+        renderer.triangle(rootL.x, rootL.y, rootT.x, rootT.y, rootR.x, rootR.y);
         renderer.triangle(branchL1.x, branchL1.y, branchL2.x, branchL2.y, branchL3.x, branchL3.y);
         renderer.triangle(branchR1.x, branchR1.y, branchR2.x, branchR2.y, branchR3.x, branchR3.y);
+
+        // Root ellipses
+        renderer.ellipse(rootL.x, rootL.y, SCALE, SCALE, TREE_SEGMENTS);
+        renderer.ellipse(rootEllipseXY.x, rootEllipseXY.y, rootEllipseW, rootEllipseH, TREE_SEGMENTS);
 
     }
 
