@@ -9,28 +9,28 @@ import static work.hungrygnu.thefreebird.Constants.*;
  */
 public class Bird extends DynamicDrawable{
 
-    private Vector2 beakL;
-    private Vector2 beakR;
-    private Vector2 beakB;
+    protected Vector2 velocity;
 
-    private Vector2 eyeL;
-    private Vector2 eyeR;
+    protected Vector2 beakB;
 
-    private Vector2 tailL;
-    private Vector2 tailR;
+    protected Vector2 eyeL;
+    protected Vector2 eyeR;
 
-    private Vector2 wingLL;
-    private Vector2 wingLB;
-    private Vector2 wingLT;
+    protected Vector2 tailL;
+    protected Vector2 tailR;
 
-    private Vector2 wingRR;
-    private Vector2 wingRB;
-    private Vector2 wingRT;
+    protected Vector2 wingLL;
+    protected Vector2 wingLB;
+    protected Vector2 wingLT;
 
-    private final float bodyRadius;
-    private final float eyeRadius;
+    protected Vector2 wingRR;
+    protected Vector2 wingRB;
+    protected Vector2 wingRT;
 
-    private boolean isFlying;
+    protected final float bodyRadius;
+    protected final float eyeRadius;
+
+    protected boolean isFlying;
 
     public Bird(ShapeRenderer renderer, Vector2 position) {
         super(renderer, position);
@@ -50,8 +50,9 @@ public class Bird extends DynamicDrawable{
         bodyRadius = 5f * BIRD_SCALE;
         eyeRadius = 0.7f *BIRD_SCALE;
 
-        isFlying = true;
+        isFlying = false;
         recalculateVectors();
+        velocity = new Vector2();
     }
 
     @Override
@@ -92,6 +93,19 @@ public class Bird extends DynamicDrawable{
     @Override
     public void update(float delta) {
         super.update(delta);
+
+        if (isFlying){
+            if (position.y > LAND_HEIGHT) {
+                velocity.add(0f, delta * 100 * GRAVITY / BIRD_WINDAGE);
+                position.add(velocity.scl(delta*10));// // TODO: 15.02.16  
+            }
+            else{
+                isFlying = false;
+                position.y = LAND_HEIGHT;
+            }
+
+        }
+
     }
 
     @Override
@@ -114,9 +128,6 @@ public class Bird extends DynamicDrawable{
         renderer.setColor(BIRD_COLOR_WINGS);
         renderer.triangle(wingLT.x, wingLT.y, wingLB.x, wingLB.y, wingLL.x, wingLL.y);
         renderer.triangle(wingRT.x, wingRT.y, wingRB.x, wingRB.y, wingRR.x, wingRR.y);
-
-
-
 
     }
 }

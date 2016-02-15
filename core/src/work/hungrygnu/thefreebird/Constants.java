@@ -9,14 +9,17 @@ import com.badlogic.gdx.math.Vector2;
 public class Constants {
 
     // World parameters
-    public static final float WORLD_WIDTH = 1920f;
-    public static final float WORLD_HEIGHT = 1080f;
+    public static final float WORLD_WIDTH = 3f * 1920f;
+    public static final float WORLD_HEIGHT = 3f * 1080f;
+    public static final float CLOSEUP_WIDTH = 1920f;
+    public static final float CLOSEUP_HEIGHT = 1080f;
     public static final Color BACKCOLOR = Color.BLACK;
-    public static final float SCALE = WORLD_HEIGHT/16f;
+    public static final float SCALE = WORLD_HEIGHT/48f;
+    public static final float GRAVITY = -10f;
     // Land parameters
     public static final float LAND_HEIGHT = WORLD_HEIGHT/4f;
-    public static final Color LAND_FRONTCOLOR = Color.OLIVE;
-    public static final Color LAND_BACKCOLOR = Color.FOREST;
+    public static final Color LAND_FRONTCOLOR = Color.FOREST;
+    public static final Color LAND_BACKCOLOR = Color.GRAY;
     // Sky parameters
     public static final Color SKY_COLOR = Color.SKY;
 
@@ -43,6 +46,7 @@ public class Constants {
     public static final Color BIRD_COLOR_WINGS = Color.SCARLET;
     public static final Color BIRD_COLOR_TAIL = Color.SCARLET;
     public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
+    public static final float BIRD_WINDAGE = 10f;
 
     // Button parameters
     public static final float BUTTON_RADIUS = 100f;

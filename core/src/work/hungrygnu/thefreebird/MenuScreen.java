@@ -1,6 +1,7 @@
 package work.hungrygnu.thefreebird;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,13 +17,16 @@ public class MenuScreen extends InputAdapter implements Screen {
 
     private TheFreeBirdGame game;
     private ShapeRenderer renderer;
-    private FitViewport viewport;
+    private FitViewport viewportFar;
+    private FitViewport viewportClose;
     private Button buttonFly;
     private Land land;
     private Sky sky;
     private Tree tree;
     private Nest nest;
-    private Bird bird;
+    private BirdButton bird;
+
+    private boolean closeUpView;
 
     public MenuScreen(TheFreeBirdGame game){
         this.game = game;
@@ -31,15 +35,18 @@ public class MenuScreen extends InputAdapter implements Screen {
     public void show() {
         renderer = new ShapeRenderer();
         renderer.setAutoShapeType(true);
-        viewport = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        viewportFar = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
+        viewportClose = new FitViewport(CLOSEUP_WIDTH, CLOSEUP_HEIGHT);
         Gdx.input.setInputProcessor(this);
 
-        buttonFly = new Button(renderer,new Vector2(viewport.getWorldWidth()/2f, viewport.getWorldHeight()/2f));
+        buttonFly = new Button(renderer,new Vector2(WORLD_WIDTH/2f, WORLD_HEIGHT/2f));
         land = new Land(renderer);
         sky = new Sky(renderer);
         tree = new Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
-        bird = new Bird(renderer, tree.nestPosition.add(0f,4f*BIRD_SCALE));
+        bird = new BirdButton(renderer, tree.nestPosition.add(0f,4f*BIRD_SCALE));
+
+        closeUpView = true;
 
 
     }
@@ -47,13 +54,19 @@ public class MenuScreen extends InputAdapter implements Screen {
     @Override
     public void render(float delta) {
         // Logic
+        bird.update(delta);
 
         // Drawing
-        viewport.apply();
+        if (closeUpView) viewportClose.apply();
+        else viewportFar.apply();
+
         Gdx.gl20.glClearColor(BACKCOLOR.r, BACKCOLOR.g, BACKCOLOR.b, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl20.glEnable(GL20.GL_BLEND);
+        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
-        renderer.setProjectionMatrix(viewport.getCamera().combined);
+        if (closeUpView) renderer.setProjectionMatrix(viewportClose.getCamera().combined);
+        else renderer.setProjectionMatrix(viewportFar.getCamera().combined);
 
         renderer.begin();
 
@@ -61,15 +74,18 @@ public class MenuScreen extends InputAdapter implements Screen {
         sky.render();
         tree.render();
         nest.render();
-        buttonFly.render();
+        //buttonFly.render();
         bird.render();
 
         renderer.end();
+        Gdx.gl20.glDisable(GL20.GL_BLEND);
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height, true);
+        viewportFar.update(width, height, true);
+        viewportClose.update(width,height);
+        viewportClose.getCamera().position.set(bird.position.x, bird.position.y, 0f);
     }
 
     @Override
@@ -91,5 +107,20 @@ public class MenuScreen extends InputAdapter implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    public boolean keyUp(int keycode){
+
+        if (keycode == Input.Keys.SPACE) closeUpView = !closeUpView;
+
+        return true;
+    }
+    public boolean touchDown (int screenX, int screenY, int pointer, int button) {
+        if (bird.position.dst(viewportClose.unproject(new Vector2(screenX,screenY))) < bird.bodyRadius) {
+            bird.visible = true;
+            bird.isFlying = true;
+            bird.velocity.add(0f, 2000f);
+        }
+        return true;
     }
 }
