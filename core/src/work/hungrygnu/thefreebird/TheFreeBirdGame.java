@@ -5,17 +5,13 @@ import com.badlogic.gdx.Game;
 
 public class TheFreeBirdGame extends Game {
 
+
 	@Override
 	public void create () {
-		showMenuScreen();
+
+		setScreen(new GameScreen());
 
 	}
 
-	public void showMenuScreen() {
-		setScreen(new MenuScreen(this));
-	}
 
-	public void showGameScreen() {
-
-	}
 }

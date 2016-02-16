@@ -54,8 +54,7 @@ public class Constants {
     public static final float BIRD_WINDAGE = 100f;
     public static final float BIRD_FLYUP_SPEED = 300f;
     public static final float BIRD_FLY_X_SPEED = 200f;
-    public static final float BIRD_FLY_X_DEADZONE = BIRD_FLY_X_SPEED / 100f;
-    public static final long BIRD_NANOTIME_FRAME = (long)(Math.pow(10, 9));
+    public static final long BIRD_NANOTIME_FRAME = (long)(0.5*Math.pow(10, 9));
 
 
 

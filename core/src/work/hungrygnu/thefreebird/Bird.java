@@ -1,5 +1,6 @@
 package work.hungrygnu.thefreebird;
 
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -37,10 +38,11 @@ public class Bird extends DynamicDrawable {
     protected Vector2 velocity;
 
     protected boolean isFlying;
+    protected boolean isGlyding;
 
     protected long nanotimeFlyStart;
 
-    protected float moveTargetX;
+
     // -----------------------------------
 
     //protected Mode status;
@@ -64,10 +66,10 @@ public class Bird extends DynamicDrawable {
         eyeRadius = 0.7f *BIRD_SCALE;
 
         isFlying = false;
+        isGlyding = false;
         recalculatePoints();
         velocity = new Vector2();
-        //status = Mode.SIT;
-        moveTargetX = position.x;
+
     }
 
     @Override
@@ -82,8 +84,8 @@ public class Bird extends DynamicDrawable {
         eyeL.set(position).add(-1.8f * BIRD_SCALE, 1.5f * BIRD_SCALE);
         eyeR.set(position).add(1.8f * BIRD_SCALE, 1.5f * BIRD_SCALE);
 
-        wingLT.set(position).add(-4.5f * BIRD_SCALE, 2f * BIRD_SCALE);
-        wingRT.set(position).add(4.5f * BIRD_SCALE, 2f * BIRD_SCALE);
+        wingLT.set(position).add(-4.2f * BIRD_SCALE, 2f * BIRD_SCALE);
+        wingRT.set(position).add(4.2f * BIRD_SCALE, 2f * BIRD_SCALE);
     }
 
     public  void recalculateDinamicPoints(){
@@ -92,15 +94,19 @@ public class Bird extends DynamicDrawable {
     }
 
     public void recalculateDinamicFlyingPoints(){
+        float wingY;
+        if (isGlyding)
+            wingY = wingLT.y;//wingLB.y +(wingLT.y - wingLB.y)/2f;
+        else {
+            float dinamicValue = (float)
+                    ((wingLT.y - wingLB.y) * (1.3f*MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeFlyStart) / BIRD_NANOTIME_FRAME)));
+            wingY = wingLB.y - dinamicValue;
+        }
+        wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -2.2f * BIRD_SCALE);
+        wingRB.set(wingRT).add(0.5f *BIRD_SCALE, -2.2f * BIRD_SCALE);
 
-        float dinamicValue = (float)
-                ((wingLT.y - wingLB.y) *(0.5f+MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeFlyStart)/BIRD_NANOTIME_FRAME)));
-
-        wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -2f * BIRD_SCALE);
-        wingRB.set(wingRT).add(0.5f *BIRD_SCALE, -2f * BIRD_SCALE);
-
-        wingLL.set(wingLT.x - 6f * BIRD_SCALE, wingLT.y - dinamicValue);
-        wingRR.set(wingRT.x + 6f * BIRD_SCALE, wingRT.y - dinamicValue);
+        wingLL.set(wingLT.x - 6f * BIRD_SCALE, wingY);
+        wingRR.set(wingRT.x + 6f * BIRD_SCALE, wingY);
 
         tailL.set(position.x - 3f * BIRD_SCALE, position.y + 5.5f * BIRD_SCALE);
         tailR.set(position.x + 3f * BIRD_SCALE, position.y + 5.5f * BIRD_SCALE);
@@ -119,9 +125,6 @@ public class Bird extends DynamicDrawable {
     @Override
     public void update(float delta) {
 
-        float distanceToTargetX = position.x - moveTargetX;
-        if (Math.abs(distanceToTargetX) < BIRD_FLY_X_DEADZONE )
-            velocity.x = 0f;
 
         if (isFlying){
 
@@ -135,6 +138,11 @@ public class Bird extends DynamicDrawable {
                 else {
                     velocity.add(0f, speedYChange / BIRD_WINDAGE);
                 }
+                if (!Gdx.input.isTouched()){
+                    velocity.x = 0f;
+                    isGlyding = false;
+                }
+
                 position.mulAdd(velocity, delta);
 
             }
@@ -142,6 +150,8 @@ public class Bird extends DynamicDrawable {
                 isFlying = false;
                 position.y = LAND_HEIGHT;
             }
+
+
 
         }
         super.update(delta);
@@ -180,18 +190,7 @@ public class Bird extends DynamicDrawable {
         nanotimeFlyStart = TimeUtils.nanoTime();
     }
 
-    public void flyToX(float x){
-        moveTargetX = x;
-        float distanceToTargetX = position.x - moveTargetX;
-        if (Math.abs(distanceToTargetX) > BIRD_FLY_X_DEADZONE ){
-            if (distanceToTargetX > 0)
-                velocity.x =-BIRD_FLY_X_SPEED;
-            else
-                velocity.x = BIRD_FLY_X_SPEED;
-        }
-        else velocity.x = 0f;
 
-    }
 
 //    public static enum Mode{
 //        FLYUP,
