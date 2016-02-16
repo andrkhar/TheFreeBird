@@ -49,8 +49,9 @@ public class BirdButton extends Bird {
         renderer.setColor(BIRD_COLOR_TAIL.r, BIRD_COLOR_TAIL.g, BIRD_COLOR_TAIL.b, alpha);
         renderer.triangle(tailL.x, tailL.y, tailR.x, tailR.y, beakB.x, beakB.y);
         // BODY
-        renderer.setColor(BIRD_COLOR_BODY.r, BIRD_COLOR_BODY.g, BIRD_COLOR_BODY.b, alpha);
-        renderer.circle(position.x, position.y, bodyRadius, BIRD_SEGMENTS);
+        renderer.setColor(BIRD_COLOR_BODY);
+        renderer.circle(lastFramePosition.x, lastFramePosition.y, bodyRadius, BIRD_SEGMENTS);
+        lastFramePosition.set(position);
         // BEAK
         beak = new Color(beak.r, beak.g, beak.b, alpha);
         body = new Color(body.r, body.g, body.b, alpha);

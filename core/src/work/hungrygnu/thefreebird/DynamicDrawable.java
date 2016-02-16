@@ -10,21 +10,23 @@ public class DynamicDrawable implements Renderable, Updatable{
 
     protected ShapeRenderer renderer;
     public Vector2 position;
+    public Vector2 lastFramePosition;
 
 
 
     public DynamicDrawable(ShapeRenderer renderer, Vector2 position){
         this.renderer = renderer;
         this.position = position;
+        this.lastFramePosition = new Vector2(position);
     }
 
-    public void recalculateVectors(){
+    public void recalculatePoints(){
 
     }
 
     @Override
     public void update(float delta) {
-        recalculateVectors();
+        recalculatePoints();
     }
 
     @Override

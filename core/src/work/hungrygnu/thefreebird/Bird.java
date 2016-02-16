@@ -1,16 +1,17 @@
 package work.hungrygnu.thefreebird;
 
-import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.TimeUtils;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
 public class Bird extends DynamicDrawable {
-
+    //TODO Animation of the flight
     // Parameters to draw the bird -------
     protected Vector2 beakB;
 
@@ -37,6 +38,8 @@ public class Bird extends DynamicDrawable {
 
     protected boolean isFlying;
 
+    protected long nanotimeFlyStart;
+
     protected float moveTargetX;
     // -----------------------------------
 
@@ -61,15 +64,19 @@ public class Bird extends DynamicDrawable {
         eyeRadius = 0.7f *BIRD_SCALE;
 
         isFlying = false;
-        recalculateVectors();
+        recalculatePoints();
         velocity = new Vector2();
         //status = Mode.SIT;
         moveTargetX = position.x;
     }
 
     @Override
-    public void recalculateVectors() {
+    public void recalculatePoints() {
+        recalculateStaticPoints();
+        recalculateDinamicPoints();
+    }
 
+    public void recalculateStaticPoints(){
         beakB.set(position).add(0f, -2f * BIRD_SCALE);
 
         eyeL.set(position).add(-1.8f * BIRD_SCALE, 1.5f * BIRD_SCALE);
@@ -77,51 +84,48 @@ public class Bird extends DynamicDrawable {
 
         wingLT.set(position).add(-4.5f * BIRD_SCALE, 2f * BIRD_SCALE);
         wingRT.set(position).add(4.5f * BIRD_SCALE, 2f * BIRD_SCALE);
+    }
 
-        if (isFlying) {
-            wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -2f * BIRD_SCALE);
-            wingRB.set(wingRT).add(0.5f *BIRD_SCALE, -2f * BIRD_SCALE);
+    public  void recalculateDinamicPoints(){
+        if (isFlying) recalculateDinamicFlyingPoints();
+        else recalculateDinamicSittingPoints();
+    }
 
-            wingLL.set(wingLT.x - 6f * BIRD_SCALE, wingLB.y);
-            wingRR.set(wingRT.x + 6f * BIRD_SCALE, wingRB.y);
+    public void recalculateDinamicFlyingPoints(){
 
-            tailL.set(position.x - 3f * BIRD_SCALE, position.y + 5.5f * BIRD_SCALE);
-            tailR.set(position.x + 3f * BIRD_SCALE, position.y + 5.5f * BIRD_SCALE);
+        float dinamicValue = (float)
+                ((wingLT.y - wingLB.y) *(0.5f+MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeFlyStart)/BIRD_NANOTIME_FRAME)));
 
-        }
-        else {
-            wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -3f * BIRD_SCALE);
-            wingRB.set(wingRT).add(0.5f *BIRD_SCALE, -3f * BIRD_SCALE);
+        wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -2f * BIRD_SCALE);
+        wingRB.set(wingRT).add(0.5f *BIRD_SCALE, -2f * BIRD_SCALE);
 
-            wingLL.set(wingLT.x - 2f * BIRD_SCALE, wingLT.y - (wingLT.y - wingLB.y) / 2f);
-            wingRR.set(wingRT.x + 2f * BIRD_SCALE, wingRT.y - (wingRT.y - wingRB.y) / 2f);
+        wingLL.set(wingLT.x - 6f * BIRD_SCALE, wingLT.y - dinamicValue);
+        wingRR.set(wingRT.x + 6f * BIRD_SCALE, wingRT.y - dinamicValue);
 
-            tailL.set(beakB);
-            tailR.set(beakB);
-        }
+        tailL.set(position.x - 3f * BIRD_SCALE, position.y + 5.5f * BIRD_SCALE);
+        tailR.set(position.x + 3f * BIRD_SCALE, position.y + 5.5f * BIRD_SCALE);
+    }
+    public void recalculateDinamicSittingPoints(){
+        wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -3f * BIRD_SCALE);
+        wingRB.set(wingRT).add(0.5f *BIRD_SCALE, -3f * BIRD_SCALE);
 
+        wingLL.set(wingLT.x - 2f * BIRD_SCALE, wingLT.y - (wingLT.y - wingLB.y) / 2f);
+        wingRR.set(wingRT.x + 2f * BIRD_SCALE, wingRT.y - (wingRT.y - wingRB.y) / 2f);
+
+        tailL.set(beakB);
+        tailR.set(beakB);
     }
 
     @Override
     public void update(float delta) {
-        super.update(delta);
 
-////        switch (status){
-////            case FLYUP:
-//
-//        }
         float distanceToTargetX = position.x - moveTargetX;
         if (Math.abs(distanceToTargetX) < BIRD_FLY_X_DEADZONE )
             velocity.x = 0f;
 
         if (isFlying){
 
-
             if (position.y > LAND_HEIGHT) {
-
-
-
-
 
                 float speedYChange = delta * GRAVITY;
                 if (velocity.y > 0){
@@ -140,6 +144,7 @@ public class Bird extends DynamicDrawable {
             }
 
         }
+        super.update(delta);
 
     }
 
@@ -150,9 +155,10 @@ public class Bird extends DynamicDrawable {
         // TAIL
         renderer.setColor(BIRD_COLOR_TAIL);
         renderer.triangle(tailL.x, tailL.y, tailR.x, tailR.y, beakB.x, beakB.y);
-        // BODY
+        // BODY uses lastFramePosition for a cool dynamic effect
         renderer.setColor(BIRD_COLOR_BODY);
-        renderer.circle(position.x, position.y, bodyRadius, BIRD_SEGMENTS);
+        renderer.circle(lastFramePosition.x, lastFramePosition.y, bodyRadius, BIRD_SEGMENTS);
+        lastFramePosition.set(position);
         // BEAK
         renderer.triangle(eyeL.x, eyeL.y, eyeR.x, eyeR.y, beakB.x, beakB.y, BIRD_COLOR_BODY, BIRD_COLOR_BODY, BIRD_COLOR_BEAK);
         // EYES
@@ -169,7 +175,9 @@ public class Bird extends DynamicDrawable {
     public void flyUP(){
         isFlying = true;
         velocity.add(0f, BIRD_FLYUP_SPEED);
-        position.add(0,1f);
+        position.add(0,1f);// jump to fly
+
+        nanotimeFlyStart = TimeUtils.nanoTime();
     }
 
     public void flyToX(float x){
