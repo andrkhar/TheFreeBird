@@ -9,10 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 public class Constants {
 
     // World parameters
-    public static final float WORLD_WIDTH = 3f * 1920f;
-    public static final float WORLD_HEIGHT = 3f * 1080f;
-    public static final float CLOSEUP_WIDTH = 1920f;
-    public static final float CLOSEUP_HEIGHT = 1080f;
+    public static final float WORLD_WIDTH = 2f * 1920f;
+    public static final float WORLD_HEIGHT = 2f * 1080f;
+
+    public static final float WORLD_BORDER_RIGHT = WORLD_WIDTH - WORLD_WIDTH/4f;
+    public static final float WORLD_BORDER_LEFT = WORLD_WIDTH/4f;
+    public static final float CLOSEUP_WIDTH = 0.8f*1920f;
+    public static final float CLOSEUP_HEIGHT = 0.8f*1080f;
     public static final Color BACKCOLOR = Color.BLACK;
     public static final float SCALE = WORLD_HEIGHT/48f;
     public static final float GRAVITY = -500f;
@@ -21,15 +24,24 @@ public class Constants {
     public static final Color UNDERGROUND_FRONTCOLOR = Color.BLACK;
     public static final Color UNDERGROUND_BACKCOLOR = Color.DARK_GRAY;
     // Land parameters
-    public static final float LAND_HEIGHT = WORLD_HEIGHT/8f;
+    public static final float LAND_Y = UNDERGROUND_HEIGHT;
+    public static final float LAND_HEIGHT = WORLD_HEIGHT/16f;
     public static final Color LAND_FRONTCOLOR = Color.OLIVE;
     public static final Color LAND_BACKCOLOR = Color.FOREST;
 
     // Sky parameters
     public static final Color SKY_COLOR = Color.SKY;
+    public static final float SKY_Y = LAND_Y + LAND_HEIGHT;
+    public static final float SKY_H = WORLD_HEIGHT *6f/8f;
+
+
+    //Space parameters
+    public static final float SPACE_Y= SKY_Y + SKY_H;
+    public static final float SPACE_H = WORLD_HEIGHT / 8f;
+
 
     // Tree parameters
-    public static final float TREE_X = WORLD_WIDTH/4f;
+    public static final float TREE_X = WORLD_WIDTH/2f;
     public static final float TREE_Y = WORLD_HEIGHT/8f;
     public static final Vector2 TREE_POSITION = new Vector2(TREE_X, TREE_Y);
     public static final int TREE_SEGMENTS = 64;
@@ -55,8 +67,6 @@ public class Constants {
     public static final float BIRD_FLYUP_SPEED = 300f;
     public static final float BIRD_FLY_X_SPEED = 200f;
     public static final long BIRD_NANOTIME_FRAME = (long)(0.5*Math.pow(10, 9));
-
-
 
     // Button parameters
     public static final float BUTTON_RADIUS = 100f;

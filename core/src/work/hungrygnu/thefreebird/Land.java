@@ -17,6 +17,6 @@ public class Land {
     public void render(){
 
         renderer.set(ShapeRenderer.ShapeType.Filled);
-        renderer.rect(0,UNDERGROUND_HEIGHT, WORLD_WIDTH, LAND_HEIGHT, LAND_FRONTCOLOR, LAND_FRONTCOLOR, LAND_BACKCOLOR, LAND_BACKCOLOR);
+        renderer.rect(0,LAND_Y, WORLD_WIDTH, LAND_HEIGHT, LAND_FRONTCOLOR, LAND_FRONTCOLOR, LAND_BACKCOLOR, LAND_BACKCOLOR);
     }
 }

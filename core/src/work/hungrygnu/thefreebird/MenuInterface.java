@@ -1,0 +1,32 @@
+package work.hungrygnu.thefreebird;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+
+/**
+ * Created by hungry on 17.02.16.
+ */
+public class MenuInterface extends InputAdapter {
+    BirdButton bird;
+    FitViewport viewport;
+    public MenuInterface(BirdButton bird, FitViewport viewport)
+    {
+        Gdx.input.setInputProcessor(this);
+        this.bird = bird;
+        this.viewport = viewport;
+    }
+
+    public boolean touchDown (int screenX, int screenY, int pointer, int button) {
+        Vector2 unprojected = viewport.unproject(new Vector2(screenX, screenY));
+        if (bird.bodyCircle.contains(unprojected)) {
+            bird.flyUP();
+            bird.visible = true;
+        }
+
+        return true;
+    }
+
+
+}

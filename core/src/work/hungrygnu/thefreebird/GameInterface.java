@@ -11,10 +11,12 @@ import static work.hungrygnu.thefreebird.Constants.*;
 public class GameInterface extends InputAdapter {
 
     GameScreen screen;
+    Bird bird;
 
-    public GameInterface(GameScreen screen){
+    public GameInterface(GameScreen screen, Level level){
 
         Gdx.input.setInputProcessor(this);
+        bird = level.bird;
         this.screen = screen;
     }
 
@@ -25,16 +27,15 @@ public class GameInterface extends InputAdapter {
         return true;
     }
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
-        switch (getScreenZone(screenX, screenY, screen.viewportClose.getScreenWidth(), screen.viewportClose.getScreenHeight())){
+        switch (getScreenZone(screenX, screenY)){
             case LEFT:
-                birdGlideLeft();
+                bird.glideLeft();
                 break;
             case RIGHT:
-                birdGlideRight();
+                bird.glideRight();
                 break;
             case TOP:
-                screen.bird.visible = true;
-                screen.bird.flyUP();
+                bird.flyUP();
                 break;
             case BOTTOM:
                 ; // Make poop;
@@ -43,12 +44,12 @@ public class GameInterface extends InputAdapter {
     }
 
     public boolean touchDragged (int screenX, int screenY, int pointer) {
-        switch (getScreenZone(screenX, screenY, screen.viewportClose.getScreenWidth(), screen.viewportClose.getScreenHeight())){
+        switch (getScreenZone(screenX, screenY)){
             case LEFT:
-                birdGlideLeft();
+                bird.glideLeft();
                 break;
             case RIGHT:
-                birdGlideRight();
+                bird.glideRight();
                 break;
             case TOP:
                 ; // DO NOTHING ON DRAG;
@@ -59,39 +60,23 @@ public class GameInterface extends InputAdapter {
         return  true;
     }
 
-    public ScreenZone getScreenZone(int x, int y, int screenWidth, int screenHeight)
-    {
-        Gdx.app.log("SCREEN ZONE", "x = "+x+" y = "+y+" w = " + screenWidth+" h = " + screenHeight);
-
-        if (x < screenWidth / 3f)
+    public ScreenZone getScreenZone(int x, int y){
+        int screenW = Gdx.graphics.getWidth();
+        int screenH = Gdx.graphics.getHeight();
+        if (x < screenW / 3f)
             return ScreenZone.LEFT;
-        else if (x > screenWidth * 2f / 3f)
+        else if (x > screenW * 2f / 3f)
             return ScreenZone.RIGHT;
-        else if (y < Gdx.graphics.getHeight() / 2f)
+        else if (y < screenH / 2f)
             return  ScreenZone.TOP;
         else
             return ScreenZone.BOTTOM;
     }
 
-    public void birdGlideRight(){
-        screen.bird.velocity.x = BIRD_FLY_X_SPEED;
-        screen.bird.isGlyding = true;
-    }
-    public void birdGlideLeft(){
-        screen.bird.velocity.x = -BIRD_FLY_X_SPEED;
-        screen.bird.isGlyding = true;
-    }
-
-
-
     public enum ScreenZone{
-
         LEFT,
         RIGHT,
         TOP,
         BOTTOM
-
     }
-
-
 }

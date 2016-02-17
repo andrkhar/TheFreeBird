@@ -3,6 +3,7 @@ package work.hungrygnu.thefreebird;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -42,6 +43,7 @@ public class Bird extends DynamicDrawable {
 
     protected long nanotimeFlyStart;
 
+    protected Circle bodyCircle;
 
     // -----------------------------------
 
@@ -69,6 +71,7 @@ public class Bird extends DynamicDrawable {
         isGlyding = false;
         recalculatePoints();
         velocity = new Vector2();
+        bodyCircle = new Circle(position, bodyRadius);
 
     }
 
@@ -124,11 +127,12 @@ public class Bird extends DynamicDrawable {
 
     @Override
     public void update(float delta) {
+        bodyCircle.setPosition(position); // Circle is for collisions detection
 
 
         if (isFlying){
 
-            if (position.y > LAND_HEIGHT) {
+            if (position.y > SKY_Y) {
 
                 float speedYChange = delta * GRAVITY;
                 if (velocity.y > 0){
@@ -138,17 +142,20 @@ public class Bird extends DynamicDrawable {
                 else {
                     velocity.add(0f, speedYChange / BIRD_WINDAGE);
                 }
-                if (!Gdx.input.isTouched()){
+                if (!Gdx.input.isTouched() || velocity.x == 0f){
                     velocity.x = 0f;
                     isGlyding = false;
                 }
 
                 position.mulAdd(velocity, delta);
 
+                respectBorders();
+
+
             }
             else{
                 isFlying = false;
-                position.y = LAND_HEIGHT;
+                position.y = SKY_Y;
             }
 
 
@@ -184,27 +191,34 @@ public class Bird extends DynamicDrawable {
 
     public void flyUP(){
         isFlying = true;
-        velocity.add(0f, BIRD_FLYUP_SPEED);
+        velocity.add(0f, BIRD_FLYUP_SPEED*(WORLD_HEIGHT-position.y)/WORLD_HEIGHT);
         position.add(0,1f);// jump to fly
 
         nanotimeFlyStart = TimeUtils.nanoTime();
     }
 
+    public void glideRight(){
+        if (position.x < WORLD_BORDER_RIGHT) {
+            velocity.x = BIRD_FLY_X_SPEED;
+            isGlyding = true;
+        }
+    }
+    public void glideLeft(){
+        if (position.x > WORLD_BORDER_LEFT) {
+            velocity.x = -BIRD_FLY_X_SPEED;
+            isGlyding = true;
+        }
+    }
 
+    public void respectBorders(){
+        if (position.x < WORLD_BORDER_LEFT) {
+            position.x = WORLD_BORDER_LEFT;
+            isGlyding = false;
+        }
+        else if (position.x > WORLD_BORDER_RIGHT){
+            position.x = WORLD_BORDER_RIGHT;
+            isGlyding = false;
+        }
+    }
 
-//    public static enum Mode{
-//        FLYUP,
-//        SOAR,
-//        SIT
-//
-//
-////        FALLDOWN,
-////        WALK,
-////        RUN,
-////        JUMP,
-////        STAY,
-////        SIT,
-////        DEAD
-//
-//    }
 }

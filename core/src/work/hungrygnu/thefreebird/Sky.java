@@ -16,6 +16,7 @@ public class Sky {
 
         renderer.set(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(SKY_COLOR);
-        renderer.rect(0,LAND_HEIGHT, WORLD_WIDTH, WORLD_HEIGHT);
+        renderer.rect(0,SKY_Y, WORLD_WIDTH, SKY_H);
+        renderer.rect(0,SPACE_Y, WORLD_WIDTH, SPACE_H, SKY_COLOR, SKY_COLOR, UNDERGROUND_FRONTCOLOR, UNDERGROUND_FRONTCOLOR);
     }
 }
