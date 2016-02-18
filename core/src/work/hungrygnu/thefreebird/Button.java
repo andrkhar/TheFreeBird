@@ -8,7 +8,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Button extends StaticDrawable{
+public class Button extends StaticGameObject {
     public Color colorBody;
     public Color colorText;
     public float radius;

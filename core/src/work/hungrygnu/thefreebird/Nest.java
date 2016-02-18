@@ -7,7 +7,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Nest extends StaticDrawable {
+public class Nest extends StaticGameObject {
 
     private final float baseX;
     private final float baseY;

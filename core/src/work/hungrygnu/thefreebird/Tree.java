@@ -1,6 +1,5 @@
 package work.hungrygnu.thefreebird;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,7 +9,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Tree extends StaticDrawable {
+public class Tree extends StaticGameObject {
 
     // The position of the nest
     public final Vector2 nestPosition;

@@ -12,9 +12,9 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Bird extends DynamicDrawable {
-    //TODO Animation of the flight
-    // Parameters to draw the bird -------
+public class Bird extends DynamicGameObject {
+
+    // Draw Bird specific parameters -------
     protected Vector2 beakB;
 
     protected Vector2 eyeL;
@@ -35,19 +35,20 @@ public class Bird extends DynamicDrawable {
     protected final float eyeRadius;
     // -----------------------------------
 
-    // Other parameters ------------------
-    protected Vector2 velocity;
+    // Main Bird specific parameters--------------------------
+    protected int food; // Eaten food trancsfers to poop and energy with time
+    protected int energy; // Energy using when flying
+    protected int poop; // Poop using when bombing
+    // -----------------------------------------
 
+    // Other Bird specific parameters ----
     protected boolean isFlying;
     protected boolean isGlyding;
 
     protected long nanotimeFlyStart;
 
     protected Circle bodyCircle;
-
     // -----------------------------------
-
-    //protected Mode status;
 
     public Bird(ShapeRenderer renderer, Vector2 position) {
         super(renderer, position);
@@ -70,7 +71,6 @@ public class Bird extends DynamicDrawable {
         isFlying = false;
         isGlyding = false;
         recalculatePoints();
-        velocity = new Vector2();
         bodyCircle = new Circle(position, bodyRadius);
 
     }
@@ -82,6 +82,7 @@ public class Bird extends DynamicDrawable {
     }
 
     public void recalculateStaticPoints(){
+
         beakB.set(position).add(0f, -2f * BIRD_SCALE);
 
         eyeL.set(position).add(-1.8f * BIRD_SCALE, 1.5f * BIRD_SCALE);
@@ -220,5 +221,4 @@ public class Bird extends DynamicDrawable {
             isGlyding = false;
         }
     }
-
 }

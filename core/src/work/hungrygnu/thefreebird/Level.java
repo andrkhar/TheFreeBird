@@ -1,6 +1,7 @@
 package work.hungrygnu.thefreebird;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import static work.hungrygnu.thefreebird.Constants.*;
@@ -17,6 +18,10 @@ public class Level {
     private Tree tree;
     private Nest nest;
     public Bird bird;
+
+    DelayedRemovalArray<Cat> cats;
+    DelayedRemovalArray<Caterpillar> caterpillars;
+    DelayedRemovalArray<Poop> poops;
 
     public Level(ShapeRenderer renderer, FitViewport viewportClose){
         this.renderer = renderer;

@@ -6,13 +6,14 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by hungry on 13.02.16.
  */
-public class StaticDrawable implements Renderable{
+public class StaticGameObject implements Renderable{
+    // Static Object parameters
     protected ShapeRenderer renderer;
-    public final Vector2 position;
+    protected Vector2 position;
 
-    public StaticDrawable(ShapeRenderer renderer, Vector2 position){
+    public StaticGameObject(ShapeRenderer renderer, Vector2 position){
         this.renderer = renderer;
-        this.position = position;
+        this.position = new Vector2(position);
     }
 
     @Override
