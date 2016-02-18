@@ -101,6 +101,13 @@ public class Constants {
     public static final float ARROW_HEAD_LENGTH = ARROW_LENGTH / 3f;
     public static final float ARROW_HEAD_HALFWIDTH = ARROW_WIDTH*0.5f;
 
+    // Cat parameters
+    public static final Color CAT_COLOR_BODY = Color.DARK_GRAY;
+    public static final float CAT_SPEED_X = 500f;
+    public static final float CAT_BODY_LENGTH = 50f;
+    public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
+    public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
+    public static final int CAT_RESPAWN_COEFFICIENT = 300; // BIGGER NUMBER - LESS CATS
 
 
 

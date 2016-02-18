@@ -1,6 +1,7 @@
 package work.hungrygnu.thefreebird;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -30,6 +31,7 @@ public class Level {
         cats = new DelayedRemovalArray<Cat>();
         caterpillars = new DelayedRemovalArray<Caterpillar>();
         poops = new DelayedRemovalArray<Poop>();
+        spawn();
     }
 
     public void init(){
@@ -53,10 +55,11 @@ public class Level {
         else viewportClose.getCamera().position.set(bird.position.x, bird.position.y, 0f);
 
         bird.update(delta);
-        for (Poop poop : poops) {
-            poop.update(delta);
-            if (!poop.active) poops.removeValue(poop, true);
-        }
+
+        checkActive(delta);
+
+        spawn();
+
 
     }
 
@@ -67,9 +70,41 @@ public class Level {
         sky.render();
         tree.render();
         nest.render();
+        renderDynamicObjects();
+
+        bird.render();
+
+    }
+    private void checkActive(float delta){
+        // TODO: I will think about to put them all in one updatable array
+        for (Poop poop : poops) {
+            poop.update(delta);
+            if (!poop.active) poops.removeValue(poop, true);
+        }
+        for (Cat cat : cats) {
+            cat.update(delta);
+            if (!cat.active) cats.removeValue(cat, true);
+        }
+        for (Caterpillar caterpillar : caterpillars) {
+            caterpillar.update(delta);
+            if (!caterpillar.active) caterpillars.removeValue(caterpillar, true);
+        }
+
+
+    }
+    private void renderDynamicObjects(){
+        for (Cat cat : cats)
+            cat.render();
         for (Poop poop : poops)
             poop.render();
-        bird.render();
+
+
+    }
+    private void spawn(){
+
+        if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0)
+            cats.add(new Cat(renderer,(MathUtils.random(-1,1) < 0)));
+
 
     }
 

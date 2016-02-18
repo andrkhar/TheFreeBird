@@ -9,6 +9,8 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 16.02.16.
  */
 public class GameInput extends InputAdapter {
+    // TODO: I do not want to overload the interface and think about Desktop Interface after succesful release on Android platform.
+
 
     GameScreen screen;
     Bird bird;
