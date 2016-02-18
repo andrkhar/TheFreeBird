@@ -39,6 +39,8 @@ public class BirdButton extends Bird {
         if (button.colorBody.a < 0f) button.colorBody.a = 0f;
         if (button.colorText.a < 0f) button.colorText.a = 0f;
 
+        button.position.set(position);
+
     }
     @Override
     public void render() {

@@ -1,29 +1,29 @@
 package work.hungrygnu.thefreebird;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.DelayedRemovalArray;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Poop implements Renderable, Updatable {
-    private final Bird bird;
-    private Vector2 position;
-    private Vector2 velocity;
-    private boolean flying;
+public class Poop extends DestructibleDynamicObject {
 
-    public Poop (Bird bird){
-        this.bird = bird;
-        position = bird.position;
-        velocity = bird.velocity;
-        flying = true;
+
+    Level level;
+
+    public Poop(Level level) {
+        super(level.bird.renderer, level.bird.position);
+        velocity = level.bird.velocity;
+        this.level = level;
+
     }
 
     @Override
     public void update(float delta) {
-        velocity.add(0f,GRAVITY * delta);
+        velocity.add(0f, GRAVITY * delta);
         position.add(velocity.scl(delta));
-
+        checkCollisions();
     }
 
     @Override
@@ -31,5 +31,21 @@ public class Poop implements Renderable, Updatable {
 
     }
 
+    private void checkCollisions() {
 
+        for (Cat cat : level.cats)
+            if (cat.hasCollisionWith(this)) {
+                    cat.active = false;
+                    active = false;
+                    return;
+                }
+        for (Caterpillar caterpillar : level.caterpillars)
+            if (caterpillar.hasCollisionWith(this)) {
+                caterpillar.active = false;
+                active = false;
+                return;
+            }
+
+        if (position.y < LAND_Y) active = false;
+    }
 }

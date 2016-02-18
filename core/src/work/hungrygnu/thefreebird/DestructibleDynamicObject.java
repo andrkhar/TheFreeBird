@@ -4,11 +4,16 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
 /**
- * Created by hungry on 12.02.16.
+ * Created by hungry on 18.02.16.
  */
-public class Cat extends FacingDeDyObject {
-    public Cat(ShapeRenderer renderer, Vector2 position, Boolean facingRight) {
-        super(renderer, position, facingRight);
+public class DestructibleDynamicObject extends  DynamicGameObject{
+
+    protected boolean active;
+
+    public DestructibleDynamicObject(ShapeRenderer renderer, Vector2 position) {
+        super(renderer, position);
+        active = true;
+
     }
 
     public Boolean hasCollisionWith(Poop poop){

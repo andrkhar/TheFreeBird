@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import static work.hungrygnu.thefreebird.Constants.*;
@@ -18,7 +17,7 @@ public class MenuScreen implements Screen {
     ShapeRenderer renderer;
     FitViewport viewportClose;
     Menu menu;
-    MenuInterface menuInterface;
+    MenuInput menuInterface;
     public MenuScreen(TheFreeBirdGame game){
         this.game = game;
     }
@@ -30,7 +29,7 @@ public class MenuScreen implements Screen {
         int height = Gdx.graphics.getHeight();
         viewportClose = game.viewportClose;
         menu = new Menu(renderer, viewportClose);
-        menuInterface = new MenuInterface(menu.bird, viewportClose);
+        menuInterface = new MenuInput(menu.bird, viewportClose);
 
 
     }

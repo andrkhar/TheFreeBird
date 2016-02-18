@@ -8,10 +8,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 /**
  * Created by hungry on 17.02.16.
  */
-public class MenuInterface extends InputAdapter {
+public class MenuInput extends InputAdapter {
     BirdButton bird;
     FitViewport viewport;
-    public MenuInterface(BirdButton bird, FitViewport viewport)
+    public MenuInput(BirdButton bird, FitViewport viewport)
     {
         Gdx.input.setInputProcessor(this);
         this.bird = bird;

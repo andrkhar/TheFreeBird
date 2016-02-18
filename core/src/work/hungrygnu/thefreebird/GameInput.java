@@ -8,12 +8,12 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 16.02.16.
  */
-public class GameInterface extends InputAdapter {
+public class GameInput extends InputAdapter {
 
     GameScreen screen;
     Bird bird;
 
-    public GameInterface(GameScreen screen, Level level){
+    public GameInput(GameScreen screen, Level level){
 
         Gdx.input.setInputProcessor(this);
         bird = level.bird;
