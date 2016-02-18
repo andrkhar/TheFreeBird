@@ -15,4 +15,8 @@ public class Caterpillar extends DestructibleDynamicObject {
     public Caterpillar(ShapeRenderer renderer, Vector2 position) {
         super(renderer, position);
     }
+
+    public void render(){
+
+    }
 }

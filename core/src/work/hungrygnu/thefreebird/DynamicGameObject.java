@@ -10,6 +10,7 @@ public class DynamicGameObject extends StaticGameObject implements Updatable{
 
     protected Vector2 velocity;
     protected Vector2 lastFramePosition;
+    protected long nanotimeAnimationStart;
 
 
 
@@ -19,6 +20,7 @@ public class DynamicGameObject extends StaticGameObject implements Updatable{
         // dinamic object specific parameters initialisation
         this.lastFramePosition = new Vector2(position);
         this.velocity = new Vector2();
+
     }
 
     // Assign correct values for drawing shapes of the complex object

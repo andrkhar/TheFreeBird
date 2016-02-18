@@ -27,7 +27,7 @@ public class GameScreen implements Screen {
     public GameScreen(TheFreeBirdGame game, Bird bird){
         this.game = game;
         this.bird = bird;
-        bird.nanotimeFlyStart = TimeUtils.nanoTime();
+        bird.nanotimeAnimationStart = TimeUtils.nanoTime();
 
     }
     @Override

@@ -11,6 +11,10 @@ public class Cat extends FacingDeDyObject {
         super(renderer, position, facingRight);
     }
 
+    public void render(){
+
+    }
+
     public Boolean hasCollisionWith(Poop poop){
         return false;
     }

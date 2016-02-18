@@ -44,9 +44,6 @@ public class Bird extends DynamicGameObject {
     // Other Bird specific parameters ----
     protected boolean isFlying;
     protected boolean isGlyding;
-
-    protected long nanotimeFlyStart;
-
     protected Circle bodyCircle;
     // -----------------------------------
 
@@ -65,7 +62,7 @@ public class Bird extends DynamicGameObject {
         wingRB = new Vector2();
         wingRT = new Vector2();
 
-        bodyRadius = 5f * BIRD_SCALE;
+        bodyRadius = BIRD_BODY_RADIUS;
         eyeRadius = 0.7f *BIRD_SCALE;
 
         isFlying = false;
@@ -103,7 +100,7 @@ public class Bird extends DynamicGameObject {
             wingY = wingLT.y;//wingLB.y +(wingLT.y - wingLB.y)/2f;
         else {
             float dinamicValue = (float)
-                    ((wingLT.y - wingLB.y) * (1.3f*MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeFlyStart) / BIRD_NANOTIME_FRAME)));
+                    ((wingLT.y - wingLB.y) * (1.3f*MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeAnimationStart) / BIRD_NANOTIME_FRAME)));
             wingY = wingLB.y - dinamicValue;
         }
         wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -2.2f * BIRD_SCALE);
@@ -192,32 +189,32 @@ public class Bird extends DynamicGameObject {
 
     public void flyUP(){
         isFlying = true;
-        velocity.add(0f, BIRD_FLYUP_SPEED*(WORLD_HEIGHT-position.y)/WORLD_HEIGHT);
+        velocity.add(0f, BIRD_FLYUP_SPEED*(SKY_H-(position.y - SKY_Y))/SKY_H);
         position.add(0,1f);// jump to fly
 
-        nanotimeFlyStart = TimeUtils.nanoTime();
+        nanotimeAnimationStart = TimeUtils.nanoTime();
     }
 
     public void glideRight(){
-        if (position.x < WORLD_BORDER_RIGHT) {
+        if (position.x < BIRD_BORDER_RIGHT) {
             velocity.x = BIRD_FLY_X_SPEED;
             isGlyding = true;
         }
     }
     public void glideLeft(){
-        if (position.x > WORLD_BORDER_LEFT) {
+        if (position.x > BIRD_BORDER_LEFT) {
             velocity.x = -BIRD_FLY_X_SPEED;
             isGlyding = true;
         }
     }
 
     public void respectBorders(){
-        if (position.x < WORLD_BORDER_LEFT) {
-            position.x = WORLD_BORDER_LEFT;
+        if (position.x < BIRD_BORDER_LEFT) {
+            position.x = BIRD_BORDER_LEFT;
             isGlyding = false;
         }
-        else if (position.x > WORLD_BORDER_RIGHT){
-            position.x = WORLD_BORDER_RIGHT;
+        else if (position.x > BIRD_BORDER_RIGHT){
+            position.x = BIRD_BORDER_RIGHT;
             isGlyding = false;
         }
     }

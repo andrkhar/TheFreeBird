@@ -1,5 +1,6 @@
 package work.hungrygnu.thefreebird;
 
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 
@@ -14,7 +15,7 @@ public class Poop extends DestructibleDynamicObject {
 
     public Poop(Level level) {
         super(level.bird.renderer, level.bird.position);
-        velocity = level.bird.velocity;
+        velocity = new Vector2(level.bird.velocity);
         this.level = level;
 
     }
@@ -22,12 +23,17 @@ public class Poop extends DestructibleDynamicObject {
     @Override
     public void update(float delta) {
         velocity.add(0f, GRAVITY * delta);
-        position.add(velocity.scl(delta));
+        position.mulAdd(velocity, delta);
         checkCollisions();
     }
 
     @Override
     public void render() {
+        renderer.set(ShapeRenderer.ShapeType.Filled);
+        renderer.setColor(POOP_COLOR_CIRCLE);
+        renderer.circle(position.x, position.y, POOP_RADIUS, POOP_SEGMENTS);
+        renderer.triangle(position.x - POOP_RADIUS, position.y, position.x + POOP_RADIUS, position.y, position.x, position.y + POOP_HEIGHT,
+                POOP_COLOR_CIRCLE,POOP_COLOR_CIRCLE,POOP_COLOR_TOP);
 
     }
 
@@ -46,6 +52,6 @@ public class Poop extends DestructibleDynamicObject {
                 return;
             }
 
-        if (position.y < LAND_Y) active = false;
+        if (position.y < POOP_LOWEST_Y) active = false;
     }
 }

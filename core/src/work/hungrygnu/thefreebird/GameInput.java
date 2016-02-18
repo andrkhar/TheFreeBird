@@ -12,12 +12,14 @@ public class GameInput extends InputAdapter {
 
     GameScreen screen;
     Bird bird;
+    Level level;
 
     public GameInput(GameScreen screen, Level level){
 
         Gdx.input.setInputProcessor(this);
         bird = level.bird;
         this.screen = screen;
+        this.level = level;
     }
 
     public boolean keyUp(int keycode){
@@ -38,7 +40,7 @@ public class GameInput extends InputAdapter {
                 bird.flyUP();
                 break;
             case BOTTOM:
-                ; // Make poop;
+                level.poops.add(new Poop(level)); // Make poop;
         }
         return  true;
     }

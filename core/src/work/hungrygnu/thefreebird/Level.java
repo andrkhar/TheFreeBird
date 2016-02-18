@@ -27,6 +27,9 @@ public class Level {
         this.renderer = renderer;
         this.viewportClose = viewportClose;
         init();
+        cats = new DelayedRemovalArray<Cat>();
+        caterpillars = new DelayedRemovalArray<Caterpillar>();
+        poops = new DelayedRemovalArray<Poop>();
     }
 
     public void init(){
@@ -41,8 +44,19 @@ public class Level {
     }
 
     public void update(float delta){
-        viewportClose.getCamera().position.set(bird.position.x, bird.position.y, 0f);
+
+
+        if (bird.position.x < CAM_BORDER_LEFT)
+            viewportClose.getCamera().position.set(CAM_BORDER_LEFT, bird.position.y, 0f);
+        else if (bird.position.x > CAM_BORDER_RIGHT)
+            viewportClose.getCamera().position.set(CAM_BORDER_RIGHT, bird.position.y, 0f);
+        else viewportClose.getCamera().position.set(bird.position.x, bird.position.y, 0f);
+
         bird.update(delta);
+        for (Poop poop : poops) {
+            poop.update(delta);
+            if (!poop.active) poops.removeValue(poop, true);
+        }
 
     }
 
@@ -53,7 +67,10 @@ public class Level {
         sky.render();
         tree.render();
         nest.render();
+        for (Poop poop : poops)
+            poop.render();
         bird.render();
+
     }
 
 }
