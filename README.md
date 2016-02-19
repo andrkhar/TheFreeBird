@@ -12,6 +12,6 @@ Goals
 
 5. The game is fun.
 
-Android Interface:
+There is Android Interface on Menu Screen. Press button FLY to start the game:
 
 ![alt text](https://github.com/Hungry-Gnu/TheFreeBird/blob/master/AndroidInterface.png "Android Interface")

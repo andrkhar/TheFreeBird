@@ -27,7 +27,7 @@ public class Bars {
         float y = CAM_CLOSEUP_HEIGHT - BAR_HEIGHT;
 
         for(int i = 0; i<3; i++){
-            bars.add(new Bar(renderer, position, maxValue));
+            ;//bars.add(new Bar(renderer, position, maxValue));
         }
     }
 
