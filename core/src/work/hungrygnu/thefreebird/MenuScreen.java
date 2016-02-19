@@ -28,7 +28,7 @@ public class MenuScreen implements Screen {
         int width = Gdx.graphics.getWidth();
         int height = Gdx.graphics.getHeight();
         viewportClose = game.viewportClose;
-        menu = new Menu(renderer, viewportClose);
+        menu = new Menu(game);
         menuInterface = new MenuInput(menu.bird, viewportClose);
 
 
@@ -38,11 +38,13 @@ public class MenuScreen implements Screen {
     public void render(float delta) {
         menu.update(delta);
         if (menu.bird.alpha == 1) {
-            Bird newBird = new Bird(renderer, menu.bird.position);
-            newBird.isFlying = true;
-            newBird.velocity.set(menu.bird.velocity);
-            newBird.recalculatePoints();
-            game.startGame(newBird);
+            Bird levelBird = game.level.bird;
+            levelBird.lastFramePosition.set(menu.bird.lastFramePosition);
+            levelBird.position.set(menu.bird.position);
+            levelBird.velocity.set(menu.bird.velocity);
+            levelBird.isFlying = true;
+            levelBird.recalculatePoints();
+            game.startGame();
         }
 
         // Drawing
@@ -68,7 +70,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        viewportClose.update(width,height);
+        viewportClose.update(width, height);
         viewportClose.getCamera().position.set(menu.bird.position, 0f);
     }
 

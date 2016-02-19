@@ -2,6 +2,7 @@ package work.hungrygnu.thefreebird;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -11,7 +12,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 17.02.16.
  */
 public class Level {
-    private ShapeRenderer renderer;
+    public ShapeRenderer renderer;
     public FitViewport viewportClose;
     private Underground underground;
     private Land land;
@@ -28,9 +29,6 @@ public class Level {
         this.renderer = renderer;
         this.viewportClose = viewportClose;
         init();
-        cats = new DelayedRemovalArray<Cat>();
-        caterpillars = new DelayedRemovalArray<Caterpillar>();
-        poops = new DelayedRemovalArray<Poop>();
         spawn();
     }
 
@@ -41,7 +39,10 @@ public class Level {
         sky = new Sky(renderer);
         tree = new Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
-        bird = new Bird(renderer, tree.nestPosition.add(0f,4f*BIRD_SCALE));
+        bird = new Bird(tree.nestPosition.add(0f,4f*BIRD_SCALE), this);
+        cats = new DelayedRemovalArray<Cat>();
+        caterpillars = new DelayedRemovalArray<Caterpillar>();
+        poops = new DelayedRemovalArray<Poop>();
 
     }
 
@@ -93,19 +94,26 @@ public class Level {
 
     }
     private void renderDynamicObjects(){
-        for (Cat cat : cats)
-            cat.render();
         for (Poop poop : poops)
             poop.render();
+        for (Caterpillar caterpillar : caterpillars)
+            caterpillar.render();
+        for (Cat cat : cats)
+            cat.render();
+
 
 
     }
     private void spawn(){
 
         if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0)
-            cats.add(new Cat(renderer,(MathUtils.random(-1,1) < 0)));
+            cats.add(new Cat(renderer, halfTrue()));
+        if(MathUtils.random(-1,CATERPILLAR_RESPAWN_COEFFICIENT) < 0)
+            caterpillars.add(new Caterpillar(renderer, new Vector2(MathUtils.random(0, WORLD_WIDTH),SKY_Y), halfTrue()));
+    }
 
-
+    private boolean halfTrue(){
+       return MathUtils.random(-1,1) < 0;
     }
 
 }

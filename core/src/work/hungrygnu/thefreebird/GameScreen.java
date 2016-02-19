@@ -14,7 +14,6 @@ import static work.hungrygnu.thefreebird.Constants.*;
 public class GameScreen implements Screen {
 
     TheFreeBirdGame game;
-    Level level;
     private ShapeRenderer renderer;
     private FitViewport viewportFar;
     private FitViewport viewportClose;
@@ -24,25 +23,24 @@ public class GameScreen implements Screen {
     public GameInput gameInterface;
     public Bird bird;
 
-    public GameScreen(TheFreeBirdGame game, Bird bird){
+    public GameScreen(TheFreeBirdGame game){
         this.game = game;
-        this.bird = bird;
+        this.bird = game.level.bird;
+        viewportClose = game.level.viewportClose;
         bird.nanotimeAnimationStart = TimeUtils.nanoTime();
 
     }
     @Override
     public void show() {
         renderer = game.renderer;
-        viewportClose = game.viewportClose;
+        //viewportClose = game.viewportClose;
 
         viewportFar = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
 
 
-        level = new Level(renderer, viewportClose);
-        level.bird = bird;
         closeUpView = true;
 
-        gameInterface = new GameInput(this, level);
+        gameInterface = new GameInput(this, game.level);
 
 
     }
@@ -51,7 +49,7 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
 
-        level.update(delta);
+        game.level.update(delta);
 
         // Drawing
         if (closeUpView) viewportClose.apply();
@@ -67,7 +65,7 @@ public class GameScreen implements Screen {
 
         renderer.begin();
 
-        level.render();
+        game.level.render();
 
         renderer.end();
 //        Gdx.gl20.glDisable(GL20.GL_BLEND);
@@ -77,7 +75,7 @@ public class GameScreen implements Screen {
     public void resize(int width, int height) {
         viewportFar.update(width, height, true);
         viewportClose.update(width,height);
-        viewportClose.getCamera().position.set(level.bird.position.x, level.bird.position.y, 0f);
+        viewportClose.getCamera().position.set(bird.position.x, bird.position.y, 0f);
     }
 
     @Override

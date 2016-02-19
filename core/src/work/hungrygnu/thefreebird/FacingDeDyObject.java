@@ -13,4 +13,12 @@ public class FacingDeDyObject extends DestructibleDynamicObject {
         this.facingRight = facingRight;
     }
 
+    public Boolean hasCollisionWith(Poop poop){
+        return false;
+    }
+
+    public Boolean hasCollisionWith(Bird bird){
+        return false;
+    }
+
 }

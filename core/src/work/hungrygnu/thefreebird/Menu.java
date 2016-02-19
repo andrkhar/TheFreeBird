@@ -32,14 +32,14 @@ public class Menu {
 
 
 
-    public Menu(ShapeRenderer renderer, FitViewport viewportClose){
-        this.renderer = renderer;
-        this.viewportClose = viewportClose;
+    public Menu(TheFreeBirdGame game){
+        this.renderer = game.renderer;
+        this.viewportClose = game.viewportClose;
         sky = new Sky(renderer);
         land = new Land(renderer);
         tree = new Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
-        bird = new BirdButton(renderer, tree.nestPosition.add(0f,4f*BIRD_SCALE));
+        bird = new BirdButton(tree.nestPosition.add(0f,4f*BIRD_SCALE),game.level);
 
         cameraPosition = new Vector2();
         gameStarting = false;
@@ -110,11 +110,11 @@ public class Menu {
     }
 
 
-    private void updateMenuBoxes(){
-
-    }
-
-    private void gameStart(){
-
-    }
+//    private void updateMenuBoxes(){
+//
+//    }
+//
+//    private void gameStart(){
+//
+//    }
 }

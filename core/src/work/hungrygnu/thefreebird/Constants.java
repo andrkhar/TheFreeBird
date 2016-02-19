@@ -58,7 +58,7 @@ public class Constants {
     public static final Color BIRD_COLOR_WINGS = Color.SCARLET;
     public static final Color BIRD_COLOR_TAIL = Color.SCARLET;
     public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
-    public static final float BIRD_WINDAGE = 100f;
+    public static final float BIRD_WINDAGE = 50f; // 100 is ok
     public static final float BIRD_FLYUP_SPEED = 300f;
     public static final float BIRD_FLY_X_SPEED = 200f;
     public static final long BIRD_NANOTIME_FRAME = (long)(0.5*Math.pow(10, 9));
@@ -103,11 +103,20 @@ public class Constants {
 
     // Cat parameters
     public static final Color CAT_COLOR_BODY = Color.DARK_GRAY;
-    public static final float CAT_SPEED_X = 500f;
+    public static final float CAT_SPEED_X = 400f;
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
-    public static final int CAT_RESPAWN_COEFFICIENT = 300; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_RESPAWN_COEFFICIENT = 400; // BIGGER NUMBER - LESS CATS
+
+    // Caterpillar parameters
+    public static final Color CATERPILLAR_COLOR_BODY = Color.GOLDENROD;
+    public static final float CATERPILLAR_SPEED_X = 50f;
+    public static final float CATERPILLAR_BODY_LENGTH = 20f;
+    public static final int CATERPILLAR_CIRCLES_NUMBER = 5;
+    public static final float CATERPILLAR_RADIUS = CATERPILLAR_BODY_LENGTH/CATERPILLAR_CIRCLES_NUMBER;
+    public static final int CATERPILLAR_RESPAWN_COEFFICIENT = 10; // BIGGER NUMBER - LESS CATERPILLARS
+
 
 
 

@@ -16,11 +16,5 @@ public class DestructibleDynamicObject extends  DynamicGameObject{
 
     }
 
-    public Boolean hasCollisionWith(Poop poop){
-        return false;
-    }
 
-    public Boolean hasCollisionWith(Bird bird){
-        return false;
-    }
 }

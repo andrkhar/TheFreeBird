@@ -12,7 +12,9 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Bird extends DynamicGameObject {
+public class Bird extends DestructibleDynamicObject {
+
+    Level level;
 
     // Draw Bird specific parameters -------
     protected Vector2 beakB;
@@ -47,8 +49,10 @@ public class Bird extends DynamicGameObject {
     protected Circle bodyCircle;
     // -----------------------------------
 
-    public Bird(ShapeRenderer renderer, Vector2 position) {
-        super(renderer, position);
+
+    public Bird(Vector2 position, Level level) {
+        super(level.renderer, position);
+        this.level = level;
 
         beakB = new Vector2();
         eyeL = new Vector2();
@@ -161,6 +165,8 @@ public class Bird extends DynamicGameObject {
         }
         super.update(delta);
 
+
+
     }
 
     @Override
@@ -216,6 +222,21 @@ public class Bird extends DynamicGameObject {
         else if (position.x > BIRD_BORDER_RIGHT){
             position.x = BIRD_BORDER_RIGHT;
             isGlyding = false;
+        }
+    }
+
+    private void checkCollisions() {
+
+        for (Cat cat : level.cats)
+            if (cat.hasCollisionWith(this)) {
+                active = false; // The bird is dead
+                return;
+            }
+        for (Caterpillar caterpillar : level.caterpillars) {
+            Gdx.app.log("CHECK", "cater x " +caterpillar.position.x );
+            if (caterpillar.hasCollisionWith(this)) {
+                caterpillar.active = false; // The caterpillar is eaten;
+            }
         }
     }
 }

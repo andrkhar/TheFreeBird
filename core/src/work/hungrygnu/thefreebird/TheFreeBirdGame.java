@@ -11,14 +11,15 @@ public class TheFreeBirdGame extends Game {
 
 	ShapeRenderer renderer;
 	FitViewport viewportClose;
+	Level level;
 
 	@Override
 	public void create () {
 		renderer = new ShapeRenderer();
 		renderer.setAutoShapeType(true);
 		viewportClose = new FitViewport(CAM_CLOSEUP_WIDTH, CAM_CLOSEUP_HEIGHT);
+		level = new Level(renderer,viewportClose);
 
-		//startGame(new Vector2(100f,100f));
 		startMenu();
 
 	}
@@ -26,8 +27,8 @@ public class TheFreeBirdGame extends Game {
 		setScreen(new MenuScreen(this));
 	}
 
-	public void startGame(Bird bird){
-		setScreen(new GameScreen(this, bird));
+	public void startGame(){
+		setScreen(new GameScreen(this));
 	}
 
 

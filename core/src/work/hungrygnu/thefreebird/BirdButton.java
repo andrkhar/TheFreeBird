@@ -19,8 +19,8 @@ public class BirdButton extends Bird {
     private Color beak;
 
 
-    public BirdButton(ShapeRenderer renderer, Vector2 position) {
-        super(renderer, position);
+    public BirdButton(Vector2 position, Level level) {
+        super(position, level);
         alpha = 0f;
         visible = false;
         button = new Button(renderer, position);
