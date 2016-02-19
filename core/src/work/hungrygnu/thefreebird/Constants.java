@@ -81,7 +81,7 @@ public class Constants {
     public static final int POOP_SEGMENTS = 16;
     public static final Color POOP_COLOR_CIRCLE = Color.GRAY;
     public static final Color POOP_COLOR_TOP = Color.LIGHT_GRAY;
-    public static final float POOP_LOWEST_Y = SKY_Y - 2f*BIRD_SCALE;
+    public static final float POOP_LOWEST_Y = SKY_Y - BIRD_BODY_RADIUS;
 
 
     // Button parameters
@@ -110,17 +110,25 @@ public class Constants {
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
-    public static final int CAT_RESPAWN_COEFFICIENT = 100; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_RESPAWN_COEFFICIENT = 200; // BIGGER NUMBER - LESS CATS
 
     // Caterpillar parameters
     public static final Color CATERPILLAR_COLOR_BODY = Color.GOLDENROD;
-    public static final float CATERPILLAR_SPEED_X = 50f;
-    public static final float CATERPILLAR_BODY_LENGTH = 200f;
+    public static final float CATERPILLAR_BODY_LENGTH = 40f;
     public static final int CATERPILLAR_CIRCLES_NUMBER = 5;
     public static final float CATERPILLAR_RADIUS = CATERPILLAR_BODY_LENGTH/CATERPILLAR_CIRCLES_NUMBER;
-    public static final int CATERPILLAR_RESPAWN_COEFFICIENT = 200; // BIGGER NUMBER - LESS CATERPILLARS
+    public static final float CATERPILLAR_TIGHT_RADIUS = CATERPILLAR_RADIUS * 0.6f;
+    public static final int CATERPILLAR_RESPAWN_COEFFICIENT = 70; // BIGGER NUMBER - LESS CATERPILLARS
+    public static final float CATERPILLAR_SPEED_X = 10f;
+    public static final float CATERPILLAR_Y = SKY_Y - (BIRD_BODY_RADIUS - CATERPILLAR_RADIUS);
+    public static final float CATERPILLAR_Y_DELTA = CATERPILLAR_RADIUS/16f;
+    public static final long CATERPILLAR_NANOTIME_FRAME = (long)(24000000000l*CATERPILLAR_Y_DELTA/CATERPILLAR_SPEED_X);
 
-
+    // Bar parameters
+    public static final float BAR_WIDTH = 100f;
+    public static final float BAR_HEIGHT = 20f;
+    public static final Color BAR_BOTOM_COLOR = Color.CHARTREUSE;
+    public static final Color BAR_TOP_COLOR = Color.RED;
 
 
 }

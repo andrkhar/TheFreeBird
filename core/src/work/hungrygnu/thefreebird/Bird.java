@@ -105,7 +105,7 @@ public class Bird extends DestructibleDynamicObject {
     public void recalculateDinamicFlyingPoints(){
         float wingY;
         if (isGlyding)
-            wingY = wingLT.y;//wingLB.y +(wingLT.y - wingLB.y)/2f;
+            wingY = wingLT.y;
         else {
             float dinamicValue = (wingLT.y - wingLB.y) * (1.3f*MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeAnimationStart) / BIRD_NANOTIME_FRAME));
             wingY = wingLB.y - dinamicValue;

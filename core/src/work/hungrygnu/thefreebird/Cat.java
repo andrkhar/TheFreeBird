@@ -36,16 +36,8 @@ public class Cat extends FacingDeDyObject {
 
         position.mulAdd(velocity, delta);
 
-        if (position.x < 0) {
-            facingRight = false;
-            if (velocity.x < 0)
-                velocity.x *= -1;
-        }
-        else if(position.x > WORLD_WIDTH) {
-            facingRight = true;
-            if (velocity.x > 0)
-                velocity.x *= -1;
-        }
+        respectBorders(2*CAT_BODY_LENGTH);
+
 
     }
 

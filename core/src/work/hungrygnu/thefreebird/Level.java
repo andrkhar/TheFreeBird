@@ -118,7 +118,7 @@ public class Level {
         if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0)
             cats.add(new Cat(renderer, halfTrue()));
         if(MathUtils.random(-1,CATERPILLAR_RESPAWN_COEFFICIENT) < 0)
-            caterpillars.add(new Caterpillar(renderer, new Vector2(MathUtils.random(0, WORLD_WIDTH),SKY_Y), halfTrue()));
+            caterpillars.add(new Caterpillar(renderer, new Vector2(MathUtils.random(0, WORLD_WIDTH), CATERPILLAR_Y), halfTrue()));
     }
 
     private boolean halfTrue(){
