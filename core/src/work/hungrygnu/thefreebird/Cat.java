@@ -55,6 +55,7 @@ public class Cat extends FacingDeDyObject {
     }
 
     public Boolean hasCollisionWith(Bird bird){
-        return false;
+        Circle catCircle = new Circle(position.x,position.y, CAT_BODY_LENGTH);
+        return catCircle.contains(bird.position);
     }
 }

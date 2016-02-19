@@ -12,6 +12,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 17.02.16.
  */
 public class Level {
+    public TheFreeBirdGame game;
     public ShapeRenderer renderer;
     public FitViewport viewportClose;
     private Underground underground;
@@ -25,20 +26,25 @@ public class Level {
     DelayedRemovalArray<Caterpillar> caterpillars;
     DelayedRemovalArray<Poop> poops;
 
-    public Level(ShapeRenderer renderer, FitViewport viewportClose){
-        this.renderer = renderer;
-        this.viewportClose = viewportClose;
+    public Level(TheFreeBirdGame game){
+        this.game = game;
+        this.renderer = game.renderer;
+        this.viewportClose = game.viewportClose;
+        initStatic();
         init();
         spawn();
     }
 
-    public void init(){
-
+    private void initStatic() {
         underground = new Underground(renderer);
         land = new Land(renderer);
         sky = new Sky(renderer);
         tree = new Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
+    }
+
+    public void init(){
+
         bird = new Bird(tree.nestPosition.add(0f,4f*BIRD_SCALE), this);
         cats = new DelayedRemovalArray<Cat>();
         caterpillars = new DelayedRemovalArray<Caterpillar>();
@@ -62,7 +68,10 @@ public class Level {
         spawn();
 
 
+
     }
+
+
 
     public void render(){
 

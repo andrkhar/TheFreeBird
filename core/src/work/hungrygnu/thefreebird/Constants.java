@@ -64,6 +64,9 @@ public class Constants {
     public static final long BIRD_NANOTIME_FRAME = (long)(0.5*Math.pow(10, 9));
     public static final float BIRD_BORDER_RIGHT = WORLD_WIDTH - BIRD_BODY_RADIUS;
     public static final float BIRD_BORDER_LEFT = BIRD_BODY_RADIUS;
+    public static final int BIRD_FOOD_MAX = 10;
+    public static final int BIRD_ENERGY_MAX = 10;
+    public static final int BIRD_POOP_MAX = 10;
 
     // Camera parameters
     public static final float CAM_CLOSEUP_COEFFICIENT = 0.4f;
@@ -107,15 +110,15 @@ public class Constants {
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
-    public static final int CAT_RESPAWN_COEFFICIENT = 400; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_RESPAWN_COEFFICIENT = 100; // BIGGER NUMBER - LESS CATS
 
     // Caterpillar parameters
     public static final Color CATERPILLAR_COLOR_BODY = Color.GOLDENROD;
     public static final float CATERPILLAR_SPEED_X = 50f;
-    public static final float CATERPILLAR_BODY_LENGTH = 20f;
+    public static final float CATERPILLAR_BODY_LENGTH = 200f;
     public static final int CATERPILLAR_CIRCLES_NUMBER = 5;
     public static final float CATERPILLAR_RADIUS = CATERPILLAR_BODY_LENGTH/CATERPILLAR_CIRCLES_NUMBER;
-    public static final int CATERPILLAR_RESPAWN_COEFFICIENT = 10; // BIGGER NUMBER - LESS CATERPILLARS
+    public static final int CATERPILLAR_RESPAWN_COEFFICIENT = 200; // BIGGER NUMBER - LESS CATERPILLARS
 
 
 

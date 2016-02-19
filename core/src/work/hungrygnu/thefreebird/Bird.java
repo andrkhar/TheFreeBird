@@ -74,6 +74,10 @@ public class Bird extends DestructibleDynamicObject {
         recalculatePoints();
         bodyCircle = new Circle(position, bodyRadius);
 
+        food = BIRD_FOOD_MAX;
+        energy = BIRD_ENERGY_MAX;
+        poop = 0;
+
     }
 
     @Override
@@ -103,8 +107,7 @@ public class Bird extends DestructibleDynamicObject {
         if (isGlyding)
             wingY = wingLT.y;//wingLB.y +(wingLT.y - wingLB.y)/2f;
         else {
-            float dinamicValue = (float)
-                    ((wingLT.y - wingLB.y) * (1.3f*MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeAnimationStart) / BIRD_NANOTIME_FRAME)));
+            float dinamicValue = (wingLT.y - wingLB.y) * (1.3f*MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeAnimationStart) / BIRD_NANOTIME_FRAME));
             wingY = wingLB.y - dinamicValue;
         }
         wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -2.2f * BIRD_SCALE);
@@ -164,6 +167,7 @@ public class Bird extends DestructibleDynamicObject {
 
         }
         super.update(delta);
+        checkCollisions();
 
 
 
@@ -230,10 +234,10 @@ public class Bird extends DestructibleDynamicObject {
         for (Cat cat : level.cats)
             if (cat.hasCollisionWith(this)) {
                 active = false; // The bird is dead
+                Gdx.app.log("CAT EAT BIRD", ""+active);
                 return;
             }
         for (Caterpillar caterpillar : level.caterpillars) {
-            Gdx.app.log("CHECK", "cater x " +caterpillar.position.x );
             if (caterpillar.hasCollisionWith(this)) {
                 caterpillar.active = false; // The caterpillar is eaten;
             }

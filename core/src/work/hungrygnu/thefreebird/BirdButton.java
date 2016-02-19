@@ -25,8 +25,9 @@ public class BirdButton extends Bird {
         visible = false;
         button = new Button(renderer, position);
         button.radius = this.bodyRadius;
-        body = BIRD_COLOR_BODY;
-        beak = BIRD_COLOR_BEAK;
+        body = new Color(BIRD_COLOR_BODY);
+        beak = new Color(BIRD_COLOR_BEAK);
+
     }
     public void update(float delta){
         super.update(delta);
@@ -46,7 +47,6 @@ public class BirdButton extends Bird {
     public void render() {
         renderer.set(ShapeRenderer.ShapeType.Filled);
 
-
         // TAIL
         renderer.setColor(BIRD_COLOR_TAIL.r, BIRD_COLOR_TAIL.g, BIRD_COLOR_TAIL.b, alpha);
         renderer.triangle(tailL.x, tailL.y, tailR.x, tailR.y, beakB.x, beakB.y);
@@ -55,10 +55,7 @@ public class BirdButton extends Bird {
         renderer.circle(lastFramePosition.x, lastFramePosition.y, bodyRadius, BIRD_SEGMENTS);
         lastFramePosition.set(position);
         // BEAK
-        beak = new Color(beak.r, beak.g, beak.b, alpha);
-        body = new Color(body.r, body.g, body.b, alpha);
         renderer.triangle(eyeL.x, eyeL.y, eyeR.x, eyeR.y, beakB.x, beakB.y, body, body, beak);
-        //renderer.triangle(eyeL.x, eyeL.y, eyeR.x, eyeR.y, beakB.x, beakB.y, BIRD_COLOR_BODY, BIRD_COLOR_BODY, BIRD_COLOR_BEAK);
         // EYES
         renderer.setColor(BIRD_COLOR_EYE.r, BIRD_COLOR_EYE.g, BIRD_COLOR_EYE.b, alpha);
         renderer.circle(eyeL.x, eyeL.y, eyeRadius, BIRD_SEGMENTS);
@@ -67,7 +64,6 @@ public class BirdButton extends Bird {
         renderer.setColor(BIRD_COLOR_WINGS.r, BIRD_COLOR_WINGS.g, BIRD_COLOR_WINGS.b, alpha);
         renderer.triangle(wingLT.x, wingLT.y, wingLB.x, wingLB.y, wingLL.x, wingLL.y);
         renderer.triangle(wingRT.x, wingRT.y, wingRB.x, wingRB.y, wingRR.x, wingRR.y);
-
 
         button.render();
 

@@ -26,17 +26,15 @@ public class GameScreen implements Screen {
     public GameScreen(TheFreeBirdGame game){
         this.game = game;
         this.bird = game.level.bird;
-        viewportClose = game.level.viewportClose;
+        viewportClose = game.viewportClose;
         bird.nanotimeAnimationStart = TimeUtils.nanoTime();
 
     }
     @Override
     public void show() {
         renderer = game.renderer;
-        //viewportClose = game.viewportClose;
 
         viewportFar = new FitViewport(WORLD_WIDTH, WORLD_HEIGHT);
-
 
         closeUpView = true;
 
@@ -57,8 +55,6 @@ public class GameScreen implements Screen {
 
         Gdx.gl20.glClearColor(BACKCOLOR.r, BACKCOLOR.g, BACKCOLOR.b, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//        Gdx.gl20.glEnable(GL20.GL_BLEND);
-//        Gdx.gl20.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 
         if (closeUpView) renderer.setProjectionMatrix(viewportClose.getCamera().combined);
         else renderer.setProjectionMatrix(viewportFar.getCamera().combined);
@@ -68,7 +64,12 @@ public class GameScreen implements Screen {
         game.level.render();
 
         renderer.end();
-//        Gdx.gl20.glDisable(GL20.GL_BLEND);
+
+        if (!game.level.bird.active){
+            game.endGame();
+        }
+
+
     }
 
     @Override
@@ -90,12 +91,12 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
-        renderer.dispose();
 
     }
 
     @Override
     public void dispose() {
+
 
     }
 

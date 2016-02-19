@@ -109,12 +109,4 @@ public class Menu {
 
     }
 
-
-//    private void updateMenuBoxes(){
-//
-//    }
-//
-//    private void gameStart(){
-//
-//    }
 }

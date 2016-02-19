@@ -15,8 +15,8 @@ public class Button extends StaticGameObject {
 
     public Button(ShapeRenderer renderer, Vector2 position){
         super(renderer, position);
-        colorBody = BUTTON_COLOR;
-        colorText = BUTTON_TEXT_COLOR;
+        colorBody = new Color(BUTTON_COLOR);
+        colorText = new Color(BUTTON_TEXT_COLOR);
         radius = BUTTON_RADIUS;
     }
 

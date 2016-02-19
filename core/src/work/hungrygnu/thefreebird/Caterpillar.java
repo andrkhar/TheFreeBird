@@ -49,9 +49,8 @@ public class Caterpillar extends FacingDeDyObject {
 
     @Override
     public Boolean hasCollisionWith(Bird bird){
-        Gdx.app.log("COLLISION", "r " +bird.bodyCircle.radius +" x" + bird.bodyCircle.x + " y" + bird.bodyCircle.y );
         for (Circle circle : circles)
-            if (bird.bodyCircle.contains(circle))
+            if (bird.bodyCircle.overlaps(circle))
                 return true;
         return false;
     }
