@@ -26,7 +26,6 @@ public class Menu {
     Vector2 cameraPosition;
 
     boolean gameStarting;
-    long nanotimeStartClick;
 
     private Arrow arrow1Left;
     private Arrow arrow2Right;
@@ -42,7 +41,8 @@ public class Menu {
         land = new work.hungrygnu.thefreebird.world.Land(renderer);
         tree = new work.hungrygnu.thefreebird.world.Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
-        bird = new BirdButton(tree.nestPosition.add(0f,4f*BIRD_SCALE),game.level);
+        Vector2 birdPosition = (new Vector2(tree.nestPosition)).add(0f,BIRD_NEST_START_OFFSET_Y);
+        bird = new BirdButton(birdPosition,game.level);
 
         cameraPosition = new Vector2();
         gameStarting = false;
@@ -104,7 +104,6 @@ public class Menu {
         renderer.setColor(MENU_BOTTOM_COLOR);
         renderer.rect(cameraPosition.x - MENU_BOX_WIDTH / 2f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT - bird.alpha * CAM_CLOSEUP_HALFHEIGHT,
                 MENU_BOX_WIDTH, CAM_CLOSEUP_HALFHEIGHT);
-
 
     }
 

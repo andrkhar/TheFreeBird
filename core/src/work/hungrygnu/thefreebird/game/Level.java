@@ -28,7 +28,7 @@ public class Level {
     private work.hungrygnu.thefreebird.world.Land land;
     private work.hungrygnu.thefreebird.world.Sky sky;
     private work.hungrygnu.thefreebird.world.Tree tree;
-    private Nest nest;
+    public Nest nest;
     public work.hungrygnu.thefreebird.beings.Bird bird;
 
     public DelayedRemovalArray<work.hungrygnu.thefreebird.beings.Cat> cats;
@@ -60,7 +60,9 @@ public class Level {
 
     public void init(){
 
-        bird = new work.hungrygnu.thefreebird.beings.Bird(tree.nestPosition.add(0f,4f*BIRD_SCALE), this);
+        Vector2 birdPosition = (new Vector2(tree.nestPosition)).add(0f, BIRD_NEST_START_OFFSET_Y);
+
+        bird = new work.hungrygnu.thefreebird.beings.Bird(birdPosition, this);
         cats = new DelayedRemovalArray<work.hungrygnu.thefreebird.beings.Cat>();
         caterpillars = new DelayedRemovalArray<work.hungrygnu.thefreebird.beings.Caterpillar>();
         poops = new DelayedRemovalArray<Poop>();

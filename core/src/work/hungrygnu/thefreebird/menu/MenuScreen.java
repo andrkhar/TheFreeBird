@@ -61,7 +61,8 @@ public class MenuScreen implements Screen {
             levelBird.lastFramePosition.set(menu.bird.lastFramePosition);
             levelBird.position.set(menu.bird.position);
             levelBird.velocity.set(menu.bird.velocity);
-            levelBird.isFlying = true;
+            levelBird.flying = true;
+            levelBird.inNest = false;
             levelBird.recalculatePoints();
             game.startGame();
         }

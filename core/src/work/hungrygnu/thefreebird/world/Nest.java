@@ -1,6 +1,7 @@
 package work.hungrygnu.thefreebird.world;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 import static work.hungrygnu.thefreebird.Constants.*;
@@ -8,7 +9,6 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 12.02.16.
  */
 public class Nest extends work.hungrygnu.thefreebird.beings.StaticGameObject {
-    // TODO: The bird should be able to land in the nest.
 
     private final float baseX;
     private final float baseY;
@@ -20,22 +20,25 @@ public class Nest extends work.hungrygnu.thefreebird.beings.StaticGameObject {
     private final float topW;
     private final float topH;
 
+    private Rectangle birdRectangleCollider;
+
     public Nest(ShapeRenderer renderer, Vector2 position) {
 
         super(renderer, position);
 
-        Vector2 base1 = new Vector2(position).add(-1.5f * NEST_SCALE, -0.5f * NEST_SCALE);
-        Vector2 base2 = new Vector2(position).add(1.5f * NEST_SCALE, 0.5f * NEST_SCALE);
 
-        baseX = base1.x;
-        baseY = base1.y;
-        baseW = base2.x - base1.x;
-        baseH = base2.y - base1.y;
+
+        baseX = position.x -1.5f * NEST_SCALE;
+        baseY = position.y -0.5f * NEST_SCALE;
+        baseW = 3f * NEST_SCALE;
+        baseH = NEST_SCALE;
 
         topX = baseX + baseW / 10f;
         topY = baseY + 2f/3f * baseH;
         topW = 0.8f * baseW;
         topH = baseH / 3f;
+
+        birdRectangleCollider = new Rectangle(topX, topY, topW, topH);
     }
 
     public void render(){
@@ -44,5 +47,9 @@ public class Nest extends work.hungrygnu.thefreebird.beings.StaticGameObject {
         renderer.ellipse(baseX, baseY, baseW, baseH, NEST_SEGMENTS);
         renderer.setColor(NEST_COLOR_TOP);
         renderer.ellipse(topX, topY, topW, topH, NEST_SEGMENTS);
+    }
+
+    public boolean isPointInNest(Vector2 point){
+        return birdRectangleCollider.contains(point.x, point.y);
     }
 }

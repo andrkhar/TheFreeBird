@@ -53,8 +53,9 @@ public class Bird extends DestructibleDynamicObject {
     // -----------------------------------------
 
     // Other Bird specific parameters ----
-    public boolean isFlying;
-    protected boolean isGlyding;
+    public boolean flying;
+    protected boolean glyding;
+    public boolean inNest;
     public Circle bodyCircle;
     // -----------------------------------
 
@@ -63,6 +64,8 @@ public class Bird extends DestructibleDynamicObject {
     long timeCounterEnergyLose;
     // -----------------------------------
 
+    // Bird Land Colider
+    private Vector2 landCollider;
 
     public Bird(Vector2 position, Level level) {
         super(level.renderer, position);
@@ -83,8 +86,9 @@ public class Bird extends DestructibleDynamicObject {
         bodyRadius = BIRD_BODY_RADIUS;
         eyeRadius = 0.7f *BIRD_SCALE;
 
-        isFlying = false;
-        isGlyding = false;
+        flying = false;
+        glyding = false;
+        inNest = true;
         recalculatePoints();
         bodyCircle = new Circle(position, bodyRadius);
 
@@ -98,6 +102,8 @@ public class Bird extends DestructibleDynamicObject {
         timeStart = TimeUtils.millis();
         timeSinceStart = 0;
         poopedCatsCounter = 0;
+
+        landCollider = (new Vector2(position)).sub(0, BIRD_COLLIDER_OFFSET_Y);
 
     }
 
@@ -119,19 +125,19 @@ public class Bird extends DestructibleDynamicObject {
     }
 
     public  void recalculateDinamicPoints(){
-        if (isFlying) recalculateDinamicFlyingPoints();
+        if (flying) recalculateDinamicFlyingPoints();
         else recalculateDinamicSittingPoints();
     }
 
     public void recalculateDinamicFlyingPoints(){
         float wingY;
-        if (isGlyding)
+        if (glyding)
             wingY = wingLT.y;
         else {
             float dinamicValue = (wingLT.y - wingLB.y) * (1.3f*MathUtils.cos(MathUtils.PI2 * TimeUtils.timeSinceNanos(nanotimeAnimationStart) / BIRD_NANOTIME_FRAME));
             wingY = wingLB.y - dinamicValue;
         }
-        wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -2.2f * BIRD_SCALE);
+        wingLB.set(wingLT).add(-0.5f * BIRD_SCALE, -2.2f * BIRD_SCALE);
         wingRB.set(wingRT).add(0.5f * BIRD_SCALE, -2.2f * BIRD_SCALE);
 
         wingLL.set(wingLT.x - 6f * BIRD_SCALE, wingY);
@@ -157,6 +163,8 @@ public class Bird extends DestructibleDynamicObject {
         move(delta);
 
         super.update(delta);
+
+        landCollider.set((new Vector2(position)).sub(0, BIRD_COLLIDER_OFFSET_Y));
 
         checkCollisions();
 
@@ -203,7 +211,7 @@ public class Bird extends DestructibleDynamicObject {
     }
 
     private void move(float delta){
-        if (isFlying){
+        if (flying){
 
             if (position.y > SKY_Y) {
 
@@ -217,7 +225,7 @@ public class Bird extends DestructibleDynamicObject {
                 }
                 if (!Gdx.input.isTouched() || velocity.x == 0f){
                     velocity.x = 0f;
-                    isGlyding = false;
+                    glyding = false;
                 }
 
                 position.mulAdd(velocity, delta);
@@ -227,13 +235,13 @@ public class Bird extends DestructibleDynamicObject {
 
             }
             else{
-                isFlying = false;
+                flying = false;
                 position.y = BIRD_Y_WALK;
                 //velocity.x = 0;
             }
 
      }
-        else {
+        else if(!inNest){
             if (Gdx.input.isTouched()) {
                 position.add(velocity.x *delta, 0);
                 respectBorders();
@@ -271,24 +279,25 @@ public class Bird extends DestructibleDynamicObject {
     public void flyUP(){
         if (energy > 1) { // 1 is for checking should the bird continue living
             energy--;
-            isFlying = true;
+            flying = true;
             velocity.add(0f, BIRD_FLYUP_SPEED * (SKY_H - (position.y - SKY_Y)) / SKY_H);
             position.add(0, BIRD_Y_WALK_DELTA+1f);// jump to fly more than BIRD_Y_WALK_DELTA
 
             nanotimeAnimationStart = TimeUtils.nanoTime();
+            inNest = false;
         }
     }
 
     public void glideRight(){
         if (position.x < BIRD_BORDER_RIGHT) {
             velocity.x = BIRD_FLY_X_SPEED;
-            isGlyding = true;
+            glyding = true;
         }
     }
     public void glideLeft(){
         if (position.x > BIRD_BORDER_LEFT) {
             velocity.x = -BIRD_FLY_X_SPEED;
-            isGlyding = true;
+            glyding = true;
         }
     }
 
@@ -321,11 +330,11 @@ public class Bird extends DestructibleDynamicObject {
     public void respectBorders(){
         if (position.x < BIRD_BORDER_LEFT) {
             position.x = BIRD_BORDER_LEFT;
-            isGlyding = false;
+            glyding = false;
         }
         else if (position.x > BIRD_BORDER_RIGHT){
             position.x = BIRD_BORDER_RIGHT;
-            isGlyding = false;
+            glyding = false;
         }
     }
 
@@ -333,19 +342,44 @@ public class Bird extends DestructibleDynamicObject {
 
         bodyCircle.setPosition(position);
 
+        if(!inNest){
+
+            checkCollisionCats();
+
+            checkCollisionCaterpillars();
+
+            if (flying)
+                checkCollisionNest();
+      }
+    }
+
+    private void checkCollisionNest() {
+
+        if(level.nest.isPointInNest(landCollider)) {
+
+            flying = false;
+            inNest = true;
+
+        }
+
+    }
+
+    private void checkCollisionCaterpillars() {
+        if (food < BIRD_FOOD_MAX)
+            for (work.hungrygnu.thefreebird.beings.Caterpillar caterpillar : level.caterpillars) {
+                if (caterpillar.hasCollisionWith(this)) {
+                    caterpillar.active = false; // The caterpillar is eaten;
+                    food++;
+                    break;
+                }
+            }
+    }
+
+    private void checkCollisionCats() {
         for (work.hungrygnu.thefreebird.beings.Cat cat : level.cats)
             if (cat.hasCollisionWith(this)) {
                 active = false; // The bird is dead
                 return;
             }
-
-        if (food < BIRD_FOOD_MAX)
-        for (work.hungrygnu.thefreebird.beings.Caterpillar caterpillar : level.caterpillars) {
-            if (caterpillar.hasCollisionWith(this)) {
-                caterpillar.active = false; // The caterpillar is eaten;
-                food++;
-                break;
-            }
-        }
     }
 }

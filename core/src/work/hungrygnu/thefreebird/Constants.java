@@ -76,6 +76,9 @@ public class Constants {
     public static final int BIRD_POOP_MAX = 50;
     public static final long BIRD_FOOD_DIGEST_TIME = 1000l;
     public static final long BIRD_ENERGY_LOSE_TIME = 2000l;
+
+    public static final float BIRD_COLLIDER_OFFSET_Y = 4f*BIRD_SCALE;
+    public static final float BIRD_NEST_START_OFFSET_Y = BIRD_COLLIDER_OFFSET_Y + NEST_SCALE/3f;
     // =========================================================
 
     // Camera parameters
