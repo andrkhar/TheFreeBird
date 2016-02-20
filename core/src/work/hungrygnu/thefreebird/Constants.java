@@ -7,6 +7,7 @@ import com.badlogic.gdx.math.Vector2;
  * Created by hungry on 11.02.16.
  */
 public class Constants {
+    // TODO: Balance and set the constants, especially for the food-energy-poop transfer
 
     // World parameters
     public static final float WORLD_WIDTH = 2f * 1920f;
@@ -64,14 +65,18 @@ public class Constants {
     public static final long BIRD_NANOTIME_FRAME = (long)(0.5*Math.pow(10, 9));
     public static final float BIRD_BORDER_RIGHT = WORLD_WIDTH - BIRD_BODY_RADIUS;
     public static final float BIRD_BORDER_LEFT = BIRD_BODY_RADIUS;
-    public static final int BIRD_FOOD_MAX = 10;
-    public static final int BIRD_ENERGY_MAX = 10;
-    public static final int BIRD_POOP_MAX = 10;
+    public static final int BIRD_FOOD_MAX = 50;
+    public static final int BIRD_ENERGY_MAX = 50;
+    public static final int BIRD_POOP_MAX = 50;
+    public static final long BIRD_FOOD_DIGEST_TIME = 1000l;
+    public static final long BIRD_ENERGY_LOSE_TIME = 2000l;
 
     // Camera parameters
     public static final float CAM_CLOSEUP_COEFFICIENT = 0.4f;
     public static final float CAM_CLOSEUP_WIDTH = CAM_CLOSEUP_COEFFICIENT * WORLD_WIDTH;
+    public static final float CAM_CLOSEUP_HALFWIDTH = CAM_CLOSEUP_COEFFICIENT * WORLD_WIDTH/2f;
     public static final float CAM_CLOSEUP_HEIGHT = CAM_CLOSEUP_COEFFICIENT * WORLD_HEIGHT;
+    public static final float CAM_CLOSEUP_HALFHEIGHT = CAM_CLOSEUP_COEFFICIENT * WORLD_HEIGHT/2f;
     public static final float CAM_BORDER_RIGHT = WORLD_WIDTH - CAM_CLOSEUP_WIDTH /2f;
     public static final float CAM_BORDER_LEFT = CAM_CLOSEUP_WIDTH /2f;
 
@@ -106,11 +111,12 @@ public class Constants {
 
     // Cat parameters
     public static final Color CAT_COLOR_BODY = Color.DARK_GRAY;
-    public static final float CAT_SPEED_X = 400f;
+    public static final float CAT_SPEED_X = 200f;
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
     public static final int CAT_RESPAWN_COEFFICIENT = 200; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_MAX_NUMBER = 100;
 
     // Caterpillar parameters
     public static final Color CATERPILLAR_COLOR_BODY = Color.GOLDENROD;
@@ -123,12 +129,15 @@ public class Constants {
     public static final float CATERPILLAR_Y = SKY_Y - (BIRD_BODY_RADIUS - CATERPILLAR_RADIUS);
     public static final float CATERPILLAR_Y_DELTA = CATERPILLAR_RADIUS/16f;
     public static final long CATERPILLAR_NANOTIME_FRAME = (long)(24000000000l*CATERPILLAR_Y_DELTA/CATERPILLAR_SPEED_X);
+    public static final int CATERPILLAR_MAX_NUMBER = 200;
 
     // Bar parameters
-    public static final float BAR_WIDTH = 100f;
-    public static final float BAR_HEIGHT = 20f;
-    public static final Color BAR_BOTOM_COLOR = Color.CHARTREUSE;
-    public static final Color BAR_TOP_COLOR = Color.RED;
+    public static final float BAR_WIDTH = 200f;
+    public static final float BAR_HEIGHT = 50f;
+    public static final float BAR_MARGIN = 20f;
+    public static final float BAR_PADDING = 5f;
+    public static final Color BAR_BOTOM_COLOR = Color.WHITE;
+
 
 
 }

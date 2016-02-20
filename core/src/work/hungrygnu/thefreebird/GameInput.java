@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 
-import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 16.02.16.
  */
@@ -42,7 +41,7 @@ public class GameInput extends InputAdapter {
                 bird.flyUP();
                 break;
             case BOTTOM:
-                level.poops.add(new Poop(level)); // Make poop;
+                bird.dropPoop();//level.poops.add(new Poop(level)); // Make poop;
         }
         return  true;
     }

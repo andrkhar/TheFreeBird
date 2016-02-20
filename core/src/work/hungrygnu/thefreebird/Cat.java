@@ -9,6 +9,8 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 12.02.16.
  */
 public class Cat extends FacingDeDyObject {
+    // TODO: Draw the cat
+    // TODO: Make the cat jump when it is near the bird
 
     public Cat(ShapeRenderer renderer, Boolean facingRight) {
 

@@ -2,19 +2,20 @@ package work.hungrygnu.thefreebird;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.DelayedRemovalArray;
+
 
 import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
 public class Poop extends DestructibleDynamicObject {
-
+    // TODO: Make the poop render splash while hitting
 
     Level level;
 
     public Poop(Level level) {
-        super(level.bird.renderer, level.bird.position);
+
+        super(level.bird.renderer, (new Vector2(level.bird.position)).sub(0f,BIRD_BODY_RADIUS/2f));
         velocity = new Vector2(level.bird.velocity);
         this.level = level;
 

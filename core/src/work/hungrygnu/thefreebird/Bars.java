@@ -14,21 +14,70 @@ import static work.hungrygnu.thefreebird.Constants.*;
 public class Bars {
 
     private final Array<Bar>bars;
-    private final ShapeRenderer renderer;
     private final Camera camera;
+    private Vector2 position;
+    private Bird bird;
 
 
 
-    public Bars(ShapeRenderer renderer, Camera camera){
-        this.renderer = renderer;
+    public Bars(ShapeRenderer renderer, Camera camera, Bird bird){
+        this.bird = bird;
+        position = new Vector2(camera.position.x, camera.position.y);
         this.camera = camera;
         this.bars = new Array<Bar>();
-        float x = CAM_CLOSEUP_WIDTH - BAR_WIDTH;
-        float y = CAM_CLOSEUP_HEIGHT - BAR_HEIGHT;
+
+        createBars(renderer);
+
+    }
+
+    private void createBars(ShapeRenderer renderer) {
+        for(int i = 0; i<3; i++){
+            switch (i){
+                case 0:
+                    bars.add(new Bar(renderer, position, BIRD_FOOD_MAX, CATERPILLAR_COLOR_BODY));
+                    position.y -= BAR_HEIGHT + BAR_MARGIN;
+                    break;
+                case 1:
+                    bars.add(new Bar(renderer, position, BIRD_ENERGY_MAX, BIRD_COLOR_BODY));
+                    position.y -= BAR_HEIGHT + BAR_MARGIN;
+                    break;
+                case 2:
+                    bars.add(new Bar(renderer, position, BIRD_POOP_MAX, POOP_COLOR_CIRCLE));
+            }
+
+
+        }
+    }
+
+    public void update(){
+        position.set(camera.position.x + CAM_CLOSEUP_HALFWIDTH - BAR_WIDTH - BAR_MARGIN,
+                camera.position.y + CAM_CLOSEUP_HALFHEIGHT - BAR_HEIGHT - BAR_MARGIN);
 
         for(int i = 0; i<3; i++){
-            ;//bars.add(new Bar(renderer, position, maxValue));
+            switch (i){
+                case 0:
+                    bars.get(i).update(position,bird.food);
+                    position.y -= BAR_HEIGHT + BAR_MARGIN;
+                    break;
+                case 1:
+                    bars.get(i).update(position,bird.energy);
+                    position.y -= BAR_HEIGHT + BAR_MARGIN;
+                    break;
+                case 2:
+                    bars.get(i).update(position,bird.poop);
+            }
+
+
         }
+
+
+
+    }
+
+
+    public void render(){
+        for (Bar bar : bars)
+            bar.render();
     }
 
 }

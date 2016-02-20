@@ -13,6 +13,9 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 12.02.16.
  */
 public class Bird extends DestructibleDynamicObject {
+    // TODO: Teach the bird to walk
+    // TODO: Make losing little energy if not gliding
+    // TODO: Animate the bird death.
 
     Level level;
 
@@ -49,6 +52,11 @@ public class Bird extends DestructibleDynamicObject {
     protected Circle bodyCircle;
     // -----------------------------------
 
+    // Bird Timers -----------------------
+    long timeCounterFoodTransform;
+    long timeCounterEnergyLose;
+    // -----------------------------------
+
 
     public Bird(Vector2 position, Level level) {
         super(level.renderer, position);
@@ -77,6 +85,9 @@ public class Bird extends DestructibleDynamicObject {
         food = BIRD_FOOD_MAX;
         energy = BIRD_ENERGY_MAX;
         poop = 0;
+
+        timeCounterFoodTransform = TimeUtils.millis(); // count in Millis
+        timeCounterEnergyLose = timeCounterFoodTransform;
 
     }
 
@@ -111,7 +122,7 @@ public class Bird extends DestructibleDynamicObject {
             wingY = wingLB.y - dinamicValue;
         }
         wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -2.2f * BIRD_SCALE);
-        wingRB.set(wingRT).add(0.5f *BIRD_SCALE, -2.2f * BIRD_SCALE);
+        wingRB.set(wingRT).add(0.5f * BIRD_SCALE, -2.2f * BIRD_SCALE);
 
         wingLL.set(wingLT.x - 6f * BIRD_SCALE, wingY);
         wingRR.set(wingRT.x + 6f * BIRD_SCALE, wingY);
@@ -121,7 +132,7 @@ public class Bird extends DestructibleDynamicObject {
     }
     public void recalculateDinamicSittingPoints(){
         wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -3f * BIRD_SCALE);
-        wingRB.set(wingRT).add(0.5f *BIRD_SCALE, -3f * BIRD_SCALE);
+        wingRB.set(wingRT).add(0.5f * BIRD_SCALE, -3f * BIRD_SCALE);
 
         wingLL.set(wingLT.x - 2f * BIRD_SCALE, wingLT.y - (wingLT.y - wingLB.y) / 2f);
         wingRR.set(wingRT.x + 2f * BIRD_SCALE, wingRT.y - (wingRT.y - wingRB.y) / 2f);
@@ -132,9 +143,52 @@ public class Bird extends DestructibleDynamicObject {
 
     @Override
     public void update(float delta) {
-        bodyCircle.setPosition(position); // Circle is for collisions detection
 
+        flyIfShouldAndCan(delta);
 
+        super.update(delta);
+
+        checkCollisions();
+
+        transformFoodToEnergyAndPoop();
+
+        loseEnergyOrDie();
+    }
+
+    private void loseEnergyOrDie() {
+        if(TimeUtils.timeSinceMillis(timeCounterEnergyLose) > BIRD_ENERGY_LOSE_TIME){
+            if(energy>0) {
+                energy--;
+                timeCounterEnergyLose = TimeUtils.millis();
+            }
+            else
+                active = false;
+        }
+    }
+
+    private void transformFoodToEnergyAndPoop() {
+        if ((TimeUtils.timeSinceMillis(timeCounterFoodTransform) > BIRD_FOOD_DIGEST_TIME) && (food > 0))
+        {
+
+            if (energy < BIRD_ENERGY_MAX)
+                energy++;
+
+            if (poop < BIRD_POOP_MAX)
+                poop++;
+            else
+                dropPoop();
+            timeCounterFoodTransform = TimeUtils.millis();
+            food--;
+        }
+
+    }
+
+    public void dropPoop(){
+        level.poops.add(new Poop(level));
+        poop--;
+    }
+
+    private void flyIfShouldAndCan(float delta){
         if (isFlying){
 
             if (position.y > SKY_Y) {
@@ -163,15 +217,7 @@ public class Bird extends DestructibleDynamicObject {
                 position.y = SKY_Y;
             }
 
-
-
-        }
-        super.update(delta);
-        checkCollisions();
-
-
-
-    }
+    }}
 
     @Override
     public void render() {
@@ -198,11 +244,14 @@ public class Bird extends DestructibleDynamicObject {
     }
 
     public void flyUP(){
-        isFlying = true;
-        velocity.add(0f, BIRD_FLYUP_SPEED*(SKY_H-(position.y - SKY_Y))/SKY_H);
-        position.add(0,1f);// jump to fly
+        if (energy > 1) { // 1 is for checking should the bird continue living
+            energy--;
+            isFlying = true;
+            velocity.add(0f, BIRD_FLYUP_SPEED * (SKY_H - (position.y - SKY_Y)) / SKY_H);
+            position.add(0, 1f);// jump to fly
 
-        nanotimeAnimationStart = TimeUtils.nanoTime();
+            nanotimeAnimationStart = TimeUtils.nanoTime();
+        }
     }
 
     public void glideRight(){
@@ -231,15 +280,21 @@ public class Bird extends DestructibleDynamicObject {
 
     private void checkCollisions() {
 
+        bodyCircle.setPosition(position);
+
         for (Cat cat : level.cats)
             if (cat.hasCollisionWith(this)) {
                 active = false; // The bird is dead
                 Gdx.app.log("CAT EAT BIRD", ""+active);
                 return;
             }
+
+        if (food < BIRD_FOOD_MAX)
         for (Caterpillar caterpillar : level.caterpillars) {
             if (caterpillar.hasCollisionWith(this)) {
                 caterpillar.active = false; // The caterpillar is eaten;
+                food++;
+                break;
             }
         }
     }

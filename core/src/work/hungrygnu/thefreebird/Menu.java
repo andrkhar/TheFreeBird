@@ -80,15 +80,15 @@ public class Menu {
         renderer.set(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(MENU_SIDE_COLOR);
         // LEFT BOX
-        renderer.rect(cameraPosition.x - CAM_CLOSEUP_WIDTH / 2f, cameraPosition.y - CAM_CLOSEUP_HEIGHT / 2f, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HEIGHT);
+        renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HEIGHT);
         // RIGHT BOX
-        renderer.rect(cameraPosition.x + CAM_CLOSEUP_WIDTH / 2f - CAM_CLOSEUP_WIDTH / 3f, cameraPosition.y - CAM_CLOSEUP_HEIGHT / 2f, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HEIGHT);
+        renderer.rect(cameraPosition.x + CAM_CLOSEUP_HALFWIDTH - CAM_CLOSEUP_WIDTH / 3f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HEIGHT);
         // TOP BOX
         renderer.setColor(MENU_TOP_COLOR);
-        renderer.rect(cameraPosition.x - CAM_CLOSEUP_WIDTH / 6f, cameraPosition.y, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HEIGHT / 2f);
+        renderer.rect(cameraPosition.x - CAM_CLOSEUP_WIDTH / 6f, cameraPosition.y, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HALFHEIGHT);
         // BOTTOM BOX
         renderer.setColor(MENU_BOTTOM_COLOR);
-        renderer.rect(cameraPosition.x - CAM_CLOSEUP_WIDTH / 6f, cameraPosition.y - CAM_CLOSEUP_HEIGHT / 2f, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HEIGHT / 2f);
+        renderer.rect(cameraPosition.x - CAM_CLOSEUP_WIDTH / 6f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HALFHEIGHT);
 
 
     }

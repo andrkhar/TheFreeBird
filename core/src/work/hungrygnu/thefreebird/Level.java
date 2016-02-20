@@ -12,6 +12,9 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 17.02.16.
  */
 public class Level {
+    // TODO: Add static objects to diverse the world, like grass, flowers, stones and cetera.
+    // TODO: Add class Batterfly. It should move at the both Axis like real and can be eaten as well as a caterpillar.
+
     public TheFreeBirdGame game;
     public ShapeRenderer renderer;
     public FitViewport viewportClose;
@@ -26,6 +29,8 @@ public class Level {
     DelayedRemovalArray<Caterpillar> caterpillars;
     DelayedRemovalArray<Poop> poops;
 
+    private Bars bars;
+
     public Level(TheFreeBirdGame game){
         this.game = game;
         this.renderer = game.renderer;
@@ -33,6 +38,8 @@ public class Level {
         initStatic();
         init();
         spawn();
+
+
     }
 
     private void initStatic() {
@@ -50,9 +57,13 @@ public class Level {
         caterpillars = new DelayedRemovalArray<Caterpillar>();
         poops = new DelayedRemovalArray<Poop>();
 
+        bars = new Bars(renderer,viewportClose.getCamera(), bird);
+
     }
 
     public void update(float delta){
+
+
 
 
         if (bird.position.x < CAM_BORDER_LEFT)
@@ -66,6 +77,8 @@ public class Level {
         checkActive(delta);
 
         spawn();
+
+        bars.update();
 
 
 
@@ -83,6 +96,8 @@ public class Level {
         renderDynamicObjects();
 
         bird.render();
+
+        bars.render();
 
     }
     private void checkActive(float delta){
@@ -115,10 +130,13 @@ public class Level {
     }
     private void spawn(){
 
-        if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0)
-            cats.add(new Cat(renderer, halfTrue()));
-        if(MathUtils.random(-1,CATERPILLAR_RESPAWN_COEFFICIENT) < 0)
-            caterpillars.add(new Caterpillar(renderer, new Vector2(MathUtils.random(0, WORLD_WIDTH), CATERPILLAR_Y), halfTrue()));
+        if (cats.size < CAT_MAX_NUMBER)
+            if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0)
+                cats.add(new Cat(renderer, halfTrue()));
+
+        if (caterpillars.size < CATERPILLAR_MAX_NUMBER)
+            if(MathUtils.random(-1,CATERPILLAR_RESPAWN_COEFFICIENT) < 0)
+                caterpillars.add(new Caterpillar(renderer, new Vector2(MathUtils.random(0, WORLD_WIDTH), CATERPILLAR_Y), halfTrue()));
     }
 
     private boolean halfTrue(){

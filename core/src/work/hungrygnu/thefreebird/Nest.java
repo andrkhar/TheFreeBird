@@ -8,6 +8,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 12.02.16.
  */
 public class Nest extends StaticGameObject {
+    // TODO: The bird should be able to land in the nest.
 
     private final float baseX;
     private final float baseY;

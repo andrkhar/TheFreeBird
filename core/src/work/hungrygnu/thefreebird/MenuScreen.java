@@ -12,7 +12,8 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 17.02.16.
  */
 public class MenuScreen implements Screen {
-    // TODO Interface hints - arrows left, right, up in the relevant touching zones. A cool transaction effect between screens.
+    // TODO Make disappering of the menu boxes less agressive
+
     TheFreeBirdGame game;
     ShapeRenderer renderer;
     FitViewport viewportClose;
