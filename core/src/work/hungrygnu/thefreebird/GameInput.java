@@ -32,10 +32,10 @@ public class GameInput extends InputAdapter {
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
         switch (getScreenZone(screenX, screenY)){
             case LEFT:
-                bird.glideLeft();
+                bird.moveLeft();
                 break;
             case RIGHT:
-                bird.glideRight();
+                bird.moveRight();
                 break;
             case TOP:
                 bird.flyUP();
@@ -49,10 +49,10 @@ public class GameInput extends InputAdapter {
     public boolean touchDragged (int screenX, int screenY, int pointer) {
         switch (getScreenZone(screenX, screenY)){
             case LEFT:
-                bird.glideLeft();
+                bird.moveLeft();
                 break;
             case RIGHT:
-                bird.glideRight();
+                bird.moveRight();
                 break;
             case TOP:
                 ; // DO NOTHING ON DRAG;

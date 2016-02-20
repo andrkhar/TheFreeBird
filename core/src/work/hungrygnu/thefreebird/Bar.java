@@ -18,7 +18,7 @@ public class Bar extends StaticGameObject {
     private Color color;
 
     public Bar (ShapeRenderer renderer, Vector2 position, int maxValue, Color color){
-        // TODO Change size of top rectangle to get borders of the bar
+
         super(renderer,position);
 
         this.unitWidth = (BAR_WIDTH - 2f*BAR_PADDING) /maxValue;

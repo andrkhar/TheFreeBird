@@ -12,6 +12,8 @@ public class TheFreeBirdGame extends Game {
 	// TODO: Add Sounds and Music
 	// TODO: Make Settings for Sound and Music
 	// TODO: Add Scores - pooped Cats and the Time of Survival
+	// TODO: Add End game screen with the Scores and the time
+	// TODO: Add shadows
 
 	ShapeRenderer renderer;
 	FitViewport viewportClose;

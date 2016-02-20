@@ -50,7 +50,7 @@ public class Constants {
     public static final Color NEST_COLOR_TOP = Color.FIREBRICK;
     public static final int NEST_SEGMENTS = TREE_SEGMENTS;
 
-    // Bird parameters
+    // Bird parameters===========================================
     public static final float BIRD_SCALE = 0.15f * SCALE;
     public static final float BIRD_BODY_RADIUS = 5f * BIRD_SCALE;
     public static final Color BIRD_COLOR_BODY = Color.RED;
@@ -59,17 +59,24 @@ public class Constants {
     public static final Color BIRD_COLOR_WINGS = Color.SCARLET;
     public static final Color BIRD_COLOR_TAIL = Color.SCARLET;
     public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
+
     public static final float BIRD_WINDAGE = 50f; // 100 is ok
     public static final float BIRD_FLYUP_SPEED = 300f;
     public static final float BIRD_FLY_X_SPEED = 200f;
+    public static final float BIRD_WALK_X_SPEED = 100f;
+    public static final float BIRD_Y_WALK_DELTA = 2f;
+    public static final float BIRD_Y_WALK = SKY_Y - BIRD_Y_WALK_DELTA;
+
     public static final long BIRD_NANOTIME_FRAME = (long)(0.5*Math.pow(10, 9));
     public static final float BIRD_BORDER_RIGHT = WORLD_WIDTH - BIRD_BODY_RADIUS;
     public static final float BIRD_BORDER_LEFT = BIRD_BODY_RADIUS;
+
     public static final int BIRD_FOOD_MAX = 50;
     public static final int BIRD_ENERGY_MAX = 50;
     public static final int BIRD_POOP_MAX = 50;
     public static final long BIRD_FOOD_DIGEST_TIME = 1000l;
     public static final long BIRD_ENERGY_LOSE_TIME = 2000l;
+    // =========================================================
 
     // Camera parameters
     public static final float CAM_CLOSEUP_COEFFICIENT = 0.4f;
@@ -111,11 +118,11 @@ public class Constants {
 
     // Cat parameters
     public static final Color CAT_COLOR_BODY = Color.DARK_GRAY;
-    public static final float CAT_SPEED_X = 200f;
+    public static final float CAT_SPEED_X = 100f;
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
-    public static final int CAT_RESPAWN_COEFFICIENT = 200; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_RESPAWN_COEFFICIENT = 3000; // BIGGER NUMBER - LESS CATS
     public static final int CAT_MAX_NUMBER = 100;
 
     // Caterpillar parameters

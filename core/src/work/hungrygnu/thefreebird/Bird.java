@@ -13,8 +13,8 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 12.02.16.
  */
 public class Bird extends DestructibleDynamicObject {
-    // TODO: Teach the bird to walk
-    // TODO: Make losing little energy if not gliding
+    // TODO: Make walking up/down move effect
+    // TODO: Make losing little energy if flying and not gliding and if walking
     // TODO: Animate the bird death.
 
     Level level;
@@ -144,7 +144,7 @@ public class Bird extends DestructibleDynamicObject {
     @Override
     public void update(float delta) {
 
-        flyIfShouldAndCan(delta);
+        move(delta);
 
         super.update(delta);
 
@@ -188,7 +188,7 @@ public class Bird extends DestructibleDynamicObject {
         poop--;
     }
 
-    private void flyIfShouldAndCan(float delta){
+    private void move(float delta){
         if (isFlying){
 
             if (position.y > SKY_Y) {
@@ -214,10 +214,21 @@ public class Bird extends DestructibleDynamicObject {
             }
             else{
                 isFlying = false;
-                position.y = SKY_Y;
+                position.y = BIRD_Y_WALK;
+                //velocity.x = 0;
             }
 
-    }}
+     }
+        else {
+            if (Gdx.input.isTouched()) {
+                position.add(velocity.x *delta, 0);
+                respectBorders();
+            }
+
+
+
+        }
+    }
 
     @Override
     public void render() {
@@ -248,7 +259,7 @@ public class Bird extends DestructibleDynamicObject {
             energy--;
             isFlying = true;
             velocity.add(0f, BIRD_FLYUP_SPEED * (SKY_H - (position.y - SKY_Y)) / SKY_H);
-            position.add(0, 1f);// jump to fly
+            position.add(0, BIRD_Y_WALK_DELTA+1f);// jump to fly more than BIRD_Y_WALK_DELTA
 
             nanotimeAnimationStart = TimeUtils.nanoTime();
         }
@@ -265,6 +276,32 @@ public class Bird extends DestructibleDynamicObject {
             velocity.x = -BIRD_FLY_X_SPEED;
             isGlyding = true;
         }
+    }
+
+    public void walkRight(){
+        if (position.x < BIRD_BORDER_RIGHT) {
+            velocity.x = BIRD_WALK_X_SPEED;
+
+        }
+    }
+    public void walkLeft(){
+        if (position.x > BIRD_BORDER_LEFT) {
+            velocity.x = -BIRD_WALK_X_SPEED;
+
+        }
+    }
+
+    public void moveRight(){
+        if (position.y >  SKY_Y)
+            glideRight();
+        else
+            walkRight();
+    }
+    public void moveLeft(){
+        if (position.y >  SKY_Y)
+            glideLeft();
+        else
+            walkLeft();
     }
 
     public void respectBorders(){
@@ -285,7 +322,6 @@ public class Bird extends DestructibleDynamicObject {
         for (Cat cat : level.cats)
             if (cat.hasCollisionWith(this)) {
                 active = false; // The bird is dead
-                Gdx.app.log("CAT EAT BIRD", ""+active);
                 return;
             }
 
