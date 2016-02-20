@@ -1,10 +1,15 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.game;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.DelayedRemovalArray;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import work.hungrygnu.thefreebird.world.Nest;
+import work.hungrygnu.thefreebird.beings.Poop;
+import work.hungrygnu.thefreebird.TheFreeBirdGame;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 
@@ -18,23 +23,26 @@ public class Level {
     public TheFreeBirdGame game;
     public ShapeRenderer renderer;
     public FitViewport viewportClose;
-    private Underground underground;
-    private Land land;
-    private Sky sky;
-    private Tree tree;
+    public Camera camera;
+    private work.hungrygnu.thefreebird.world.Underground underground;
+    private work.hungrygnu.thefreebird.world.Land land;
+    private work.hungrygnu.thefreebird.world.Sky sky;
+    private work.hungrygnu.thefreebird.world.Tree tree;
     private Nest nest;
-    public Bird bird;
+    public work.hungrygnu.thefreebird.beings.Bird bird;
 
-    DelayedRemovalArray<Cat> cats;
-    DelayedRemovalArray<Caterpillar> caterpillars;
-    DelayedRemovalArray<Poop> poops;
+    public DelayedRemovalArray<work.hungrygnu.thefreebird.beings.Cat> cats;
+    public DelayedRemovalArray<work.hungrygnu.thefreebird.beings.Caterpillar> caterpillars;
+    public DelayedRemovalArray<Poop> poops;
 
-    private Bars bars;
+    private work.hungrygnu.thefreebird.game.Bars bars;
+    private Scores scores;
 
     public Level(TheFreeBirdGame game){
         this.game = game;
         this.renderer = game.renderer;
         this.viewportClose = game.viewportClose;
+        this.camera = viewportClose.getCamera();
         initStatic();
         init();
         spawn();
@@ -43,21 +51,22 @@ public class Level {
     }
 
     private void initStatic() {
-        underground = new Underground(renderer);
-        land = new Land(renderer);
-        sky = new Sky(renderer);
-        tree = new Tree(renderer);
+        underground = new work.hungrygnu.thefreebird.world.Underground(renderer);
+        land = new work.hungrygnu.thefreebird.world.Land(renderer);
+        sky = new work.hungrygnu.thefreebird.world.Sky(renderer);
+        tree = new work.hungrygnu.thefreebird.world.Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
     }
 
     public void init(){
 
-        bird = new Bird(tree.nestPosition.add(0f,4f*BIRD_SCALE), this);
-        cats = new DelayedRemovalArray<Cat>();
-        caterpillars = new DelayedRemovalArray<Caterpillar>();
+        bird = new work.hungrygnu.thefreebird.beings.Bird(tree.nestPosition.add(0f,4f*BIRD_SCALE), this);
+        cats = new DelayedRemovalArray<work.hungrygnu.thefreebird.beings.Cat>();
+        caterpillars = new DelayedRemovalArray<work.hungrygnu.thefreebird.beings.Caterpillar>();
         poops = new DelayedRemovalArray<Poop>();
 
-        bars = new Bars(renderer,viewportClose.getCamera(), bird);
+        bars = new work.hungrygnu.thefreebird.game.Bars(renderer,camera, bird);
+        scores = new Scores(renderer, camera);
 
     }
 
@@ -79,6 +88,7 @@ public class Level {
         spawn();
 
         bars.update();
+        scores.update(bird.poopedCatsCounter);
 
 
 
@@ -98,19 +108,21 @@ public class Level {
         bird.render();
 
         bars.render();
+        scores.render();
 
     }
     private void checkActive(float delta){
-        // TODO: I will think about to put them all in one updatable array
+        // TODO: LOW Put Arrays<type> all in one updatable array
+        // TODO: LOW Put Arrays<type> all in one renderable array
         for (Poop poop : poops) {
             poop.update(delta);
             if (!poop.active) poops.removeValue(poop, true);
         }
-        for (Cat cat : cats) {
+        for (work.hungrygnu.thefreebird.beings.Cat cat : cats) {
             cat.update(delta);
             if (!cat.active) cats.removeValue(cat, true);
         }
-        for (Caterpillar caterpillar : caterpillars) {
+        for (work.hungrygnu.thefreebird.beings.Caterpillar caterpillar : caterpillars) {
             caterpillar.update(delta);
             if (!caterpillar.active) caterpillars.removeValue(caterpillar, true);
         }
@@ -120,9 +132,9 @@ public class Level {
     private void renderDynamicObjects(){
         for (Poop poop : poops)
             poop.render();
-        for (Caterpillar caterpillar : caterpillars)
+        for (work.hungrygnu.thefreebird.beings.Caterpillar caterpillar : caterpillars)
             caterpillar.render();
-        for (Cat cat : cats)
+        for (work.hungrygnu.thefreebird.beings.Cat cat : cats)
             cat.render();
 
 
@@ -132,11 +144,11 @@ public class Level {
 
         if (cats.size < CAT_MAX_NUMBER)
             if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0)
-                cats.add(new Cat(renderer, halfTrue()));
+                cats.add(new work.hungrygnu.thefreebird.beings.Cat(renderer, halfTrue()));
 
         if (caterpillars.size < CATERPILLAR_MAX_NUMBER)
             if(MathUtils.random(-1,CATERPILLAR_RESPAWN_COEFFICIENT) < 0)
-                caterpillars.add(new Caterpillar(renderer, new Vector2(MathUtils.random(0, WORLD_WIDTH), CATERPILLAR_Y), halfTrue()));
+                caterpillars.add(new work.hungrygnu.thefreebird.beings.Caterpillar(renderer, new Vector2(MathUtils.random(0, WORLD_WIDTH), CATERPILLAR_Y), halfTrue()));
     }
 
     private boolean halfTrue(){

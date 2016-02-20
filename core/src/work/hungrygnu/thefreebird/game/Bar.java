@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.game;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -10,7 +10,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Bar extends StaticGameObject {
+public class Bar extends work.hungrygnu.thefreebird.beings.StaticGameObject {
     private Rectangle bottomRect;
     private Rectangle topRect;
     private int value;

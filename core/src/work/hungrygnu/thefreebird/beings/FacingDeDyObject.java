@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.beings;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -8,7 +8,7 @@ import static work.hungrygnu.thefreebird.Constants.WORLD_WIDTH;
 /**
  * Created by hungry on 18.02.16.
  */
-public class FacingDeDyObject extends DestructibleDynamicObject {
+public class FacingDeDyObject extends work.hungrygnu.thefreebird.beings.DestructibleDynamicObject {
     protected boolean facingRight;
     public FacingDeDyObject(ShapeRenderer renderer, Vector2 position, Boolean facingRight) {
         super(renderer, position);
@@ -19,11 +19,11 @@ public class FacingDeDyObject extends DestructibleDynamicObject {
         return false;
     }
 
-    public Boolean hasCollisionWith(Bird bird){
+    public Boolean hasCollisionWith(work.hungrygnu.thefreebird.beings.Bird bird){
         return false;
     }
 
-    void respectBorders(float offBorderDistance){
+    public void respectBorders(float offBorderDistance){
         if (position.x < -offBorderDistance) {
             facingRight = false;
             if (velocity.x < 0)

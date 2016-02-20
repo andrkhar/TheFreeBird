@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.beings;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -6,9 +6,9 @@ import com.badlogic.gdx.math.Vector2;
 /**
  * Created by hungry on 18.02.16.
  */
-public class DestructibleDynamicObject extends  DynamicGameObject{
+public class DestructibleDynamicObject extends DynamicGameObject {
 
-    protected boolean active;
+    public boolean active;
 
     public DestructibleDynamicObject(ShapeRenderer renderer, Vector2 position) {
         super(renderer, position);

@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.world;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import static work.hungrygnu.thefreebird.Constants.*;

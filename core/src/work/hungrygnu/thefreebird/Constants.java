@@ -113,7 +113,6 @@ public class Constants {
     public static final Color ARROW_COLOR = new Color(1f, 1f, 1f, 1f);
     public static final float ARROW_LENGTH = 200f;
     public static final float ARROW_HALFLENGTH = ARROW_LENGTH/2f;
-
     public static final float ARROW_WIDTH = ARROW_LENGTH /5f;
     public static final float ARROW_HEAD_LENGTH = ARROW_LENGTH / 3f;
     public static final float ARROW_HEAD_HALFWIDTH = ARROW_WIDTH*0.5f;
@@ -124,7 +123,7 @@ public class Constants {
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
-    public static final int CAT_RESPAWN_COEFFICIENT = 3000; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_RESPAWN_COEFFICIENT = 30; // BIGGER NUMBER - LESS CATS
     public static final int CAT_MAX_NUMBER = 100;
 
     // Caterpillar parameters
@@ -146,6 +145,12 @@ public class Constants {
     public static final float BAR_MARGIN = 20f;
     public static final float BAR_PADDING = 5f;
     public static final Color BAR_BOTOM_COLOR = Color.WHITE;
+
+    //Scores parameters
+    public static final float SCORES_SCALE = MENU_BOX_WIDTH/16f;
+    public static final float SCORES_MARGIN = 0.8f*SCORES_SCALE;
+    public static final float SCORES_PADDING = SCORES_SCALE/2;
+    public static final float SCORES_RADIUS = SCORES_SCALE;
 
 
 

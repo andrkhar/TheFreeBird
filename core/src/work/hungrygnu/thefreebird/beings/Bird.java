@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.beings;
 
 
 import com.badlogic.gdx.Gdx;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
+
+import work.hungrygnu.thefreebird.game.Level;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 /**
@@ -18,6 +20,10 @@ public class Bird extends DestructibleDynamicObject {
     // TODO: Animate the bird death.
 
     Level level;
+
+    final long timeStart; // in Millis
+    public long timeSinceStart; // in Millis
+    public int poopedCatsCounter;
 
     // Draw Bird specific parameters -------
     protected Vector2 beakB;
@@ -41,15 +47,15 @@ public class Bird extends DestructibleDynamicObject {
     // -----------------------------------
 
     // Main Bird specific parameters--------------------------
-    protected int food; // Eaten food trancsfers to poop and energy with time
-    protected int energy; // Energy using when flying
-    protected int poop; // Poop using when bombing
+    public int food; // Eaten food trancsfers to poop and energy with time
+    public int energy; // Energy using when flying
+    public int poop; // Poop using when bombing
     // -----------------------------------------
 
     // Other Bird specific parameters ----
-    protected boolean isFlying;
+    public boolean isFlying;
     protected boolean isGlyding;
-    protected Circle bodyCircle;
+    public Circle bodyCircle;
     // -----------------------------------
 
     // Bird Timers -----------------------
@@ -88,6 +94,10 @@ public class Bird extends DestructibleDynamicObject {
 
         timeCounterFoodTransform = TimeUtils.millis(); // count in Millis
         timeCounterEnergyLose = timeCounterFoodTransform;
+
+        timeStart = TimeUtils.millis();
+        timeSinceStart = 0;
+        poopedCatsCounter = 0;
 
     }
 
@@ -131,7 +141,7 @@ public class Bird extends DestructibleDynamicObject {
         tailR.set(position.x + 3f * BIRD_SCALE, position.y + 5.5f * BIRD_SCALE);
     }
     public void recalculateDinamicSittingPoints(){
-        wingLB.set(wingLT).add(-0.5f *BIRD_SCALE, -3f * BIRD_SCALE);
+        wingLB.set(wingLT).add(-0.5f * BIRD_SCALE, -3f * BIRD_SCALE);
         wingRB.set(wingRT).add(0.5f * BIRD_SCALE, -3f * BIRD_SCALE);
 
         wingLL.set(wingLT.x - 2f * BIRD_SCALE, wingLT.y - (wingLT.y - wingLB.y) / 2f);
@@ -153,6 +163,8 @@ public class Bird extends DestructibleDynamicObject {
         transformFoodToEnergyAndPoop();
 
         loseEnergyOrDie();
+
+        timeSinceStart = TimeUtils.timeSinceMillis(timeStart);
     }
 
     private void loseEnergyOrDie() {
@@ -184,8 +196,10 @@ public class Bird extends DestructibleDynamicObject {
     }
 
     public void dropPoop(){
-        level.poops.add(new Poop(level));
-        poop--;
+        if (poop > 0) {
+            level.poops.add(new Poop(level));
+            poop--;
+        }
     }
 
     private void move(float delta){
@@ -319,14 +333,14 @@ public class Bird extends DestructibleDynamicObject {
 
         bodyCircle.setPosition(position);
 
-        for (Cat cat : level.cats)
+        for (work.hungrygnu.thefreebird.beings.Cat cat : level.cats)
             if (cat.hasCollisionWith(this)) {
                 active = false; // The bird is dead
                 return;
             }
 
         if (food < BIRD_FOOD_MAX)
-        for (Caterpillar caterpillar : level.caterpillars) {
+        for (work.hungrygnu.thefreebird.beings.Caterpillar caterpillar : level.caterpillars) {
             if (caterpillar.hasCollisionWith(this)) {
                 caterpillar.active = false; // The caterpillar is eaten;
                 food++;

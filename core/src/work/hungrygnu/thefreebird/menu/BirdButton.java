@@ -1,15 +1,17 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.menu;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+
+import work.hungrygnu.thefreebird.game.Level;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 
 /**
  * Created by hungry on 15.02.16.
  */
-public class BirdButton extends Bird {
+public class BirdButton extends work.hungrygnu.thefreebird.beings.Bird {
 
     public float alpha;
     public boolean visible;

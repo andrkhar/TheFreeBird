@@ -1,9 +1,11 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import work.hungrygnu.thefreebird.menu.BirdButton;
 
 /**
  * Created by hungry on 17.02.16.

@@ -1,7 +1,9 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.world;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
+
+import work.hungrygnu.thefreebird.beings.StaticGameObject;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 

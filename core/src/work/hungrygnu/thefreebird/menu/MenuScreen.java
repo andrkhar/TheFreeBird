@@ -1,10 +1,12 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.menu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import work.hungrygnu.thefreebird.TheFreeBirdGame;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 
@@ -49,14 +51,13 @@ public class MenuScreen implements Screen {
 
         renderer.begin();
 
-
         menu.render();
 
         renderer.end();
         Gdx.gl20.glDisable(GL20.GL_BLEND);
 
         if (menu.bird.alpha == 1) {
-            Bird levelBird = game.level.bird;
+            work.hungrygnu.thefreebird.beings.Bird levelBird = game.level.bird;
             levelBird.lastFramePosition.set(menu.bird.lastFramePosition);
             levelBird.position.set(menu.bird.position);
             levelBird.velocity.set(menu.bird.velocity);
@@ -64,8 +65,6 @@ public class MenuScreen implements Screen {
             levelBird.recalculatePoints();
             game.startGame();
         }
-
-
 
     }
 

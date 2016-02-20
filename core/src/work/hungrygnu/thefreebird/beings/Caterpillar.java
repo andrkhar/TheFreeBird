@@ -1,6 +1,5 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.beings;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;

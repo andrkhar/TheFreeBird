@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -8,11 +8,11 @@ import com.badlogic.gdx.InputAdapter;
  * Created by hungry on 16.02.16.
  */
 public class GameInput extends InputAdapter {
-    // TODO: I do not want to overload the interface and think about Desktop Interface after succesful release on Android platform.
+    // TODO: LOW Improve Desktop Interface.
 
 
     GameScreen screen;
-    Bird bird;
+    work.hungrygnu.thefreebird.beings.Bird bird;
     Level level;
 
     public GameInput(GameScreen screen, Level level){

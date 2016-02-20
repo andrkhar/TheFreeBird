@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import work.hungrygnu.thefreebird.TheFreeBirdGame;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 /**
@@ -21,7 +23,7 @@ public class GameScreen implements Screen {
     public boolean closeUpView;
 
     public GameInput gameInterface;
-    public Bird bird;
+    public work.hungrygnu.thefreebird.beings.Bird bird;
 
     public GameScreen(TheFreeBirdGame game){
         this.game = game;

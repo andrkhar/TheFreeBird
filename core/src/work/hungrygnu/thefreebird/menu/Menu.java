@@ -1,8 +1,11 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.menu;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import work.hungrygnu.thefreebird.world.Nest;
+import work.hungrygnu.thefreebird.TheFreeBirdGame;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 
@@ -12,9 +15,9 @@ import static work.hungrygnu.thefreebird.Constants.*;
 public class Menu {
     ShapeRenderer renderer;
     public FitViewport viewportClose;
-    private Sky sky;
-    private Land land;
-    private Tree tree;
+    private work.hungrygnu.thefreebird.world.Sky sky;
+    private work.hungrygnu.thefreebird.world.Land land;
+    private work.hungrygnu.thefreebird.world.Tree tree;
     private Nest nest;
     public BirdButton bird;
 
@@ -35,9 +38,9 @@ public class Menu {
     public Menu(TheFreeBirdGame game){
         this.renderer = game.renderer;
         this.viewportClose = game.viewportClose;
-        sky = new Sky(renderer);
-        land = new Land(renderer);
-        tree = new Tree(renderer);
+        sky = new work.hungrygnu.thefreebird.world.Sky(renderer);
+        land = new work.hungrygnu.thefreebird.world.Land(renderer);
+        tree = new work.hungrygnu.thefreebird.world.Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
         bird = new BirdButton(tree.nestPosition.add(0f,4f*BIRD_SCALE),game.level);
 

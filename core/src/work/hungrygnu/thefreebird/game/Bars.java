@@ -1,8 +1,7 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.game;
 
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -16,11 +15,11 @@ public class Bars {
     private final Array<Bar>bars;
     private final Camera camera;
     private Vector2 position;
-    private Bird bird;
+    private work.hungrygnu.thefreebird.beings.Bird bird;
 
 
 
-    public Bars(ShapeRenderer renderer, Camera camera, Bird bird){
+    public Bars(ShapeRenderer renderer, Camera camera, work.hungrygnu.thefreebird.beings.Bird bird){
         this.bird = bird;
         position = new Vector2(camera.position.x, camera.position.y);
         this.camera = camera;

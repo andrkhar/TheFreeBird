@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.world;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -7,7 +7,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Nest extends StaticGameObject {
+public class Nest extends work.hungrygnu.thefreebird.beings.StaticGameObject {
     // TODO: The bird should be able to land in the nest.
 
     private final float baseX;

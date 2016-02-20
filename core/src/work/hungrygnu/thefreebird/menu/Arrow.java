@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.menu;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -8,7 +8,7 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 18.02.16.
  */
-public class Arrow extends StaticGameObject {
+public class Arrow extends work.hungrygnu.thefreebird.beings.StaticGameObject {
     public int direction;
     public Color color;
 

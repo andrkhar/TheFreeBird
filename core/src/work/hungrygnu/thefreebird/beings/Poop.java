@@ -1,4 +1,4 @@
-package work.hungrygnu.thefreebird;
+package work.hungrygnu.thefreebird.beings;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -8,12 +8,12 @@ import static work.hungrygnu.thefreebird.Constants.*;
 /**
  * Created by hungry on 12.02.16.
  */
-public class Poop extends DestructibleDynamicObject {
+public class Poop extends work.hungrygnu.thefreebird.beings.DestructibleDynamicObject {
     // TODO: Make the poop render splash while hitting
 
-    Level level;
+    work.hungrygnu.thefreebird.game.Level level;
 
-    public Poop(Level level) {
+    public Poop(work.hungrygnu.thefreebird.game.Level level) {
 
         super(level.bird.renderer, (new Vector2(level.bird.position)).sub(0f,BIRD_BODY_RADIUS/2f));
         velocity = new Vector2(level.bird.velocity);
@@ -40,13 +40,14 @@ public class Poop extends DestructibleDynamicObject {
 
     private void checkCollisions() {
 
-        for (Cat cat : level.cats)
+        for (work.hungrygnu.thefreebird.beings.Cat cat : level.cats)
             if (cat.hasCollisionWith(this)) {
                     cat.active = false;
                     active = false;
+                    level.bird.poopedCatsCounter++;
                     return;
                 }
-        for (Caterpillar caterpillar : level.caterpillars)
+        for (work.hungrygnu.thefreebird.beings.Caterpillar caterpillar : level.caterpillars)
             if (caterpillar.hasCollisionWith(this)) {
                 caterpillar.active = false;
                 active = false;
