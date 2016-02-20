@@ -11,6 +11,8 @@ import com.badlogic.gdx.utils.TimeUtils;
 import work.hungrygnu.thefreebird.game.Level;
 
 import static work.hungrygnu.thefreebird.Constants.*;
+
+import static work.hungrygnu.thefreebird.Assets.*;
 /**
  * Created by hungry on 12.02.16.
  */
@@ -182,7 +184,7 @@ public class Bird extends DestructibleDynamicObject {
                 timeCounterEnergyLose = TimeUtils.millis();
             }
             else
-                active = false;
+                death();
         }
     }
 
@@ -207,6 +209,7 @@ public class Bird extends DestructibleDynamicObject {
         if (poop > 0) {
             level.poops.add(new Poop(level));
             poop--;
+            soundBomb.play(1f);
         }
     }
 
@@ -378,8 +381,13 @@ public class Bird extends DestructibleDynamicObject {
     private void checkCollisionCats() {
         for (work.hungrygnu.thefreebird.beings.Cat cat : level.cats)
             if (cat.hasCollisionWith(this)) {
-                active = false; // The bird is dead
+                death(); // The bird is dead
                 return;
             }
+    }
+
+    private void death(){
+        active = false;
+        soundDeath.play(0.5f);
     }
 }

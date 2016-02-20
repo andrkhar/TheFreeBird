@@ -2,8 +2,11 @@ package work.hungrygnu.thefreebird;
 
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import static work.hungrygnu.thefreebird.Assets.*;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 
@@ -20,6 +23,7 @@ public class TheFreeBirdGame extends Game {
 	public FitViewport viewportClose;
 	public work.hungrygnu.thefreebird.game.Level level;
 
+
 	@Override
 	public void create () {
 		renderer = new ShapeRenderer();
@@ -35,10 +39,14 @@ public class TheFreeBirdGame extends Game {
 	}
 
 	public void startGame(){
+		music.setLooping(true);
+		music.setVolume(0.1f);
+		music.play();
 		setScreen(new work.hungrygnu.thefreebird.game.GameScreen(this));
 	}
 
 	public void endGame(){
+		music.stop();
 		level.init();
 		startMenu();
 	}

@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 
 import static work.hungrygnu.thefreebird.Constants.*;
+import static work.hungrygnu.thefreebird.Assets.*;
 /**
  * Created by hungry on 12.02.16.
  */
@@ -42,15 +43,17 @@ public class Poop extends work.hungrygnu.thefreebird.beings.DestructibleDynamicO
 
         for (work.hungrygnu.thefreebird.beings.Cat cat : level.cats)
             if (cat.hasCollisionWith(this)) {
-                    cat.active = false;
-                    active = false;
-                    level.bird.poopedCatsCounter++;
-                    return;
+                cat.active = false;
+                active = false;
+                level.bird.poopedCatsCounter++;
+                soundHit.play(1f);
+                return;
                 }
         for (work.hungrygnu.thefreebird.beings.Caterpillar caterpillar : level.caterpillars)
             if (caterpillar.hasCollisionWith(this)) {
                 caterpillar.active = false;
                 active = false;
+                soundHit.play(1f);
                 return;
             }
 

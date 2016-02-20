@@ -12,6 +12,7 @@ import work.hungrygnu.thefreebird.beings.Poop;
 import work.hungrygnu.thefreebird.TheFreeBirdGame;
 
 import static work.hungrygnu.thefreebird.Constants.*;
+import static work.hungrygnu.thefreebird.Assets.*;
 
 /**
  * Created by hungry on 17.02.16.
@@ -145,8 +146,10 @@ public class Level {
     private void spawn(){
 
         if (cats.size < CAT_MAX_NUMBER)
-            if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0)
+            if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0) {
                 cats.add(new work.hungrygnu.thefreebird.beings.Cat(renderer, halfTrue()));
+                soundMeow.play(1);
+            }
 
         if (caterpillars.size < CATERPILLAR_MAX_NUMBER)
             if(MathUtils.random(-1,CATERPILLAR_RESPAWN_COEFFICIENT) < 0)

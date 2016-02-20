@@ -126,7 +126,7 @@ public class Constants {
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
-    public static final int CAT_RESPAWN_COEFFICIENT = 30; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_RESPAWN_COEFFICIENT = 100; // BIGGER NUMBER - LESS CATS
     public static final int CAT_MAX_NUMBER = 100;
 
     // Caterpillar parameters
@@ -144,7 +144,7 @@ public class Constants {
 
     // Bar parameters
     public static final float BAR_WIDTH = 200f;
-    public static final float BAR_HEIGHT = 50f;
+    public static final float BAR_HEIGHT = 30f;
     public static final float BAR_MARGIN = 20f;
     public static final float BAR_PADDING = 5f;
     public static final Color BAR_BOTOM_COLOR = Color.WHITE;
