@@ -1,5 +1,6 @@
 package work.hungrygnu.thefreebird;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -9,16 +10,18 @@ import static work.hungrygnu.thefreebird.Constants.*;
  */
 public class Arrow extends StaticGameObject {
     public int direction;
+    public Color color;
 
     public Arrow(ShapeRenderer renderer, Vector2 position, int direction) { // 1 is left, 2 is right, 3 is up
         super(renderer, position);
         this.direction = direction;
+        color = new Color(ARROW_COLOR);
     }
 
     public void render(Vector2 cameraPosition) {
 
         renderer.set(ShapeRenderer.ShapeType.Filled);
-        renderer.setColor(ARROW_COLOR);
+        renderer.setColor(color);
         float deltaX = CAM_CLOSEUP_WIDTH/3f;
         float halfWidth = ARROW_LENGTH /2f;
         float rectX = cameraPosition.x;

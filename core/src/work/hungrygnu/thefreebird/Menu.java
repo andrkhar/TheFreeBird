@@ -56,6 +56,14 @@ public class Menu {
         bird.update(delta);
         cameraPosition.set(viewportClose.getCamera().position.x, viewportClose.getCamera().position.y);
 
+        updateArrowsColor();
+
+    }
+
+    private void updateArrowsColor() {
+        arrow1Left.color.a = 1 - bird.alpha;
+        arrow2Right.color.a = 1 - bird.alpha;
+        arrow3Up.color.a = 1 - bird.alpha;
 
     }
 
@@ -80,15 +88,19 @@ public class Menu {
         renderer.set(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(MENU_SIDE_COLOR);
         // LEFT BOX
-        renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HEIGHT);
+        renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH - bird.alpha * MENU_BOX_WIDTH,
+                cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, MENU_BOX_WIDTH, CAM_CLOSEUP_HEIGHT);
         // RIGHT BOX
-        renderer.rect(cameraPosition.x + CAM_CLOSEUP_HALFWIDTH - CAM_CLOSEUP_WIDTH / 3f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HEIGHT);
+        renderer.rect(cameraPosition.x + CAM_CLOSEUP_HALFWIDTH - MENU_BOX_WIDTH + bird.alpha * MENU_BOX_WIDTH,
+                cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, MENU_BOX_WIDTH, CAM_CLOSEUP_HEIGHT);
         // TOP BOX
         renderer.setColor(MENU_TOP_COLOR);
-        renderer.rect(cameraPosition.x - CAM_CLOSEUP_WIDTH / 6f, cameraPosition.y, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HALFHEIGHT);
+        renderer.rect(cameraPosition.x - MENU_BOX_WIDTH / 2f, cameraPosition.y + bird.alpha * CAM_CLOSEUP_HALFHEIGHT,
+                MENU_BOX_WIDTH, CAM_CLOSEUP_HALFHEIGHT);
         // BOTTOM BOX
         renderer.setColor(MENU_BOTTOM_COLOR);
-        renderer.rect(cameraPosition.x - CAM_CLOSEUP_WIDTH / 6f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, CAM_CLOSEUP_WIDTH / 3f, CAM_CLOSEUP_HALFHEIGHT);
+        renderer.rect(cameraPosition.x - MENU_BOX_WIDTH / 2f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT - bird.alpha * CAM_CLOSEUP_HALFHEIGHT,
+                MENU_BOX_WIDTH, CAM_CLOSEUP_HALFHEIGHT);
 
 
     }
@@ -96,7 +108,7 @@ public class Menu {
     private void renderPoop(){
 
         float poopX = cameraPosition.x;
-        float poopY = cameraPosition.y - CAM_CLOSEUP_HEIGHT/4f;
+        float poopY = cameraPosition.y - CAM_CLOSEUP_HEIGHT/4f - (CAM_CLOSEUP_HALFHEIGHT * bird.alpha);
         float poopScale = 5f;
         float poopR = POOP_RADIUS * poopScale;
         float poopH = POOP_HEIGHT * poopScale;

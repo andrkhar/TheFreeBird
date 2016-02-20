@@ -12,7 +12,6 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 17.02.16.
  */
 public class MenuScreen implements Screen {
-    // TODO Make disappering of the menu boxes less agressive
 
     TheFreeBirdGame game;
     ShapeRenderer renderer;
