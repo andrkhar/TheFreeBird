@@ -47,9 +47,9 @@ public class Menu {
         cameraPosition = new Vector2();
         gameStarting = false;
 
-        arrow1Left = new Arrow(renderer,new Vector2(cameraPosition.x - CAM_CLOSEUP_WIDTH/3f, cameraPosition.y), 1);
-        arrow2Right = new Arrow(renderer,new Vector2(cameraPosition.x + CAM_CLOSEUP_WIDTH/3f, cameraPosition.y),2);
-        arrow3Up = new Arrow(renderer,new Vector2(cameraPosition.x, cameraPosition.y + CAM_CLOSEUP_HEIGHT/3f),3);
+        arrow1Left = new Arrow(renderer, 1);
+        arrow2Right = new Arrow(renderer,2);
+        arrow3Up = new Arrow(renderer,3);
 
 
     }
@@ -92,14 +92,14 @@ public class Menu {
         renderer.setColor(MENU_SIDE_COLOR);
         // LEFT BOX
         renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH - bird.alpha * MENU_BOX_WIDTH,
-                cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, MENU_BOX_WIDTH, CAM_CLOSEUP_HEIGHT);
+                cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, MENU_BOX_WIDTH, CAM_CLOSEUP_HEIGHT/2f);
         // RIGHT BOX
         renderer.rect(cameraPosition.x + CAM_CLOSEUP_HALFWIDTH - MENU_BOX_WIDTH + bird.alpha * MENU_BOX_WIDTH,
-                cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, MENU_BOX_WIDTH, CAM_CLOSEUP_HEIGHT);
+                cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, MENU_BOX_WIDTH, CAM_CLOSEUP_HEIGHT/2f);
         // TOP BOX
         renderer.setColor(MENU_TOP_COLOR);
-        renderer.rect(cameraPosition.x - MENU_BOX_WIDTH / 2f, cameraPosition.y + bird.alpha * CAM_CLOSEUP_HALFHEIGHT,
-                MENU_BOX_WIDTH, CAM_CLOSEUP_HALFHEIGHT);
+        renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH, cameraPosition.y + bird.alpha * CAM_CLOSEUP_HALFHEIGHT,
+                CAM_CLOSEUP_WIDTH, CAM_CLOSEUP_HALFHEIGHT);
         // BOTTOM BOX
         renderer.setColor(MENU_BOTTOM_COLOR);
         renderer.rect(cameraPosition.x - MENU_BOX_WIDTH / 2f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT - bird.alpha * CAM_CLOSEUP_HALFHEIGHT,

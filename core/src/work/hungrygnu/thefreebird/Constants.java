@@ -71,9 +71,9 @@ public class Constants {
     public static final float BIRD_BORDER_RIGHT = WORLD_WIDTH - BIRD_BODY_RADIUS;
     public static final float BIRD_BORDER_LEFT = BIRD_BODY_RADIUS;
 
-    public static final int BIRD_FOOD_MAX = 1000;
+    public static final int BIRD_FOOD_MAX = 10;
     public static final int BIRD_ENERGY_MAX = 50;
-    public static final int BIRD_POOP_MAX = 500;
+    public static final int BIRD_POOP_MAX = 5;
     public static final long BIRD_FOOD_DIGEST_TIME = 1500l;
     public static final long BIRD_ENERGY_LOSE_TIME = 3000l;
 
@@ -126,7 +126,7 @@ public class Constants {
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
-    public static final int CAT_RESPAWN_COEFFICIENT = 50; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_RESPAWN_COEFFICIENT = 150; // BIGGER NUMBER - LESS CATS
     public static final int CAT_MAX_NUMBER = 100;
 
     // Caterpillar parameters
@@ -140,7 +140,7 @@ public class Constants {
     public static final float CATERPILLAR_Y = SKY_Y - (BIRD_BODY_RADIUS - CATERPILLAR_RADIUS);
     public static final float CATERPILLAR_Y_DELTA = CATERPILLAR_RADIUS/16f;
     public static final long CATERPILLAR_NANOTIME_FRAME = (long)(24000000000l*CATERPILLAR_Y_DELTA/CATERPILLAR_SPEED_X);
-    public static final int CATERPILLAR_MAX_NUMBER = 200;
+    public static final int CATERPILLAR_MAX_NUMBER = 150;
 
     // Bar parameters
     public static final float BAR_WIDTH = CAM_CLOSEUP_WIDTH/5f;

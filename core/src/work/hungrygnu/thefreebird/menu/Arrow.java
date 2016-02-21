@@ -12,8 +12,8 @@ public class Arrow extends work.hungrygnu.thefreebird.beings.StaticGameObject {
     public int direction;
     public Color color;
 
-    public Arrow(ShapeRenderer renderer, Vector2 position, int direction) { // 1 is left, 2 is right, 3 is up
-        super(renderer, position);
+    public Arrow(ShapeRenderer renderer, int direction) { // 1 is left, 2 is right, 3 is up
+        super(renderer, new Vector2());
         this.direction = direction;
         color = new Color(ARROW_COLOR);
     }
@@ -27,22 +27,24 @@ public class Arrow extends work.hungrygnu.thefreebird.beings.StaticGameObject {
         float rectX = cameraPosition.x;
         float rectY = cameraPosition.y;
         switch (direction){
-            case 1:
+            case 1:// left
                 rectX += - deltaX - halfWidth;
+                rectY -= CAM_CLOSEUP_HALFHEIGHT/2f;
                 renderer.rect(rectX, rectY, ARROW_LENGTH, ARROW_WIDTH);
                 renderer.triangle(rectX, rectY-ARROW_HEAD_HALFWIDTH,
                         rectX,rectY+ARROW_WIDTH+ARROW_HEAD_HALFWIDTH,
                         rectX - ARROW_HEAD_LENGTH, rectY + ARROW_WIDTH/2f);
                 break;
-            case 2:
+            case 2:// right
                 rectX = cameraPosition.x + deltaX - halfWidth;
+                rectY -= CAM_CLOSEUP_HALFHEIGHT/2f;
                 renderer.rect(rectX, rectY, ARROW_LENGTH, ARROW_WIDTH);
                 rectX += + ARROW_LENGTH;
                 renderer.triangle(rectX, rectY - ARROW_HEAD_HALFWIDTH,
                         rectX, rectY + ARROW_WIDTH + ARROW_HEAD_HALFWIDTH,
                         rectX + ARROW_HEAD_LENGTH, rectY + ARROW_WIDTH / 2f);
                 break;
-            case 3:
+            case 3:// up
                 rectX -= ARROW_WIDTH /2f;
                 rectY += CAM_CLOSEUP_HEIGHT/6f;
                 renderer.rect(rectX, rectY, ARROW_WIDTH, ARROW_HALFLENGTH);

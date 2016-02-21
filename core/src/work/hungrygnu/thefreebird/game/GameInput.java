@@ -66,12 +66,12 @@ public class GameInput extends InputAdapter {
     public ScreenZone getScreenZone(int x, int y){
         int screenW = Gdx.graphics.getWidth();
         int screenH = Gdx.graphics.getHeight();
-        if (x < screenW / 3f)
-            return ScreenZone.LEFT;
+        if (y < screenH / 2f)
+            return  ScreenZone.TOP;
         else if (x > screenW * 2f / 3f)
             return ScreenZone.RIGHT;
-        else if (y < screenH / 2f)
-            return  ScreenZone.TOP;
+        else if (x < screenW / 3f)
+            return ScreenZone.LEFT;
         else
             return ScreenZone.BOTTOM;
     }

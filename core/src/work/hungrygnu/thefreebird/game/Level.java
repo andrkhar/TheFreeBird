@@ -151,7 +151,7 @@ public class Level {
         if (cats.size < CAT_MAX_NUMBER)
             if(MathUtils.random(-1,CAT_RESPAWN_COEFFICIENT) < 0) {
                 cats.add(new work.hungrygnu.thefreebird.beings.Cat(renderer, halfTrue()));
-                soundMeow.play(1);
+                soundMeow.play(0.6f);
             }
 
         if (caterpillars.size < CATERPILLAR_MAX_NUMBER)

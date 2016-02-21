@@ -18,6 +18,7 @@ public class TheFreeBirdGame extends Game {
 	// TODO: Make Settings for Sound and Music
 	// TODO: HIGH Add End game screen with the Scores and the time
 	// TODO: Add shadows
+	// TODO: Change Interface. FlyUp when touch all top half of the screen.
 
 	public ShapeRenderer renderer;
 	public FitViewport viewportClose;
@@ -31,7 +32,7 @@ public class TheFreeBirdGame extends Game {
 		viewportClose = new FitViewport(CAM_CLOSEUP_WIDTH, CAM_CLOSEUP_HEIGHT);
 		level = new work.hungrygnu.thefreebird.game.Level(this);
 
-		music.setLooping(false);
+		music.setLooping(true);
 		music.setVolume(0.1f);
 		startMenu();
 
@@ -41,6 +42,7 @@ public class TheFreeBirdGame extends Game {
 	}
 
 	public void startGame(){
+
 
 		setScreen(new work.hungrygnu.thefreebird.game.GameScreen(this));
 	}
