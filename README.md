@@ -1,5 +1,9 @@
 # TheFreeBird
 
+Music is from http://freemusicarchive.org/music/Tyler_Twombly/
+
+Google Play link: https://play.google.com/store/apps/details?id=work.hungrygnu.thefreebird
+
 Goals
 
 1. A game simulator of bird life.
