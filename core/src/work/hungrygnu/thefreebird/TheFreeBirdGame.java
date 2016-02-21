@@ -47,7 +47,7 @@ public class TheFreeBirdGame extends Game {
 	public void endGame(){
 		music.stop();
 		music.setPosition(0);
-		music.dispose();
+
 		int poopedCatsCounter = level.bird.poopedCatsCounter;
 		level.init();
 		startMenu(poopedCatsCounter);
