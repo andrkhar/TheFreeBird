@@ -1,4 +1,5 @@
 # TheFreeBird
+![alt text](https://github.com/Hungry-Gnu/TheFreeBird/blob/master/BirdAndCat.png "The bird and a cat")
 
 Music is from http://freemusicarchive.org/music/Tyler_Twombly/
 
@@ -19,3 +20,5 @@ Goals
 There is Android Interface on Menu Screen. Press button FLY to start the game:
 
 ![alt text](https://github.com/Hungry-Gnu/TheFreeBird/blob/master/AndroidInterface.png "Android Interface")
+
+![alt text](https://github.com/Hungry-Gnu/TheFreeBird/blob/master/GamePlay.jpg "Gameplay")
