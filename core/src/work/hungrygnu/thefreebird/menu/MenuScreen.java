@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import work.hungrygnu.thefreebird.Assets;
 import work.hungrygnu.thefreebird.TheFreeBirdGame;
 
 import static work.hungrygnu.thefreebird.Constants.*;

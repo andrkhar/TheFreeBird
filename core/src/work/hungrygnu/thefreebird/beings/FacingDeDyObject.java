@@ -1,6 +1,7 @@
 package work.hungrygnu.thefreebird.beings;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 
 import static work.hungrygnu.thefreebird.Constants.WORLD_WIDTH;
@@ -28,11 +29,20 @@ public class FacingDeDyObject extends work.hungrygnu.thefreebird.beings.Destruct
             facingRight = false;
             if (velocity.x < 0)
                 velocity.x *= -1;
+            halfChanceGoAway();
+
         }
         else if(position.x > WORLD_WIDTH+offBorderDistance) {
             facingRight = true;
             if (velocity.x > 0)
                 velocity.x *= -1;
+            halfChanceGoAway();
         }
     }
+
+    private void halfChanceGoAway(){
+        if (MathUtils.random(-1,1)< 0 )
+            active = false;
+    }
+
 }

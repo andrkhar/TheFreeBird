@@ -45,6 +45,8 @@ public class Scores {
     public void render(){
         renderer.set(ShapeRenderer.ShapeType.Filled);
         int all = gold+red+grey;
+        int newLineCounter = 0;
+        float startX = position.x;
         for (int i = 0; i < all; i++){
             if (gold > 0){
                 renderer.setColor(Color.GOLD);
@@ -56,8 +58,16 @@ public class Scores {
                 renderer.setColor(CAT_COLOR_BODY);
                 grey--;
             }
+
+
             renderer.circle(position.x, position.y, SCORES_RADIUS);
             position.x += 2* SCORES_RADIUS + SCORES_PADDING;
+            newLineCounter++;
+            if (newLineCounter > 9){
+                newLineCounter = 0;
+                position.y -= 2* SCORES_RADIUS + SCORES_PADDING;
+                position.x = startX;
+            }
 
         }
 

@@ -75,6 +75,9 @@ public class Level {
 
     public void update(float delta){
 
+        if (!music.isPlaying())
+            music.play();
+
 
 
 

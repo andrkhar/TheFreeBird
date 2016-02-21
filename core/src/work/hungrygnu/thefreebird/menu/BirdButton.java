@@ -33,6 +33,7 @@ public class BirdButton extends work.hungrygnu.thefreebird.beings.Bird {
     }
     public void update(float delta){
         super.update(delta);
+        energy = BIRD_ENERGY_MAX;
         if (visible && alpha < 1){
             alpha += delta;
             button.colorBody.a -= delta;

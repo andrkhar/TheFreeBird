@@ -192,8 +192,11 @@ public class Bird extends DestructibleDynamicObject {
         if ((TimeUtils.timeSinceMillis(timeCounterFoodTransform) > BIRD_FOOD_DIGEST_TIME) && (food > 0))
         {
 
-            if (energy < BIRD_ENERGY_MAX)
-                energy++;
+            if (energy < BIRD_ENERGY_MAX){
+                energy += 5;
+                if (energy > BIRD_ENERGY_MAX)
+                    energy = BIRD_ENERGY_MAX;
+            }
 
             if (poop < BIRD_POOP_MAX)
                 poop++;
@@ -318,13 +321,15 @@ public class Bird extends DestructibleDynamicObject {
     }
 
     public void moveRight(){
-        if (position.y >  SKY_Y)
+        if(!inNest)
+        if (position.y >  SKY_Y )
             glideRight();
         else
             walkRight();
     }
     public void moveLeft(){
-        if (position.y >  SKY_Y)
+        if(!inNest)
+        if (position.y >  SKY_Y )
             glideLeft();
         else
             walkLeft();
@@ -362,6 +367,7 @@ public class Bird extends DestructibleDynamicObject {
 
             flying = false;
             inNest = true;
+            velocity.set(0,0);
 
         }
 

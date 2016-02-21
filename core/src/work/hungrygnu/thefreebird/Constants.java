@@ -10,8 +10,8 @@ public class Constants {
     // TODO: Balance and set the constants, especially for the food-energy-poop transfer
 
     // World parameters
-    public static final float WORLD_WIDTH = 2f * 1920f;
-    public static final float WORLD_HEIGHT = 2f * 1080f;
+    public static final float WORLD_WIDTH = 1920f;
+    public static final float WORLD_HEIGHT = 1080f;
     public static final Color BACKCOLOR = Color.BLACK;
     public static final float SCALE = WORLD_HEIGHT/48f;
     public static final float GRAVITY = -500f;
@@ -71,11 +71,11 @@ public class Constants {
     public static final float BIRD_BORDER_RIGHT = WORLD_WIDTH - BIRD_BODY_RADIUS;
     public static final float BIRD_BORDER_LEFT = BIRD_BODY_RADIUS;
 
-    public static final int BIRD_FOOD_MAX = 50;
+    public static final int BIRD_FOOD_MAX = 1000;
     public static final int BIRD_ENERGY_MAX = 50;
-    public static final int BIRD_POOP_MAX = 50;
-    public static final long BIRD_FOOD_DIGEST_TIME = 1000l;
-    public static final long BIRD_ENERGY_LOSE_TIME = 2000l;
+    public static final int BIRD_POOP_MAX = 500;
+    public static final long BIRD_FOOD_DIGEST_TIME = 1500l;
+    public static final long BIRD_ENERGY_LOSE_TIME = 3000l;
 
     public static final float BIRD_COLLIDER_OFFSET_Y = 4f*BIRD_SCALE;
     public static final float BIRD_NEST_START_OFFSET_Y = BIRD_COLLIDER_OFFSET_Y + NEST_SCALE/3f;
@@ -114,7 +114,7 @@ public class Constants {
 
     // Arrow parameters
     public static final Color ARROW_COLOR = new Color(1f, 1f, 1f, 1f);
-    public static final float ARROW_LENGTH = 200f;
+    public static final float ARROW_LENGTH = WORLD_HEIGHT/8f;
     public static final float ARROW_HALFLENGTH = ARROW_LENGTH/2f;
     public static final float ARROW_WIDTH = ARROW_LENGTH /5f;
     public static final float ARROW_HEAD_LENGTH = ARROW_LENGTH / 3f;
@@ -126,7 +126,7 @@ public class Constants {
     public static final float CAT_BODY_LENGTH = 50f;
     public static final float CAT_START_X_LEFT = -CAT_BODY_LENGTH;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
-    public static final int CAT_RESPAWN_COEFFICIENT = 100; // BIGGER NUMBER - LESS CATS
+    public static final int CAT_RESPAWN_COEFFICIENT = 50; // BIGGER NUMBER - LESS CATS
     public static final int CAT_MAX_NUMBER = 100;
 
     // Caterpillar parameters
@@ -135,7 +135,7 @@ public class Constants {
     public static final int CATERPILLAR_CIRCLES_NUMBER = 5;
     public static final float CATERPILLAR_RADIUS = CATERPILLAR_BODY_LENGTH/CATERPILLAR_CIRCLES_NUMBER;
     public static final float CATERPILLAR_TIGHT_RADIUS = CATERPILLAR_RADIUS * 0.6f;
-    public static final int CATERPILLAR_RESPAWN_COEFFICIENT = 70; // BIGGER NUMBER - LESS CATERPILLARS
+    public static final int CATERPILLAR_RESPAWN_COEFFICIENT = 100; // BIGGER NUMBER - LESS CATERPILLARS
     public static final float CATERPILLAR_SPEED_X = 10f;
     public static final float CATERPILLAR_Y = SKY_Y - (BIRD_BODY_RADIUS - CATERPILLAR_RADIUS);
     public static final float CATERPILLAR_Y_DELTA = CATERPILLAR_RADIUS/16f;
@@ -143,10 +143,10 @@ public class Constants {
     public static final int CATERPILLAR_MAX_NUMBER = 200;
 
     // Bar parameters
-    public static final float BAR_WIDTH = 200f;
-    public static final float BAR_HEIGHT = 30f;
-    public static final float BAR_MARGIN = 20f;
-    public static final float BAR_PADDING = 5f;
+    public static final float BAR_WIDTH = CAM_CLOSEUP_WIDTH/5f;
+    public static final float BAR_HEIGHT = BAR_WIDTH/12f;
+    public static final float BAR_MARGIN = BAR_WIDTH/17f;
+    public static final float BAR_PADDING = BAR_MARGIN/3f;
     public static final Color BAR_BOTOM_COLOR = Color.WHITE;
 
     //Scores parameters

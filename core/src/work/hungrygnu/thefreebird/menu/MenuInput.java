@@ -5,6 +5,7 @@ import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import work.hungrygnu.thefreebird.Assets;
 import work.hungrygnu.thefreebird.menu.BirdButton;
 
 /**
@@ -25,6 +26,7 @@ public class MenuInput extends InputAdapter {
         if (bird.bodyCircle.contains(unprojected)) {
             bird.flyUP();
             bird.visible = true;
+            Assets.music.play();
         }
 
         return true;
