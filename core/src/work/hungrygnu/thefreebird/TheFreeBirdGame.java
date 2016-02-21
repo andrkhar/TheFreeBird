@@ -18,7 +18,6 @@ public class TheFreeBirdGame extends Game {
 	// TODO: Make Settings for Sound and Music
 	// TODO: HIGH Add End game screen with the Scores and the time
 	// TODO: Add shadows
-	// TODO: Change Interface. FlyUp when touch all top half of the screen.
 
 	public ShapeRenderer renderer;
 	public FitViewport viewportClose;

@@ -26,14 +26,14 @@ public class FacingDeDyObject extends work.hungrygnu.thefreebird.beings.Destruct
 
     public void respectBorders(float offBorderDistance){
         if (position.x < -offBorderDistance) {
-            facingRight = false;
+            facingRight = true;
             if (velocity.x < 0)
                 velocity.x *= -1;
             halfChanceGoAway();
 
         }
         else if(position.x > WORLD_WIDTH+offBorderDistance) {
-            facingRight = true;
+            facingRight = false;
             if (velocity.x > 0)
                 velocity.x *= -1;
             halfChanceGoAway();
