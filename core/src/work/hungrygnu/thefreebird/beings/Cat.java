@@ -95,8 +95,12 @@ public class Cat extends FacingDeDyObject {
 
         }
 
-        renderer.rectLine(tailX, position.y, tailX + 0.3f*tailW *getAnimationCoefficient(), tailY, tailW);
+        float animCoefficient = getAnimationCoefficient();
 
+        // TAIL
+        renderer.rectLine(tailX, position.y, tailX + 0.3f*tailW *animCoefficient, tailY, tailW);
+
+        // EAR
         float earOffsetX = CAT_BODY_RADIUS /4f;
         float earHeight = CAT_BODY_RADIUS /2f;
         float earBaseY = position.y + 0.9f* CAT_BODY_RADIUS;
@@ -107,19 +111,22 @@ public class Cat extends FacingDeDyObject {
                 position.x, earBaseY + earHeight);
 
 
-
+        // EYE
         renderer.setColor(Color.WHITE);
         renderer.circle(eyeX, eyeY, eyeR);
 
-
+        // PUPIL
         renderer.setColor(Color.PURPLE);
-        renderer.circle(pupilX + 0.4f*pupilR * getAnimationCoefficient() , eyeY, pupilR);
+        renderer.circle(pupilX + 0.4f*pupilR * animCoefficient , eyeY, pupilR);
 
+        // NOSE
         renderer.setColor(Color.PINK);
         renderer.circle(noseX, position.y, CAT_BODY_RADIUS / 6f);
 
+        // MOUTH
         renderer.setColor(Color.LIGHT_GRAY);
-        renderer.rectLine(position.x, position.y, mouthX, mouthY, tailW / 2);
+        //renderer.rectLine(position.x, position.y, mouthX, mouthY, tailW / 2);
+        renderer.triangle(position.x, position.y, mouthX, mouthY, mouthX, mouthY - tailW/3 - animCoefficient*tailW/3);
 
     }
 

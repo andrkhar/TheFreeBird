@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import work.hungrygnu.thefreebird.Assets;
 import work.hungrygnu.thefreebird.TheFreeBirdGame;
+import work.hungrygnu.thefreebird.game.Scores;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 
@@ -21,16 +22,23 @@ public class MenuScreen implements Screen {
     FitViewport viewportClose;
     Menu menu;
     MenuInput menuInterface;
-    public MenuScreen(TheFreeBirdGame game){
+    private final int poopedNumberPreviousGame;
+    private Scores scores;
+    public MenuScreen(TheFreeBirdGame game, int poopedNumberPreviousGame){
         this.game = game;
+        this.poopedNumberPreviousGame = poopedNumberPreviousGame;
+
     }
 
     @Override
     public void show() {
-        renderer = game.renderer;
+
         viewportClose = game.viewportClose;
+        renderer = game.renderer;
+        scores = new Scores(game.renderer, viewportClose.getCamera());
         menu = new Menu(game);
         menuInterface = new MenuInput(menu.bird, viewportClose);
+
 
 
     }
@@ -38,6 +46,7 @@ public class MenuScreen implements Screen {
     @Override
     public void render(float delta) {
         menu.update(delta);
+        scores.update(poopedNumberPreviousGame);
 
         // Drawing
         viewportClose.apply();
@@ -53,6 +62,7 @@ public class MenuScreen implements Screen {
         renderer.begin();
 
         menu.render();
+        scores.render();
 
         renderer.end();
         Gdx.gl20.glDisable(GL20.GL_BLEND);

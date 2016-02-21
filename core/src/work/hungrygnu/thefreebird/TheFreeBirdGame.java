@@ -2,8 +2,6 @@ package work.hungrygnu.thefreebird;
 
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -12,7 +10,7 @@ import static work.hungrygnu.thefreebird.Assets.*;
 import static work.hungrygnu.thefreebird.Constants.*;
 
 public class TheFreeBirdGame extends Game {
-	// TODO: VERY HIGH Work around the music loop issue
+	// TODO: HIGH Work around the music loop issue
 	// TODO: LOW Improve the code and comments quality overall.
 	// TODO: LOW Impove protection of public classes.
 	// TODO: Make Settings for Sound and Music
@@ -33,11 +31,11 @@ public class TheFreeBirdGame extends Game {
 
 		music.setLooping(true);
 		music.setVolume(0.1f);
-		startMenu();
+		startMenu(0);
 
 		}
-	public void startMenu(){
-		setScreen(new work.hungrygnu.thefreebird.menu.MenuScreen(this));
+	public void startMenu(int poopedCatsCounter){
+		setScreen(new work.hungrygnu.thefreebird.menu.MenuScreen(this, poopedCatsCounter));
 	}
 
 	public void startGame(){
@@ -50,8 +48,9 @@ public class TheFreeBirdGame extends Game {
 		music.stop();
 		music.setPosition(0);
 		music.dispose();
+		int poopedCatsCounter = level.bird.poopedCatsCounter;
 		level.init();
-		startMenu();
+		startMenu(poopedCatsCounter);
 	}
 
 

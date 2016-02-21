@@ -37,7 +37,7 @@ public class Level {
     public DelayedRemovalArray<Poop> poops;
 
     private work.hungrygnu.thefreebird.game.Bars bars;
-    private Scores scores;
+    public Scores scores;
 
     public Level(TheFreeBirdGame game){
         this.game = game;
