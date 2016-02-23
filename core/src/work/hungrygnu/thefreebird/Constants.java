@@ -106,9 +106,12 @@ public class Constants {
     public static final Color BUTTON_TEXT_COLOR = Color.WHITE;
 
     // Menu parameters========================================================
-    public static final Color MENU_SIDE_COLOR = new Color(1f, 0f, 0f, 0.4f);
-    public static final Color MENU_TOP_COLOR = new Color(0f, 0f, 1f, 0.4f);
-    public static final Color MENU_BOTTOM_COLOR = new Color(0f, 1f, 0f, 0.4f);
+    //public static final Color MENU_SIDE_COLOR = new Color(1f, 0f, 0f, 0.4f);
+    public static final Color MENU_SIDE_COLOR = new Color(TREE_COLOR_GREEN1.r, TREE_COLOR_GREEN1.g, TREE_COLOR_GREEN1.b, 0.8f);
+    public static final Color MENU_TOP_COLOR = new Color(0f, 0f, 1f, 0.5f);
+    //public static final Color MENU_BOTTOM_COLOR = new Color(0f, 1f, 0f, 0.4f);
+    public static final Color MENU_BOTTOM_COLOR = new Color(TREE_COLOR_BROWN.r, TREE_COLOR_BROWN.g, TREE_COLOR_BROWN.b, 0.9f);
+    //public static final Color MENU_BOTTOM_COLOR = new Color(1f, 0.f, 0.f, 0.7f);
     public static final float MENU_BOX_WIDTH = CAM_CLOSEUP_WIDTH/3f;
     // ========================================================================
 

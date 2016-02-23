@@ -110,6 +110,15 @@ public class Cat extends FacingDeDyObject {
                 position.x + earOffsetX, earBaseY,
                 position.x, earBaseY + earHeight);
 
+        // EAR2
+        float ear2DeltaX = (facingRight? earOffsetX: - earOffsetX);
+        float ear2DeltaY = -earOffsetX/6f;
+
+
+        renderer.triangle(position.x - earOffsetX + ear2DeltaX, earBaseY + ear2DeltaY ,
+                position.x+ ear2DeltaX + earOffsetX, earBaseY + ear2DeltaY,
+                position.x+ ear2DeltaX, earBaseY + earHeight + ear2DeltaY);
+
 
         // EYE
         renderer.setColor(Color.WHITE);
