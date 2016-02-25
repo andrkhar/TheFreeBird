@@ -124,16 +124,22 @@ public class Constants {
     public static final float ARROW_HEAD_HALFWIDTH = ARROW_WIDTH*0.5f;
 
     // Cat parameters
-    public static final Color CAT_COLOR_BODY = Color.DARK_GRAY;
-    public static final float CAT_SPEED_X = 100f;
-    public static final float CAT_BODY_RADIUS = 40f;
+    public static final Color CAT_COLOR_BODY = new Color(0.23f, 0.23f,  0.23f, 1);
+    public static final float CAT_HEAD_RADIUS = 30f;
+    public static final float CAT_HEAD_RADIUS_ONE_THIRD = CAT_HEAD_RADIUS/3f;
+    public static final float CAT_BODY_LENGTH = 3f * CAT_HEAD_RADIUS;
+    public static final float CAT_BODY_WIDTH = CAT_HEAD_RADIUS;
+    public static final int CAT_HEAD_SEGMENTS = 64;
+
+    public static final float CAT_SPEED_X = 90f;
+    public static final float CAT_BODY_RADIUS = CAT_BODY_LENGTH + CAT_HEAD_RADIUS;
     public static final float CAT_START_X_LEFT = -CAT_BODY_RADIUS;
     public static final float CAT_START_X_RIGHT = WORLD_WIDTH;
     public static final int CAT_RESPAWN_COEFFICIENT = 150; // BIGGER NUMBER - LESS CATS
     public static final int CAT_MAX_NUMBER = 100;
-    public static final float CAT_WALK_AMP = 0.05f;
-    public static final long CAT_WALK_PERIOD = 1000l;
-    public static final float CAT_Y = SKY_Y + CAT_BODY_RADIUS/2f;
+    public static final float CAT_WALK_AMP = 0.02f;
+    public static final long CAT_WALK_PERIOD = 340l;
+    public static final float CAT_Y = SKY_Y + CAT_BODY_WIDTH/2f;
 
     // Caterpillar parameters
     public static final Color CATERPILLAR_COLOR_BODY = Color.GOLDENROD;
