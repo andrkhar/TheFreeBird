@@ -13,9 +13,9 @@ import static work.hungrygnu.thefreebird.Constants.*;
  * Created by hungry on 12.02.16.
  */
 public class Cat extends FacingDeDyObject {
-    // TODO: Draw the cat
+
     // TODO: Make the cat jump when it is near the bird
-    // TODO: Optimise code using more CAT-constants instead of calculation.
+
 
     private long catCreateMillis;
     private Circle circle;
@@ -86,72 +86,66 @@ public class Cat extends FacingDeDyObject {
         float angle = 12 * getAnimationCoefficient();
 
         // tail
-        float tailWidth = CAT_HEAD_RADIUS_ONE_THIRD;
-        float tailLength = CAT_HEAD_RADIUS + tailWidth/2;
-        float tailX = facingRight? x : x + CAT_BODY_LENGTH - tailWidth;
-        float tailY = y + CAT_HEAD_RADIUS - tailWidth/2;
-        float tailOriginX = tailWidth/4f;
+        float tailX = facingRight? x : x + CAT_BODY_LENGTH - CAT_TAIL_WIDTH;
+        float tailY = y + CAT_HEAD_RADIUS - CAT_TAIL_WIDTH/2;
+        float tailOriginX = CAT_TAIL_WIDTH/4f;
         float tailOriginY = 0;
         float tailAngle = angle/4f;
 
-
         // legs
-        float legLength = 0.8f*tailLength;
-        float legWidth = tailWidth;
-
-        float legY = y + legWidth/4f;
+        float legY = y + CAT_LEG_WIDTH/4f;
         // handR
-        float handRX = facingRight?x + CAT_BODY_LENGTH - 2*legWidth:x;
+        float handRX = facingRight?x + CAT_BODY_LENGTH - 2*CAT_LEG_WIDTH:x;
         float handRY = legY;
-        float handROriginX= legWidth/2f;
+        float handROriginX= CAT_LEG_WIDTH/2f;
         float handROriginY= 0;
         float handRAngle = angle + 180;
         // handL
-        float handLX = facingRight?x + CAT_BODY_LENGTH - legWidth:handRX + legWidth;
+        float handLX = facingRight?x + CAT_BODY_LENGTH - CAT_LEG_WIDTH:handRX + CAT_LEG_WIDTH;
         float handLY = legY;
-        float handLOriginX= legWidth/2f;
+        float handLOriginX= CAT_LEG_WIDTH/2f;
         float handLOriginY= 0;
         float handLAngle = -angle + 180;
         // legR
-        float legRX = facingRight?x:x + CAT_BODY_LENGTH - legWidth*2f;
+        float legRX = facingRight?x:x + CAT_BODY_LENGTH - CAT_LEG_WIDTH*2f;
         float legRY = legY;
-        float legROriginX= legWidth/2f;
+        float legROriginX= CAT_LEG_WIDTH/2f;
         float legROriginY= 0;
         float legRAngle = -angle + 180;
         // legL
-        float legLX = facingRight?x + legWidth:legRX + legWidth;
+        float legLX = facingRight?x + CAT_LEG_WIDTH:legRX + CAT_LEG_WIDTH;
         float legLY = legY;
-        float legLOriginX= legWidth/2f;
+        float legLOriginX= CAT_LEG_WIDTH/2f;
         float legLOriginY= 0;
         float legLAngle = angle + 180;
 
         // TAIL
         renderer.setColor(Color.DARK_GRAY);
-        renderer.rect(tailX, tailY, tailOriginX, tailOriginY, tailWidth, tailLength, 1, 1, tailAngle);
+        renderer.rect(tailX, tailY, tailOriginX, tailOriginY, CAT_TAIL_WIDTH, CAT_TAIL_LENGTH, 1, 1, tailAngle);
 
         if (facingRight) {
             // LEFT LEGS FIRST
             renderer.setColor(Color.DARK_GRAY);
-            renderer.rect(handLX, handLY, handLOriginX, handLOriginY, legWidth, legLength, 1, 1, handLAngle);
-            renderer.rect(legLX, legLY, legLOriginX, legLOriginY, legWidth, legLength, 1, 1, legLAngle);
+            renderer.rect(handLX, handLY, handLOriginX, handLOriginY, CAT_LEG_WIDTH, CAT_LEG_LENGTH, 1, 1, handLAngle);
+            renderer.rect(legLX, legLY, legLOriginX, legLOriginY, CAT_LEG_WIDTH, CAT_LEG_LENGTH, 1, 1, legLAngle);
             // BODY
             renderer.setColor(CAT_COLOR_BODY);
             renderer.rect(x, y, CAT_BODY_LENGTH, CAT_BODY_WIDTH);
             // RIGHT LEGS
-            renderer.rect(handRX, handRY, handROriginX, handROriginY, legWidth, legLength, 1, 1, handRAngle);
-            renderer.rect(legRX, legRY, legROriginX, legROriginY, legWidth, legLength, 1, 1, legRAngle);
+            renderer.rect(handRX, handRY, handROriginX, handROriginY, CAT_LEG_WIDTH, CAT_LEG_LENGTH, 1, 1, handRAngle);
+            renderer.rect(legRX, legRY, legROriginX, legROriginY, CAT_LEG_WIDTH, CAT_LEG_LENGTH, 1, 1, legRAngle);
         }
         else{ // if facing left
             // RIGHT LEGS FIRST
             renderer.setColor(Color.DARK_GRAY);
-            renderer.rect(handRX, handRY, handROriginX, handROriginY, legWidth, legLength, 1, 1, handRAngle);
-            renderer.rect(legRX, legRY, legROriginX, legROriginY, legWidth, legLength, 1, 1, legRAngle);
+            renderer.rect(handRX, handRY, handROriginX, handROriginY, CAT_LEG_WIDTH, CAT_LEG_LENGTH, 1, 1, handRAngle);
+            renderer.rect(legRX, legRY, legROriginX, legROriginY, CAT_LEG_WIDTH, CAT_LEG_LENGTH, 1, 1, legRAngle);
             // BODY
             renderer.setColor(CAT_COLOR_BODY);
             renderer.rect(x, y, CAT_BODY_LENGTH, CAT_BODY_WIDTH);
             // LEFT LEGS
-            renderer.rect(handLX, handLY, handLOriginX, handLOriginY, legWidth, legLength, 1, 1, handLAngle);
-            renderer.rect(legLX, legLY, legLOriginX, legLOriginY, legWidth, legLength, 1, 1, legLAngle);
+            renderer.rect(handLX, handLY, handLOriginX, handLOriginY, CAT_LEG_WIDTH, CAT_LEG_LENGTH, 1, 1, handLAngle);
+            renderer.rect(legLX, legLY, legLOriginX, legLOriginY, CAT_LEG_WIDTH, CAT_LEG_LENGTH, 1, 1, legLAngle);
            }
 
 
@@ -168,88 +162,78 @@ public class Cat extends FacingDeDyObject {
 
     public void renderHead(){
 
+        float animCoefficient = getAnimationCoefficient();
+
         // CALCULATION OF COORDINATES
         // CENTER
         float x = circle.x;
         float y = circle.y;
 
         // NOSE
-        float noseSide = 0.7f*CAT_HEAD_RADIUS_ONE_THIRD;
-        float noseHalfSide = noseSide/2f;
-        float noseX = x-noseHalfSide;
-        float noseY = y - noseHalfSide;
+        float noseX = x - CAT_NOSE_HALFSIDE;
+        float noseY = y - CAT_NOSE_HALFSIDE;
 
         // MOUTH
-        float mouthWidth = CAT_HEAD_RADIUS_ONE_THIRD/2f;
-        float mouthHeight = mouthWidth/5f;
-        float mouthX = x - mouthWidth/2f;
+        float mouthX = x - CAT_MOUTH_WIDTH/2f;
         float mouthY = y - CAT_HEAD_RADIUS/2f;
 
         // EYES
-        float eyeRadius = mouthHeight;
         float eyeY = y + CAT_HEAD_RADIUS_ONE_THIRD;
         // LEFT EYE
-        float eyeLX = x - CAT_HEAD_RADIUS_ONE_THIRD;
+        float eyeLX = x - CAT_HEAD_RADIUS_ONE_THIRD - CAT_EYE_DELTA * animCoefficient;
         // RIGHT EYE
-        float eyeRX = x + CAT_HEAD_RADIUS_ONE_THIRD;
+        float eyeRX = x + CAT_HEAD_RADIUS_ONE_THIRD + CAT_EYE_DELTA * animCoefficient;
 
         // CHEEKS
-        float cheekRadius = 1.3f*CAT_HEAD_RADIUS_ONE_THIRD/2f;
-        float cheekY = y - cheekRadius;
-        float cheekLeftX = x - cheekRadius;
-        float cheekRightX = x + cheekRadius;
+        float cheekY = y - CAT_CHEEK_RADIUS;
+        float cheekLeftX = x - CAT_CHEEK_RADIUS;
+        float cheekRightX = x + CAT_CHEEK_RADIUS;
 
         // EARS
-        float earOffset = eyeRadius*2f;
-        float earX = x - CAT_HEAD_RADIUS + earOffset;
+        float earX = x - CAT_HEAD_RADIUS + CAT_EAR_OFFSET;
         float earY = y;
-        float earW = CAT_HEAD_RADIUS*2f - 2f*earOffset;
-        float earH = CAT_HEAD_RADIUS - 2f*earOffset;
 
         // MUSTACHE
-        float mustacheLength = 1.2f *CAT_HEAD_RADIUS_ONE_THIRD;
-        float mustacheWidth = mustacheLength/20f;
         float mustacheYMiddle = cheekY;
-        float mustacheDelta = 3f*mustacheWidth;
-        float mustacheYTop = mustacheYMiddle + mustacheDelta;
-        float mustacheYBottom = mustacheYMiddle - mustacheDelta;
+        float mustacheYTop = mustacheYMiddle + CAT_MUSTACHE_DELTA;
+        float mustacheYBottom = mustacheYMiddle - CAT_MUSTACHE_DELTA;
         float mustacheXLeft = cheekLeftX;
         float mustacheXRight = cheekRightX;
-        float mustacheXLeftEnd = cheekLeftX - mustacheLength;
-        float mustacheXRightEnd = cheekRightX + mustacheLength;
+        float mustacheXLeftEnd = cheekLeftX - CAT_MUSTACHE_LENGTH;
+        float mustacheXRightEnd = cheekRightX + CAT_MUSTACHE_LENGTH;
 
 
 
         // RENDERING
         renderer.setColor(CAT_COLOR_BODY);
-        renderer.rect(earX, earY, earW, earH);
+        renderer.rect(earX, earY, CAT_EAR_WIDTH, CAT_EAR_HEIGHT);
         // HEAD
         renderer.setColor(Color.DARK_GRAY);
         renderer.circle(x, y, CAT_HEAD_RADIUS, CAT_HEAD_SEGMENTS);
         // MOUTH
         renderer.setColor(Color.SALMON);
-        renderer.rect(mouthX, mouthY, mouthWidth, mouthHeight);
+        renderer.rect(mouthX, mouthY, CAT_MOUTH_WIDTH, CAT_MOUTH_HEIGHT + CAT_MOUTH_DELTA *(1+ animCoefficient));
         // EYES
         renderer.setColor(Color.FOREST);
-        renderer.circle(eyeLX, eyeY, eyeRadius);
-        renderer.circle(eyeRX, eyeY, eyeRadius);
+        renderer.circle(eyeLX, eyeY, CAT_EYE_RADIUS);
+        renderer.circle(eyeRX, eyeY, CAT_EYE_RADIUS);
         // CHEEKS
         renderer.setColor(Color.GRAY);
-        renderer.circle(cheekLeftX, cheekY, cheekRadius);
-        renderer.circle(cheekRightX, cheekY, cheekRadius);
+        renderer.circle(cheekLeftX, cheekY, CAT_CHEEK_RADIUS);
+        renderer.circle(cheekRightX, cheekY, CAT_CHEEK_RADIUS);
         // NOSE
         renderer.setColor(Color.PINK);
-        renderer.rect(noseX, noseY, noseHalfSide, noseHalfSide, noseSide, noseSide, 1, 1, 45);
+        renderer.rect(noseX, noseY, CAT_NOSE_HALFSIDE, CAT_NOSE_HALFSIDE, CAT_NOSE_SIDE, CAT_NOSE_SIDE, 1, 1, 45);
         // MUSTACHE
         renderer.setColor(Color.WHITE);
-        renderer.rectLine(mustacheXLeft-mustacheDelta, mustacheYMiddle, mustacheXLeftEnd, mustacheYMiddle, mustacheWidth);
-        renderer.rectLine(mustacheXRight+mustacheDelta, mustacheYMiddle, mustacheXRightEnd, mustacheYMiddle, mustacheWidth);
+        renderer.rectLine(mustacheXLeft-CAT_MUSTACHE_DELTA, mustacheYMiddle, mustacheXLeftEnd, mustacheYMiddle, CAT_MUSTACHE_WIDTH);
+        renderer.rectLine(mustacheXRight+CAT_MUSTACHE_DELTA, mustacheYMiddle, mustacheXRightEnd, mustacheYMiddle, CAT_MUSTACHE_WIDTH);
 
-        renderer.rectLine(mustacheXLeft, mustacheYTop, mustacheXLeftEnd, mustacheYTop + mustacheDelta, mustacheWidth);
-        renderer.rectLine(mustacheXRight, mustacheYTop, mustacheXRightEnd, mustacheYTop + mustacheDelta, mustacheWidth);
+        renderer.rectLine(mustacheXLeft, mustacheYTop, mustacheXLeftEnd, mustacheYTop + CAT_MUSTACHE_DELTA, CAT_MUSTACHE_WIDTH);
+        renderer.rectLine(mustacheXRight, mustacheYTop, mustacheXRightEnd, mustacheYTop + CAT_MUSTACHE_DELTA, CAT_MUSTACHE_WIDTH);
 
-        renderer.rectLine(mustacheXLeft, mustacheYBottom, mustacheXLeftEnd, mustacheYBottom - mustacheDelta, mustacheWidth);
-        renderer.rectLine(mustacheXRight, mustacheYBottom, mustacheXRightEnd, mustacheYBottom - mustacheDelta, mustacheWidth);
+        renderer.rectLine(mustacheXLeft, mustacheYBottom, mustacheXLeftEnd, mustacheYBottom - CAT_MUSTACHE_DELTA, CAT_MUSTACHE_WIDTH);
+        renderer.rectLine(mustacheXRight, mustacheYBottom, mustacheXRightEnd, mustacheYBottom - CAT_MUSTACHE_DELTA, CAT_MUSTACHE_WIDTH);
 
 
 

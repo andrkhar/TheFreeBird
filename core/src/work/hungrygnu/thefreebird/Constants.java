@@ -129,7 +129,25 @@ public class Constants {
     public static final float CAT_HEAD_RADIUS_ONE_THIRD = CAT_HEAD_RADIUS/3f;
     public static final float CAT_BODY_LENGTH = 3f * CAT_HEAD_RADIUS;
     public static final float CAT_BODY_WIDTH = CAT_HEAD_RADIUS;
-    public static final int CAT_HEAD_SEGMENTS = 64;
+    public static final int CAT_HEAD_SEGMENTS = 24;
+    public static final float CAT_CHEEK_RADIUS =  1.3f*CAT_HEAD_RADIUS_ONE_THIRD/2f;
+    public static final float CAT_MOUTH_WIDTH = CAT_HEAD_RADIUS_ONE_THIRD/2f;
+    public static final float CAT_MOUTH_HEIGHT = CAT_MOUTH_WIDTH/5f;
+    public static final float CAT_MOUTH_DELTA = CAT_MOUTH_HEIGHT/6f;
+    public static final float CAT_EYE_RADIUS = CAT_MOUTH_HEIGHT;
+    public static final float CAT_EAR_OFFSET = CAT_EYE_RADIUS*2f;
+    public static final float CAT_EYE_DELTA = 0.2f * CAT_EYE_RADIUS;
+    public static final float CAT_MUSTACHE_LENGTH = 1.2f *CAT_HEAD_RADIUS_ONE_THIRD;
+    public static final float CAT_MUSTACHE_WIDTH = CAT_MUSTACHE_LENGTH/20f;
+    public static final float CAT_MUSTACHE_DELTA = 3f*CAT_MUSTACHE_WIDTH;
+    public static final float CAT_NOSE_SIDE = 0.7f*CAT_HEAD_RADIUS_ONE_THIRD;
+    public static final float CAT_NOSE_HALFSIDE = CAT_NOSE_SIDE/2f;
+    public static final float CAT_EAR_WIDTH= CAT_HEAD_RADIUS*2f - 2f*CAT_EAR_OFFSET;
+    public static final float CAT_EAR_HEIGHT = CAT_HEAD_RADIUS - 2f*CAT_EAR_OFFSET;
+    public static final float CAT_TAIL_WIDTH = CAT_HEAD_RADIUS_ONE_THIRD;
+    public static final float CAT_TAIL_LENGTH = CAT_HEAD_RADIUS + CAT_TAIL_WIDTH/2f;
+    public static final float CAT_LEG_LENGTH = 0.8f* CAT_TAIL_LENGTH;
+    public static final float CAT_LEG_WIDTH = CAT_TAIL_WIDTH;
 
     public static final float CAT_SPEED_X = 90f;
     public static final float CAT_BODY_RADIUS = CAT_BODY_LENGTH + CAT_HEAD_RADIUS;
@@ -153,6 +171,8 @@ public class Constants {
     public static final float CATERPILLAR_Y_DELTA = CATERPILLAR_RADIUS/16f;
     public static final long CATERPILLAR_NANOTIME_FRAME = (long)(24000000000l*CATERPILLAR_Y_DELTA/CATERPILLAR_SPEED_X);
     public static final int CATERPILLAR_MAX_NUMBER = 150;
+    public static final float CATERPILLAR_EYE_Y_OFFSET =  CATERPILLAR_RADIUS/3f;
+    public static final float CATERPILLAR_EYE_RADIUS =  CATERPILLAR_RADIUS/8f;
 
     // Bar parameters
     public static final float BAR_WIDTH = CAM_CLOSEUP_WIDTH/5f;

@@ -1,5 +1,6 @@
 package work.hungrygnu.thefreebird.beings;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
@@ -16,6 +17,7 @@ public class Caterpillar extends FacingDeDyObject {
     // Caterpillar specific parameters -------
     private Array<Circle> circles; // For collision detection
     //  ---------
+    private Vector2 eye;
 
     public Caterpillar(ShapeRenderer renderer, Vector2 position,boolean facingRight) {
         super(renderer, position, facingRight);
@@ -36,6 +38,8 @@ public class Caterpillar extends FacingDeDyObject {
         }
 
         nanotimeAnimationStart = TimeUtils.nanoTime();
+
+        eye = new Vector2();
     }
 
     public void render(){
@@ -43,6 +47,8 @@ public class Caterpillar extends FacingDeDyObject {
         renderer.setColor(CATERPILLAR_COLOR_BODY);
         for (Circle circle : circles)
             renderer.circle(circle.x, circle.y, circle.radius, POOP_SEGMENTS);
+        renderer.setColor(Color.CORAL);
+        renderer.circle(eye.x,eye.y + CATERPILLAR_EYE_Y_OFFSET, CATERPILLAR_EYE_RADIUS);
 
     }
 
@@ -50,6 +56,9 @@ public class Caterpillar extends FacingDeDyObject {
         position.mulAdd(velocity, delta);
         respectBorders(2 * CATERPILLAR_BODY_LENGTH);
         updateCircles();
+        if (facingRight)
+            eye.set(circles.get(4).x, circles.get(4).y);
+        else eye.set(circles.get(0).x, circles.get(0).y);
 
     }
 
