@@ -39,8 +39,6 @@ public class TheFreeBirdGame extends Game {
 	}
 
 	public void startGame(){
-
-
 		setScreen(new work.hungrygnu.thefreebird.game.GameScreen(this));
 	}
 
