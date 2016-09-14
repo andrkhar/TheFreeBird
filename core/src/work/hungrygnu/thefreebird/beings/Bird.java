@@ -1,16 +1,14 @@
 package work.hungrygnu.thefreebird.beings;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.TimeUtils;
 
-import work.hungrygnu.thefreebird.game.Level;
-
 import static work.hungrygnu.thefreebird.Constants.*;
+import work.hungrygnu.thefreebird.game.Level;
 
 import static work.hungrygnu.thefreebird.Assets.*;
 /**
@@ -61,6 +59,13 @@ public class Bird extends DestructibleDynamicObject {
     public Circle bodyCircle;
     // -----------------------------------
 
+    // Bird moving parameters ----
+    protected boolean movingX;
+    protected boolean direction;
+    // -----------------------------------
+
+
+
     // Bird Timers -----------------------
     long timeCounterFoodTransform;
     long timeCounterEnergyLose;
@@ -68,6 +73,7 @@ public class Bird extends DestructibleDynamicObject {
 
     // Bird Land Colider
     private Vector2 landCollider;
+
 
     public Bird(Vector2 position, Level level) {
         super(level.renderer, position);
@@ -107,6 +113,7 @@ public class Bird extends DestructibleDynamicObject {
 
         landCollider = (new Vector2(position)).sub(0, BIRD_COLLIDER_OFFSET_Y);
 
+        movingX = false;
     }
 
     @Override
@@ -208,7 +215,7 @@ public class Bird extends DestructibleDynamicObject {
 
     }
 
-    public void dropPoop(){
+    private void dropPoop(){
         if (poop > 0) {
             level.poops.add(new Poop(level));
             poop--;
@@ -216,46 +223,65 @@ public class Bird extends DestructibleDynamicObject {
         }
     }
 
+    private void applyGravity(float delta){
+        velocity = velocity.add(0, GRAVITY*delta);
+
+    }
+
+    private void applyWindage(){
+        if (velocity.y < 0 && flying)
+            velocity.set(velocity.x, MathUtils.clamp(velocity.y, BIRD_WINDAGE, 0));
+
+    }
+
+    private void applyLandCollider(){
+        applyCollisionNest();
+    }
+
     private void move(float delta){
-        if (flying){
-
-            if (position.y > SKY_Y) {
-
-                float speedYChange = delta * GRAVITY;
-                if (velocity.y > 0){
-                    velocity.add(0f, speedYChange);
-
-                }
-                else {
-                    velocity.add(0f, speedYChange / BIRD_WINDAGE);
-                }
-                if (!Gdx.input.isTouched() || velocity.x == 0f){
-                    velocity.x = 0f;
-                    glyding = false;
-                }
-
-                position.mulAdd(velocity, delta);
-
-                respectBorders();
-
-
-            }
-            else{
-                flying = false;
-                position.y = BIRD_Y_WALK;
-                //velocity.x = 0;
-            }
-
-     }
-        else if(!inNest){
-            if (Gdx.input.isTouched()) {
-                position.add(velocity.x *delta, 0);
-                respectBorders();
-            }
-
-
-
-        }
+        applyGravity(delta);
+        applyWindage();
+        applyLandCollider();
+        position = position.mulAdd(velocity, delta);
+//        if (flying){
+//
+//            if (position.y > SKY_Y) {
+//
+//                float speedYChange = delta * GRAVITY;
+//                if (velocity.y > 0){
+//                    velocity.add(0f, speedYChange);
+//
+//                }
+//                else {
+//                    velocity.add(0f, speedYChange / BIRD_WINDAGE);
+//                }
+//                if (!Gdx.input.isTouched() || velocity.x == 0f){
+//                    velocity.x = 0f;
+//                    glyding = false;
+//                }
+//
+//                position.mulAdd(velocity, delta);
+//
+//                respectBorders();
+//
+//
+//            }
+//            else{
+//                flying = false;
+//                position.y = BIRD_Y_WALK;
+//                //velocity.x = 0;
+//            }
+//
+//     }
+//        else if(!inNest){
+//            if (Gdx.input.isTouched()) {
+//                position.add(velocity.x *delta, 0);
+//                respectBorders();
+//            }
+//
+//
+//
+//        }
     }
 
     @Override
@@ -286,64 +312,62 @@ public class Bird extends DestructibleDynamicObject {
         if (energy > 1) { // 1 is for checking should the bird continue living
             energy--;
             flying = true;
-            velocity.add(0f, BIRD_FLYUP_SPEED * (SKY_H - (position.y - SKY_Y)) / SKY_H);
-            position.add(0, BIRD_Y_WALK_DELTA+1f);// jump to fly more than BIRD_Y_WALK_DELTA
+            velocity.add(0f, 2*BIRD_FLYUP_SPEED * (SKY_H - (position.y - SKY_Y)) / SKY_H);
+            position.add(0, 2*BIRD_Y_WALK_DELTA+1f);// jump to fly more than BIRD_Y_WALK_DELTA
 
             nanotimeAnimationStart = TimeUtils.nanoTime();
             inNest = false;
         }
     }
 
-    public void glideRight(){
-        if (position.x < BIRD_BORDER_RIGHT) {
-            velocity.x = BIRD_FLY_X_SPEED;
-            glyding = true;
-        }
-    }
-    public void glideLeft(){
-        if (position.x > BIRD_BORDER_LEFT) {
-            velocity.x = -BIRD_FLY_X_SPEED;
-            glyding = true;
-        }
+    private void setProperVelocityX(){
+        if (glyding)
+            velocity.x = (direction?-1:1) * BIRD_FLY_X_SPEED;
+        else 
+            velocity.x = (direction?-1:1) * BIRD_WALK_X_SPEED;
+
     }
 
-    public void walkRight(){
-        if (position.x < BIRD_BORDER_RIGHT) {
-            velocity.x = BIRD_WALK_X_SPEED;
 
-        }
-    }
-    public void walkLeft(){
-        if (position.x > BIRD_BORDER_LEFT) {
-            velocity.x = -BIRD_WALK_X_SPEED;
-
+    private void startMoveX(boolean direction){
+        if(!inNest){
+            this.direction = direction;
+            movingX = true;
+            setProperGlyding();
+            setProperVelocityX();
         }
     }
 
-    public void moveRight(){
-        if(!inNest)
-        if (position.y >  SKY_Y )
-            glideRight();
+    public void askToStartMoveX(boolean direction){
+        if (isMovingX() && this.direction != direction )
+            stopMoveX();
         else
-            walkRight();
+            startMoveX(direction);
     }
-    public void moveLeft(){
-        if(!inNest)
-        if (position.y >  SKY_Y )
-            glideLeft();
-        else
-            walkLeft();
+
+    private void stopMoveX(){
+        movingX = false;
+    }
+
+    public void askToStopMoveX(){
+        stopMoveX();
+    }
+
+    private void setProperGlyding(){
+        if (position.y > SKY_Y)
+            glyding = true;
+    }
+
+    public void askToStartFlyUp(){
+        flyUP();
+    }
+
+    public void askToStartDropPoop(){
+        dropPoop();
     }
 
     public void respectBorders(){
-        if (position.x < BIRD_BORDER_LEFT) {
-            position.x = BIRD_BORDER_LEFT;
-            glyding = false;
-        }
-        else if (position.x > BIRD_BORDER_RIGHT){
-            position.x = BIRD_BORDER_RIGHT;
-            glyding = false;
-        }
+        position.x = MathUtils.clamp(position.x,BIRD_BORDER_LEFT, BIRD_BORDER_RIGHT );
     }
 
     private void checkCollisions() {
@@ -357,11 +381,11 @@ public class Bird extends DestructibleDynamicObject {
             checkCollisionCaterpillars();
 
             if (flying)
-                checkCollisionNest();
+                applyCollisionNest();
       }
     }
 
-    private void checkCollisionNest() {
+    private void applyCollisionNest() {
 
         if(level.nest.isPointInNest(landCollider)) {
 
@@ -370,7 +394,6 @@ public class Bird extends DestructibleDynamicObject {
             velocity.set(0,0);
 
         }
-
     }
 
     private void checkCollisionCaterpillars() {
@@ -395,5 +418,9 @@ public class Bird extends DestructibleDynamicObject {
     private void death(){
         active = false;
         soundDeath.play(0.5f);
+    }
+
+    public boolean isMovingX(){
+        return movingX;
     }
 }

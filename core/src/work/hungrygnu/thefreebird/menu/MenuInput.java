@@ -1,6 +1,7 @@
 package work.hungrygnu.thefreebird.menu;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -23,13 +24,23 @@ public class MenuInput extends InputAdapter {
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
         Vector2 unprojected = viewport.unproject(new Vector2(screenX, screenY));
         if (bird.bodyCircle.contains(unprojected)) {
-            bird.flyUP();
-            bird.visible = true;
-            Assets.soundKarr.play(0.4f);
-            Assets.music.play();
+            startGame();
         }
 
         return true;
+    }
+
+    public boolean keyDown (int keycode){
+        if(keycode == Input.Keys.UP)
+            startGame();
+        return true;
+    }
+
+    private void startGame(){
+        bird.flyUP();
+        bird.visible = true;
+        Assets.soundKarr.play(0.4f);
+        Assets.music.play();
     }
 
 

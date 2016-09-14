@@ -60,7 +60,7 @@ public class Constants {
     public static final Color BIRD_COLOR_TAIL = Color.SCARLET;
     public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
 
-    public static final float BIRD_WINDAGE = 50f; // 100 is ok
+    public static final float BIRD_WINDAGE = -20f; // 100 is ok
     public static final float BIRD_FLYUP_SPEED = 300f;
     public static final float BIRD_FLY_X_SPEED = 200f;
     public static final float BIRD_WALK_X_SPEED = 100f;
@@ -187,6 +187,9 @@ public class Constants {
     public static final float SCORES_PADDING = SCORES_SCALE/2;
     public static final float SCORES_RADIUS = SCORES_SCALE;
 
+    //Direction parameters
+    public static final boolean DIRECTION_LEFT = true;
+    public static final boolean DIRECTION_RIGHT = false;
 
 
 }
