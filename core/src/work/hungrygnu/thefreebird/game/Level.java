@@ -61,7 +61,7 @@ public class Level {
 
     public void init(){
 
-        Vector2 birdPosition = (new Vector2(tree.nestPosition)).add(0f, BIRD_NEST_START_OFFSET_Y);
+        Vector2 birdPosition = (new Vector2(tree.nestPosition)).add(0f, BIRD_NEST_POSITION_Y_OFFSET);
 
         bird = new work.hungrygnu.thefreebird.beings.Bird(birdPosition, this);
         cats = new DelayedRemovalArray<work.hungrygnu.thefreebird.beings.Cat>();

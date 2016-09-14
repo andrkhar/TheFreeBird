@@ -61,17 +61,23 @@ public class Constants {
     public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
 
 
-    public static final float BIRD_FLYUP_ACCELERATION = 300;
+    public static final float BIRD_FLYUP_ACCELERATION = 200;
     public static final float BIRD_FLYUP_MAX_SPEED = 100f;
     public static final float BIRD_FLYDOWN_MAX_SPEED = 50f;
-    public static final float BIRD_FLY_X_SPEED = 200f;
-    public static final float BIRD_WALK_X_SPEED = 100f;
-    public static final float BIRD_Y_WALK_DELTA = 2f;
-    public static final float BIRD_Y_WALK = SKY_Y - BIRD_Y_WALK_DELTA;
+    public static final float BIRD_GLIDE_SPEED_X = 200f;
+    public static final float BIRD_WALK_SPEED_X = 100f;
+
+
 
     public static final long BIRD_NANOTIME_FRAME = (long)(0.5*Math.pow(10, 9));
+
     public static final float BIRD_BORDER_RIGHT = WORLD_WIDTH - BIRD_BODY_RADIUS;
     public static final float BIRD_BORDER_LEFT = BIRD_BODY_RADIUS;
+    public static final float BIRD_BORDER_TOP = WORLD_HEIGHT;
+    public static final float BIRD_GLIDE_Y = SKY_Y;
+    public static final float BIRD_Y_GLIDE_DELTA = 2f;
+    public static final float BIRD_BORDER_BOTTOM = SKY_Y - BIRD_Y_GLIDE_DELTA;
+
 
     public static final int BIRD_FOOD_MAX = 10;
     public static final int BIRD_ENERGY_MAX = 50;
@@ -79,8 +85,8 @@ public class Constants {
     public static final long BIRD_FOOD_DIGEST_TIME = 1500l;
     public static final long BIRD_ENERGY_LOSE_TIME = 3000l;
 
-    public static final float BIRD_COLLIDER_OFFSET_Y = 4f*BIRD_SCALE;
-    public static final float BIRD_NEST_START_OFFSET_Y = BIRD_COLLIDER_OFFSET_Y + NEST_SCALE/3f;
+    public static final float BIRD_COLLIDER_OFFSET_Y = 2f*BIRD_SCALE;
+    public static final float BIRD_NEST_POSITION_Y_OFFSET = BIRD_COLLIDER_OFFSET_Y + NEST_SCALE/3f;
     // =========================================================
 
     // Camera parameters

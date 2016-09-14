@@ -87,6 +87,9 @@ public class GameInput extends InputAdapter {
             case Input.Keys.RIGHT:
                 bird.askToStopMoveX();
                 break;
+            case Input.Keys.UP:
+                bird.askToStopFlyUp();
+                break;
         }
 
         return true;

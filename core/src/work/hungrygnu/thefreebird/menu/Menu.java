@@ -41,7 +41,7 @@ public class Menu {
         land = new work.hungrygnu.thefreebird.world.Land(renderer);
         tree = new work.hungrygnu.thefreebird.world.Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
-        Vector2 birdPosition = (new Vector2(tree.nestPosition)).add(0f,BIRD_NEST_START_OFFSET_Y);
+        Vector2 birdPosition = (new Vector2(tree.nestPosition)).add(0f, BIRD_NEST_POSITION_Y_OFFSET);
         bird = new BirdButton(birdPosition,game.level);
 
         cameraPosition = new Vector2();
