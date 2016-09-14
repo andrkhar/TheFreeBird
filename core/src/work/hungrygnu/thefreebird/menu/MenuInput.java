@@ -37,11 +37,9 @@ public class MenuInput extends InputAdapter {
     }
 
     private void startGame(){
-        bird.flyUP();
+        bird.askToStartFlyUp();
         bird.visible = true;
         Assets.soundKarr.play(0.4f);
         Assets.music.play();
     }
-
-
 }

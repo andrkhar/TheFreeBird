@@ -14,7 +14,7 @@ public class Constants {
     public static final float WORLD_HEIGHT = 1080f;
     public static final Color BACKCOLOR = Color.BLACK;
     public static final float SCALE = WORLD_HEIGHT/48f;
-    public static final float GRAVITY = -500f;
+    public static final float GRAVITY = -100f;
 
     // Underground parameters
     public static final float UNDERGROUND_HEIGHT = WORLD_HEIGHT/16f;
@@ -60,8 +60,10 @@ public class Constants {
     public static final Color BIRD_COLOR_TAIL = Color.SCARLET;
     public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
 
-    public static final float BIRD_WINDAGE = -20f; // 100 is ok
-    public static final float BIRD_FLYUP_SPEED = 300f;
+
+    public static final float BIRD_FLYUP_ACCELERATION = 300;
+    public static final float BIRD_FLYUP_MAX_SPEED = 100f;
+    public static final float BIRD_FLYDOWN_MAX_SPEED = 50f;
     public static final float BIRD_FLY_X_SPEED = 200f;
     public static final float BIRD_WALK_X_SPEED = 100f;
     public static final float BIRD_Y_WALK_DELTA = 2f;

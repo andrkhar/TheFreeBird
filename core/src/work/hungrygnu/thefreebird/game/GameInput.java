@@ -49,6 +49,9 @@ public class GameInput extends InputAdapter {
             case RIGHT:
                 bird.askToStopMoveX();
                 break;
+            case TOP:
+                bird.askToStopFlyUp();
+                break;
         }
         return  true;
     }

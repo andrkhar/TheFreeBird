@@ -1,6 +1,7 @@
 package work.hungrygnu.thefreebird.beings;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.MathUtils;
@@ -62,6 +63,7 @@ public class Bird extends DestructibleDynamicObject {
     // Bird moving parameters ----
     protected boolean movingX;
     protected boolean direction;
+    protected boolean flyingUp;
     // -----------------------------------
 
 
@@ -114,6 +116,7 @@ public class Bird extends DestructibleDynamicObject {
         landCollider = (new Vector2(position)).sub(0, BIRD_COLLIDER_OFFSET_Y);
 
         movingX = false;
+        flyingUp = false;
     }
 
     @Override
@@ -175,7 +178,7 @@ public class Bird extends DestructibleDynamicObject {
 
         landCollider.set((new Vector2(position)).sub(0, BIRD_COLLIDER_OFFSET_Y));
 
-        checkCollisions();
+        //checkCollisions();
 
         transformFoodToEnergyAndPoop();
 
@@ -228,9 +231,9 @@ public class Bird extends DestructibleDynamicObject {
 
     }
 
-    private void applyWindage(){
-        if (velocity.y < 0 && flying)
-            velocity.set(velocity.x, MathUtils.clamp(velocity.y, BIRD_WINDAGE, 0));
+    private void applyClampOnVelocityY(){
+//        velocity.set(velocity.x,
+//                MathUtils.clamp(velocity.y, -BIRD_FLYDOWN_MAX_SPEED, BIRD_FLYUP_MAX_SPEED));
 
     }
 
@@ -238,10 +241,22 @@ public class Bird extends DestructibleDynamicObject {
         applyCollisionNest();
     }
 
+    private void applyFlyUp(float delta){
+        if (energy > 1){
+            velocity.add(0f, BIRD_FLYUP_ACCELERATION*delta);
+            energy--;
+        }
+    }
+
     private void move(float delta){
+        Gdx.app.log("Velocity Y", velocity.y + " Start");
         applyGravity(delta);
-        applyWindage();
-        applyLandCollider();
+        Gdx.app.log("Velocity Y", velocity.y + " Gravity applied");
+        if(flyingUp) applyFlyUp(delta);
+        else applyLandCollider();
+        Gdx.app.log("Velocity Y", velocity.y + " FlyUp " + (flyingUp?"":"do not") + " applied");
+        applyClampOnVelocityY();
+        Gdx.app.log("Velocity Y", velocity.y + " Clamp applied");
         position = position.mulAdd(velocity, delta);
 //        if (flying){
 //
@@ -308,26 +323,17 @@ public class Bird extends DestructibleDynamicObject {
 
     }
 
-    public void flyUP(){
-        if (energy > 1) { // 1 is for checking should the bird continue living
-            energy--;
-            flying = true;
-            velocity.add(0f, 2*BIRD_FLYUP_SPEED * (SKY_H - (position.y - SKY_Y)) / SKY_H);
-            position.add(0, 2*BIRD_Y_WALK_DELTA+1f);// jump to fly more than BIRD_Y_WALK_DELTA
 
-            nanotimeAnimationStart = TimeUtils.nanoTime();
-            inNest = false;
-        }
+
+
+
+    // ============================MoveX===================================
+    public void askToStartMoveX(boolean direction){
+        if (isMovingX() && this.direction != direction )
+            stopMoveX();
+        else
+            startMoveX(direction);
     }
-
-    private void setProperVelocityX(){
-        if (glyding)
-            velocity.x = (direction?-1:1) * BIRD_FLY_X_SPEED;
-        else 
-            velocity.x = (direction?-1:1) * BIRD_WALK_X_SPEED;
-
-    }
-
 
     private void startMoveX(boolean direction){
         if(!inNest){
@@ -338,33 +344,54 @@ public class Bird extends DestructibleDynamicObject {
         }
     }
 
-    public void askToStartMoveX(boolean direction){
-        if (isMovingX() && this.direction != direction )
-            stopMoveX();
-        else
-            startMoveX(direction);
+    private void setProperGlyding(){
+        if (position.y > SKY_Y)
+            glyding = true;
     }
 
-    private void stopMoveX(){
-        movingX = false;
+    private void setProperVelocityX(){
+        if (glyding)
+            velocity.x = (direction?-1:1) * BIRD_FLY_X_SPEED;
+        else
+            velocity.x = (direction?-1:1) * BIRD_WALK_X_SPEED;
+
     }
 
     public void askToStopMoveX(){
         stopMoveX();
     }
 
-    private void setProperGlyding(){
-        if (position.y > SKY_Y)
-            glyding = true;
+    private void stopMoveX(){
+        movingX = false;
     }
+    // ============================MoveX===================================
 
+    // ============================FlyUp===================================
     public void askToStartFlyUp(){
-        flyUP();
+        startFlyUp();
     }
 
+    private void startFlyUp(){
+        if (energy > 1) { // 1 is for checking should the bird continue living
+            flyingUp = true;
+            flying = true;
+            nanotimeAnimationStart = TimeUtils.nanoTime();
+        }
+    }
+
+    public void askToStopFlyUp(){
+        stopFlyUp();
+    }
+    private void stopFlyUp(){
+        flyingUp = false;
+    }
+    // ============================FlyUp===================================
+
+    // ==========================DropPoop==================================
     public void askToStartDropPoop(){
         dropPoop();
     }
+    // ==========================DropPoop==================================
 
     public void respectBorders(){
         position.x = MathUtils.clamp(position.x,BIRD_BORDER_LEFT, BIRD_BORDER_RIGHT );
