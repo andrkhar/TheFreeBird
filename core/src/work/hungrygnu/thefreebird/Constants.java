@@ -199,5 +199,7 @@ public class Constants {
     public static final boolean DIRECTION_LEFT = true;
     public static final boolean DIRECTION_RIGHT = false;
 
+    //Input parameters
+    public static final int MAX_NUMBER_OF_FINGERS_PLAYER_HAS_TO_PLAY = 10;
 
 }

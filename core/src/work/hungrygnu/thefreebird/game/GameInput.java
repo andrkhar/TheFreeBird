@@ -3,6 +3,9 @@ package work.hungrygnu.thefreebird.game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+
+import work.hungrygnu.thefreebird.beings.Bird;
+
 import static work.hungrygnu.thefreebird.Constants.*;
 
 /**
@@ -12,20 +15,28 @@ public class GameInput extends InputAdapter {
     // TODO: LOW Improve Desktop Interface.
 
 
-    GameScreen screen;
-    work.hungrygnu.thefreebird.beings.Bird bird;
-    Level level;
+    private GameScreen screen;
+    private Bird bird;
+    private ScreenZone[] pointersScreenZones;
+    private boolean[] pointers;
 
-    public GameInput(GameScreen screen, Level level){
+
+    public GameInput(GameScreen screen, Bird bird){
 
         Gdx.input.setInputProcessor(this);
-        bird = level.bird;
+        this.bird = bird;
         this.screen = screen;
-        this.level = level;
+
+        pointersScreenZones = new ScreenZone[MAX_NUMBER_OF_FINGERS_PLAYER_HAS_TO_PLAY];
+        pointers = new boolean[MAX_NUMBER_OF_FINGERS_PLAYER_HAS_TO_PLAY];
+
     }
 
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
-        switch (getScreenZone(screenX, screenY)){
+        ScreenZone touchedZone = getScreenZone(screenX, screenY);
+        pointersScreenZones[pointer] = touchedZone;
+        PointersOnZonesManager.add(touchedZone);
+        switch (touchedZone){
             case LEFT:
                 bird.askToStartMoveX(DIRECTION_LEFT);
                 break;
@@ -41,17 +52,40 @@ public class GameInput extends InputAdapter {
         return  true;
     }
 
+    // TODO: 9/14/2016 if bird moving left but you drag to not left zone and up
+    public boolean touchDragged (int screenX, int screenY, int pointer) {
+        ScreenZone touchedZone = getScreenZone(screenX, screenY);
+        if(pointersScreenZones[pointer] != touchedZone) {
+            PointersOnZonesManager.sub(pointersScreenZones[pointer]);
+            ifHasNoPointersOnZoneAskToStopMoveX(touchedZone);
+            ifHasNoPointersOnZoneAskToStopFlyUp(touchedZone);
+            pointersScreenZones[pointer] = touchedZone;
+            PointersOnZonesManager.add(touchedZone);
+            switch (touchedZone) {
+                case LEFT:
+                    bird.askToStartMoveX(DIRECTION_LEFT);
+                    break;
+                case RIGHT:
+                    bird.askToStartMoveX(DIRECTION_RIGHT);
+                    break;
+                case TOP:
+                    bird.askToStartFlyUp();
+                    break;
+            }
+        }
+        return  true;
+    }
+
     public boolean touchUp (int screenX, int screenY, int pointer, int button) {
-        switch (getScreenZone(screenX, screenY)){
+        ScreenZone touchedZone = getScreenZone(screenX, screenY);
+        PointersOnZonesManager.sub(touchedZone);
+        switch (touchedZone){
             case LEFT:
-                bird.askToStopMoveX();
-                break;
             case RIGHT:
-                bird.askToStopMoveX();
+                ifHasNoPointersOnZoneAskToStopMoveX(touchedZone);
                 break;
             case TOP:
-                bird.askToStopFlyUp();
-                break;
+                ifHasNoPointersOnZoneAskToStopFlyUp(touchedZone);
         }
         return  true;
     }
@@ -95,25 +129,6 @@ public class GameInput extends InputAdapter {
         return true;
     }
 
-
-    // TODO: 9/14/2016 if bird moving left but you drag to not left zone and up 
-//    public boolean touchDragged (int screenX, int screenY, int pointer) {
-//        switch (getScreenZone(screenX, screenY)){
-//            case LEFT:
-//                bird.moveLeft();
-//                break;
-//            case RIGHT:
-//                bird.moveRight();
-//                break;
-//            case TOP:
-//                ; // DO NOTHING ON DRAG;
-//                break;
-//            case BOTTOM:
-//                ; // DO NOTHING ON DRAG;
-//        }
-//        return  true;
-//    }
-
     public ScreenZone getScreenZone(int x, int y){
         int screenW = Gdx.graphics.getWidth();
         int screenH = Gdx.graphics.getHeight();
@@ -125,6 +140,16 @@ public class GameInput extends InputAdapter {
             return ScreenZone.LEFT;
         else
             return ScreenZone.BOTTOM;
+    }
+
+    private void ifHasNoPointersOnZoneAskToStopMoveX(ScreenZone touchedZone){
+        if (!PointersOnZonesManager.zoneHasPointers(touchedZone))
+            bird.askToStopMoveX();
+    }
+
+    private void ifHasNoPointersOnZoneAskToStopFlyUp(ScreenZone touchedZone){
+        if (!PointersOnZonesManager.zoneHasPointers(touchedZone))
+            bird.askToStopFlyUp();
     }
 
     public enum ScreenZone{

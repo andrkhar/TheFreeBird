@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.TimeUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 import work.hungrygnu.thefreebird.TheFreeBirdGame;
+import work.hungrygnu.thefreebird.beings.Bird;
 
 import static work.hungrygnu.thefreebird.Constants.*;
 /**
@@ -23,7 +24,7 @@ public class GameScreen implements Screen {
     public boolean closeUpView;
 
     public GameInput gameInterface;
-    public work.hungrygnu.thefreebird.beings.Bird bird;
+    public Bird bird;
 
     public GameScreen(TheFreeBirdGame game){
         this.game = game;
@@ -40,7 +41,7 @@ public class GameScreen implements Screen {
 
         closeUpView = true;
 
-        gameInterface = new GameInput(this, game.level);
+        gameInterface = new GameInput(this, bird);
 
 
     }

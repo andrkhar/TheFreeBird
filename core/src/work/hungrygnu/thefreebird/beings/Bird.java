@@ -305,11 +305,15 @@ public class Bird extends DestructibleDynamicObject {
     // ===================================RENDER=========================================
 
     // ============================MoveX===================================
-    public void askToStartMoveX(boolean direction){
-        if (isMovingX() && this.direction != direction )
+    public boolean askToStartMoveX(boolean direction){
+        if (isMovingX() && this.direction != direction ){
             stopMoveX();
-        else
+            return false;
+        }
+        else {
             startMoveX(direction);
+            return true;
+        }
     }
 
     private void startMoveX(boolean direction){
@@ -327,9 +331,10 @@ public class Bird extends DestructibleDynamicObject {
     // ============================MoveX===================================
 
     // ============================FlyUp===================================
-    public void askToStartFlyUp(){
+    public boolean askToStartFlyUp(){
         if(!flyingUp)
             startFlyUp();
+        return true;
     }
 
     private void startFlyUp(){
