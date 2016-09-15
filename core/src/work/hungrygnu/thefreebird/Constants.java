@@ -14,7 +14,7 @@ public class Constants {
     public static final float WORLD_HEIGHT = 1080f;
     public static final Color BACKCOLOR = Color.BLACK;
     public static final float SCALE = WORLD_HEIGHT/48f;
-    public static final float GRAVITY = -100f;
+    public static final float GRAVITY = -150f;
 
     // Underground parameters
     public static final float UNDERGROUND_HEIGHT = WORLD_HEIGHT/16f;
@@ -61,7 +61,7 @@ public class Constants {
     public static final int BIRD_SEGMENTS = TREE_SEGMENTS;
 
 
-    public static final float BIRD_FLYUP_ACCELERATION = 200;
+    public static final float BIRD_FLYUP_ACCELERATION = 300;
     public static final float BIRD_FLYUP_MAX_SPEED = 100f;
     public static final float BIRD_FLYDOWN_MAX_SPEED = 50f;
     public static final float BIRD_GLIDE_SPEED_X = 200f;
@@ -80,10 +80,11 @@ public class Constants {
 
 
     public static final int BIRD_FOOD_MAX = 10;
-    public static final int BIRD_ENERGY_MAX = 50;
+    public static final int BIRD_ENERGY_MAX = 500;
     public static final int BIRD_POOP_MAX = 5;
     public static final long BIRD_FOOD_DIGEST_TIME = 1500l;
     public static final long BIRD_ENERGY_LOSE_TIME = 3000l;
+    public static final int BIRD_ENERGY_ADD = 50;
 
     public static final float BIRD_COLLIDER_OFFSET_Y = 2f*BIRD_SCALE;
     public static final float BIRD_NEST_POSITION_Y_OFFSET = BIRD_COLLIDER_OFFSET_Y + NEST_SCALE/3f;

@@ -14,13 +14,13 @@ public final class PointersOnZonesManager {
         switch (zone){
             case LEFT:
                 zones[0]++;
-                Gdx.app.log(zone.name(), ""+zones[0]);
+//                Gdx.app.log(zone.name(), ""+zones[0]);
             case RIGHT:
                 zones[1]++;
-                Gdx.app.log(zone.name(), ""+zones[1]);
+//                Gdx.app.log(zone.name(), ""+zones[1]);
             case TOP:
                 zones[2]++;
-                Gdx.app.log(zone.name(), ""+zones[2]);
+//                Gdx.app.log(zone.name(), ""+zones[2]);
             default:
                 return;
         }
@@ -30,13 +30,13 @@ public final class PointersOnZonesManager {
         switch (zone){
             case LEFT:
                 zones[0]--;
-                Gdx.app.log(zone.name(), ""+zones[0]);
+//                Gdx.app.log(zone.name(), ""+zones[0]);
             case RIGHT:
                 zones[1]--;
-                Gdx.app.log(zone.name(), ""+zones[1]);
+//                Gdx.app.log(zone.name(), ""+zones[1]);
             case TOP:
                 zones[2]--;
-                Gdx.app.log(zone.name(), ""+zones[2]);
+//                Gdx.app.log(zone.name(), ""+zones[2]);
             default:
                 return;
         }

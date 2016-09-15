@@ -73,6 +73,7 @@ public class MenuScreen implements Screen {
             levelBird.position.set(menu.bird.position);
             levelBird.velocity.set(menu.bird.velocity);
             // TODO: 9/14/2016 landCollider levelBird.r
+            levelBird.updateLandCollider();
             levelBird.flying = true;
             levelBird.inNest = false;
             levelBird.recalculatePoints();

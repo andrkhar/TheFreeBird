@@ -19,9 +19,9 @@ public class Bird extends DestructibleDynamicObject {
     // TODO: Make losing little energy if flying and not gliding and if walking
     // TODO: Animate the bird death.
 
-    Level level;
+    private Level level;
 
-    final long timeStart; // in Millis
+    private final long timeStart; // in Millis
     public long timeSinceStart; // in Millis
     public int poopedCatsCounter;
 
@@ -172,13 +172,17 @@ public class Bird extends DestructibleDynamicObject {
     public void update(float delta) {
         move(delta);
         super.update(delta);
-        landCollider.set((new Vector2(position)).sub(0, BIRD_COLLIDER_OFFSET_Y));
+        updateLandCollider();
         checkCollisions();
         transformFoodToEnergyAndPoop();
         loseEnergyOrDie();
         timeSinceStart = TimeUtils.timeSinceMillis(timeStart);
     }
     // ===================================UPDATE========================================
+
+    public void updateLandCollider(){
+        landCollider.set((new Vector2(position)).sub(0, BIRD_COLLIDER_OFFSET_Y));
+    }
 
     private void loseEnergyOrDie() {
         if(TimeUtils.timeSinceMillis(timeCounterEnergyLose) > BIRD_ENERGY_LOSE_TIME){
@@ -194,13 +198,11 @@ public class Bird extends DestructibleDynamicObject {
     private void transformFoodToEnergyAndPoop() {
         if ((TimeUtils.timeSinceMillis(timeCounterFoodTransform) > BIRD_FOOD_DIGEST_TIME) && (food > 0))
         {
-
             if (energy < BIRD_ENERGY_MAX){
-                energy += 5;
+                energy += BIRD_ENERGY_ADD;
                 if (energy > BIRD_ENERGY_MAX)
                     energy = BIRD_ENERGY_MAX;
             }
-
             if (poop < BIRD_POOP_MAX)
                 poop++;
             else
@@ -208,7 +210,6 @@ public class Bird extends DestructibleDynamicObject {
             timeCounterFoodTransform = TimeUtils.millis();
             food--;
         }
-
     }
 
     private void dropPoop(){
@@ -237,7 +238,7 @@ public class Bird extends DestructibleDynamicObject {
     private void applyFlyUp(float delta){
         if (energy > 1){
             velocity.add(0f, BIRD_FLYUP_ACCELERATION*delta);
-            //energy--;
+            energy--;
         }
     }
 
@@ -254,28 +255,19 @@ public class Bird extends DestructibleDynamicObject {
     }
 
     private void setProperVelocityY(float delta){
-//        Gdx.app.log("Velocity Y", velocity.y + " Start");
-
         applyGravity(delta);
-//        Gdx.app.log("Velocity Y", velocity.y + " Gravity applied");
-
         if(flyingUp) applyFlyUp(delta);
         else applyLandCollider();
-//        Gdx.app.log("Velocity Y", velocity.y + " FlyUp " + (flyingUp?"":"do not") + " applied");
-
         clampVelocityY();
-//        Gdx.app.log("Velocity Y", velocity.y + " Clamp applied");
     }
     // ============================serProperVelocity===================================
 
     // ===================================move=========================================
     private void move(float delta){
-
         setProperVelocityX();
         setProperVelocityY(delta);
         position = position.mulAdd(velocity, delta);
         clampPosition();
-
     }
     // ===================================move=========================================
 
@@ -348,6 +340,7 @@ public class Bird extends DestructibleDynamicObject {
     public void askToStopFlyUp(){
         stopFlyUp();
     }
+
     private void stopFlyUp(){
         flyingUp = false;
     }
