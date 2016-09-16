@@ -18,6 +18,7 @@ public class GameInput extends InputAdapter {
     private GameScreen screen;
     private Bird bird;
     private ScreenZone[] screenZones;
+    private boolean[] leftAndRightButtons;
 
 
 
@@ -28,6 +29,7 @@ public class GameInput extends InputAdapter {
         this.screen = screen;
 
         screenZones = new ScreenZone[MAX_NUMBER_OF_FINGERS_PLAYER_HAS_TO_PLAY];
+        leftAndRightButtons = new boolean[2];
 
     }
 
@@ -36,7 +38,7 @@ public class GameInput extends InputAdapter {
         screenZones[pointer] = touchedZone;
         if(touchedZone == ScreenZone.BOTTOM)
             bird.askToStartDropPoop();
-        else updateOrders();
+        else updateOrdersTouch();
         return  true;
     }
 
@@ -49,7 +51,7 @@ public class GameInput extends InputAdapter {
         ScreenZone touchedZone = getScreenZone(screenX, screenY);
         if(notTheSameZone(touchedZone, pointer)) {
             screenZones[pointer] = touchedZone;
-            updateOrders();
+            updateOrdersTouch();
 
         }
         return  true;
@@ -58,11 +60,11 @@ public class GameInput extends InputAdapter {
     public boolean touchUp (int screenX, int screenY, int pointer, int button) {
         //ScreenZone touchedZone = getScreenZone(screenX, screenY);
         screenZones[pointer] = null;
-        updateOrders();
+        updateOrdersTouch();
         return  true;
     }
 
-    private void updateOrders(){
+    private void updateOrdersTouch(){
         boolean left = false;
         boolean right = false;
         boolean up = false;
@@ -90,13 +92,27 @@ public class GameInput extends InputAdapter {
             bird.askToStartFlyUp();
     }
 
+//    private void updateOrdersButtons(){
+//        bird.askToStopMoveX();
+//        Gdx.app.log("left",Gdx.input.isButtonPressed(Input.Keys.LEFT)+"");
+//        Gdx.app.log("right",Gdx.input.isButtonPressed(Input.Keys.RIGHT)+"");
+//        if(Gdx.input.isButtonPressed(Input.Keys.LEFT) && !Gdx.input.isButtonPressed(Input.Keys.RIGHT))
+//            bird.askToStartMoveX(DIRECTION_LEFT);
+//        else if(!Gdx.input.isButtonPressed(Input.Keys.LEFT) && Gdx.input.isButtonPressed(Input.Keys.RIGHT))
+//            bird.askToStartMoveX(DIRECTION_RIGHT);
+//    }
+
     public boolean keyDown(int keycode){
         switch (keycode){
             case Input.Keys.LEFT:
-                bird.askToStartMoveX(DIRECTION_LEFT);
+                if(!Gdx.input.isButtonPressed(Input.Keys.RIGHT))
+                    leftAndRightButtons[0] = true;
+                    bird.askToStartMoveX(DIRECTION_LEFT);
                 break;
             case Input.Keys.RIGHT:
-                bird.askToStartMoveX(DIRECTION_RIGHT);
+                if(!Gdx.input.isButtonPressed(Input.Keys.LEFT))
+                    leftAndRightButtons[1] = true;
+                    bird.askToStartMoveX(DIRECTION_RIGHT);
                 break;
             case Input.Keys.UP:
                 bird.askToStartFlyUp();
@@ -117,13 +133,19 @@ public class GameInput extends InputAdapter {
                 break;
             case Input.Keys.LEFT:
                 bird.askToStopMoveX();
+                leftAndRightButtons[0]=false;
+                if(leftAndRightButtons[1])
+                    bird.askToStartMoveX(DIRECTION_RIGHT);
                 break;
             case Input.Keys.RIGHT:
                 bird.askToStopMoveX();
+                leftAndRightButtons[1]=false;
+                if(leftAndRightButtons[0])
+                    bird.askToStartMoveX(DIRECTION_LEFT);
                 break;
             case Input.Keys.UP:
                 bird.askToStopFlyUp();
-                break;
+
         }
 
         return true;

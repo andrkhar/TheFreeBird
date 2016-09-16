@@ -417,5 +417,7 @@ public class Bird extends DestructibleDynamicObject {
         return (position.y > BIRD_GLIDE_Y) && isMovingX() && !flyingUp;
     }
 
+    public boolean getDirection(){ return direction; }
+
 
 }
