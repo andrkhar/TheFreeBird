@@ -17,8 +17,8 @@ public class GameInput extends InputAdapter {
 
     private GameScreen screen;
     private Bird bird;
-    private ScreenZone[] pointersScreenZones;
-    private boolean[] pointers;
+    private ScreenZone[] screenZones;
+
 
 
     public GameInput(GameScreen screen, Bird bird){
@@ -27,67 +27,67 @@ public class GameInput extends InputAdapter {
         this.bird = bird;
         this.screen = screen;
 
-        pointersScreenZones = new ScreenZone[MAX_NUMBER_OF_FINGERS_PLAYER_HAS_TO_PLAY];
-        pointers = new boolean[MAX_NUMBER_OF_FINGERS_PLAYER_HAS_TO_PLAY];
+        screenZones = new ScreenZone[MAX_NUMBER_OF_FINGERS_PLAYER_HAS_TO_PLAY];
 
     }
 
     public boolean touchDown (int screenX, int screenY, int pointer, int button) {
         ScreenZone touchedZone = getScreenZone(screenX, screenY);
-        pointersScreenZones[pointer] = touchedZone;
-        PointersOnZonesManager.add(touchedZone);
-        switch (touchedZone){
-            case LEFT:
-                bird.askToStartMoveX(DIRECTION_LEFT);
-                break;
-            case RIGHT:
-                bird.askToStartMoveX(DIRECTION_RIGHT);
-                break;
-            case TOP:
-                bird.askToStartFlyUp();
-                break;
-            case BOTTOM:
-                bird.askToStartDropPoop();
-        }
+        screenZones[pointer] = touchedZone;
+        if(touchedZone == ScreenZone.BOTTOM)
+            bird.askToStartDropPoop();
+        else updateOrders();
         return  true;
+    }
+
+    private boolean notTheSameZone(ScreenZone zone, int pointer){
+        return screenZones[pointer] != zone;
     }
 
     // TODO: 9/14/2016 if bird moving left but you drag to not left zone and up
     public boolean touchDragged (int screenX, int screenY, int pointer) {
         ScreenZone touchedZone = getScreenZone(screenX, screenY);
-        if(pointersScreenZones[pointer] != touchedZone) {
-            PointersOnZonesManager.sub(pointersScreenZones[pointer]);
-            ifHasNoPointersOnZoneAskToStopMoveX(touchedZone);
-            ifHasNoPointersOnZoneAskToStopFlyUp(touchedZone);
-            pointersScreenZones[pointer] = touchedZone;
-            PointersOnZonesManager.add(touchedZone);
-            switch (touchedZone) {
-                case LEFT:
-                    bird.askToStartMoveX(DIRECTION_LEFT);
-                    break;
-                case RIGHT:
-                    bird.askToStartMoveX(DIRECTION_RIGHT);
-                    break;
-                case TOP:
-                    bird.askToStartFlyUp();
-                    break;
-            }
+        if(notTheSameZone(touchedZone, pointer)) {
+            screenZones[pointer] = touchedZone;
+            updateOrders();
+
         }
         return  true;
     }
 
     public boolean touchUp (int screenX, int screenY, int pointer, int button) {
-        ScreenZone touchedZone = getScreenZone(screenX, screenY);
-        PointersOnZonesManager.sub(touchedZone);
-        switch (touchedZone){
-            case LEFT:
-            case RIGHT:
-                ifHasNoPointersOnZoneAskToStopMoveX(touchedZone);
-                break;
-            case TOP:
-                ifHasNoPointersOnZoneAskToStopFlyUp(touchedZone);
-        }
+        //ScreenZone touchedZone = getScreenZone(screenX, screenY);
+        screenZones[pointer] = null;
+        updateOrders();
         return  true;
+    }
+
+    private void updateOrders(){
+        boolean left = false;
+        boolean right = false;
+        boolean up = false;
+        for (ScreenZone zone : screenZones){
+            if (zone != null)
+                switch (zone){
+                    case LEFT:
+                        left = true;
+                        break;
+                    case RIGHT:
+                        right = true;
+                        break;
+                    case TOP:
+                        up = true;
+                        break;
+                }
+        }
+        bird.askToStopFlyUp();
+        bird.askToStopMoveX();
+        if(left && !right)
+            bird.askToStartMoveX(DIRECTION_LEFT);
+        else if(right && !left)
+            bird.askToStartMoveX(DIRECTION_RIGHT);
+        if(up)
+            bird.askToStartFlyUp();
     }
 
     public boolean keyDown(int keycode){
@@ -140,22 +140,5 @@ public class GameInput extends InputAdapter {
             return ScreenZone.LEFT;
         else
             return ScreenZone.BOTTOM;
-    }
-
-    private void ifHasNoPointersOnZoneAskToStopMoveX(ScreenZone touchedZone){
-        if (!PointersOnZonesManager.zoneHasPointers(touchedZone))
-            bird.askToStopMoveX();
-    }
-
-    private void ifHasNoPointersOnZoneAskToStopFlyUp(ScreenZone touchedZone){
-        if (!PointersOnZonesManager.zoneHasPointers(touchedZone))
-            bird.askToStopFlyUp();
-    }
-
-    public enum ScreenZone{
-        LEFT,
-        RIGHT,
-        TOP,
-        BOTTOM
     }
 }

@@ -249,6 +249,7 @@ public class Bird extends DestructibleDynamicObject {
 
     // ============================serProperVelocity===================================
     private void setProperVelocityX(){
+
         if(movingX)
             velocity.x = (direction?-1:1)*(isGlyding()?BIRD_GLIDE_SPEED_X: BIRD_WALK_SPEED_X);
         else velocity.x = 0;
@@ -261,6 +262,14 @@ public class Bird extends DestructibleDynamicObject {
         clampVelocityY();
     }
     // ============================serProperVelocity===================================
+
+//    private setVelocityAccordingPointers(){
+//
+//        for(int i=0; i<MAX_NUMBER_OF_FINGERS_PLAYER_HAS_TO_PLAY; i++){
+//
+//        }
+//    }
+
 
     // ===================================move=========================================
     private void move(float delta){
