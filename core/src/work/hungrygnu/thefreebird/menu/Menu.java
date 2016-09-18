@@ -19,7 +19,7 @@ public class Menu {
     private work.hungrygnu.thefreebird.world.Land land;
     private work.hungrygnu.thefreebird.world.Tree tree;
     private Nest nest;
-    public BirdButton bird;
+    public BirdButton birdButton;
 
     // Parameters for screen zones rendering
 
@@ -42,7 +42,7 @@ public class Menu {
         tree = new work.hungrygnu.thefreebird.world.Tree(renderer);
         nest = new Nest(renderer, tree.nestPosition);
         Vector2 birdPosition = (new Vector2(tree.nestPosition)).add(0f, BIRD_NEST_POSITION_Y_OFFSET);
-        bird = new BirdButton(birdPosition,game.level);
+        birdButton = new BirdButton(birdPosition,game.level);
 
         cameraPosition = new Vector2();
         gameStarting = false;
@@ -55,8 +55,8 @@ public class Menu {
     }
 
     public void update(float delta){
-        viewportClose.getCamera().position.set(bird.position, 0);
-        bird.update(delta);
+        viewportClose.getCamera().position.set(birdButton.bird.position, 0);
+        birdButton.update(delta);
         cameraPosition.set(viewportClose.getCamera().position.x, viewportClose.getCamera().position.y);
 
         updateArrowsColor();
@@ -64,9 +64,9 @@ public class Menu {
     }
 
     private void updateArrowsColor() {
-        arrow1Left.color.a = 1 - bird.alpha;
-        arrow2Right.color.a = 1 - bird.alpha;
-        arrow3Up.color.a = 1 - bird.alpha;
+        arrow1Left.color.a = 1 - birdButton.alpha;
+        arrow2Right.color.a = 1 - birdButton.alpha;
+        arrow3Up.color.a = 1 - birdButton.alpha;
 
     }
 
@@ -76,7 +76,7 @@ public class Menu {
         tree.render();
         nest.render();
         renderMenuBoxes();
-        bird.render();
+        birdButton.render();
         renderPoop();
 
         arrow1Left.render(cameraPosition);
@@ -91,18 +91,18 @@ public class Menu {
         renderer.set(ShapeRenderer.ShapeType.Filled);
         renderer.setColor(MENU_SIDE_COLOR);
         // LEFT BOX
-        renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH - bird.alpha * MENU_BOX_WIDTH,
+        renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH - birdButton.alpha * MENU_BOX_WIDTH,
                 cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, MENU_BOX_WIDTH, CAM_CLOSEUP_HEIGHT/2f);
         // RIGHT BOX
-        renderer.rect(cameraPosition.x + CAM_CLOSEUP_HALFWIDTH - MENU_BOX_WIDTH + bird.alpha * MENU_BOX_WIDTH,
+        renderer.rect(cameraPosition.x + CAM_CLOSEUP_HALFWIDTH - MENU_BOX_WIDTH + birdButton.alpha * MENU_BOX_WIDTH,
                 cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT, MENU_BOX_WIDTH, CAM_CLOSEUP_HEIGHT/2f);
         // TOP BOX
         renderer.setColor(MENU_TOP_COLOR);
-        renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH, cameraPosition.y + bird.alpha * CAM_CLOSEUP_HALFHEIGHT,
+        renderer.rect(cameraPosition.x - CAM_CLOSEUP_HALFWIDTH, cameraPosition.y + birdButton.alpha * CAM_CLOSEUP_HALFHEIGHT,
                 CAM_CLOSEUP_WIDTH, CAM_CLOSEUP_HALFHEIGHT);
         // BOTTOM BOX
         renderer.setColor(MENU_BOTTOM_COLOR);
-        renderer.rect(cameraPosition.x - MENU_BOX_WIDTH / 2f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT - bird.alpha * CAM_CLOSEUP_HALFHEIGHT,
+        renderer.rect(cameraPosition.x - MENU_BOX_WIDTH / 2f, cameraPosition.y - CAM_CLOSEUP_HALFHEIGHT - birdButton.alpha * CAM_CLOSEUP_HALFHEIGHT,
                 MENU_BOX_WIDTH, CAM_CLOSEUP_HALFHEIGHT);
 
     }
@@ -110,7 +110,7 @@ public class Menu {
     private void renderPoop(){
 
         float poopX = cameraPosition.x;
-        float poopY = cameraPosition.y - CAM_CLOSEUP_HEIGHT/4f - (CAM_CLOSEUP_HALFHEIGHT * bird.alpha);
+        float poopY = cameraPosition.y - CAM_CLOSEUP_HEIGHT/4f - (CAM_CLOSEUP_HALFHEIGHT * birdButton.alpha);
         float poopScale = 5f;
         float poopR = POOP_RADIUS * poopScale;
         float poopH = POOP_HEIGHT * poopScale;

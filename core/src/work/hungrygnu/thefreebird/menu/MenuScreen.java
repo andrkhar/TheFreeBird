@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-import work.hungrygnu.thefreebird.Assets;
 import work.hungrygnu.thefreebird.TheFreeBirdGame;
 import work.hungrygnu.thefreebird.game.Scores;
 
@@ -37,7 +36,7 @@ public class MenuScreen implements Screen {
         renderer = game.renderer;
         scores = new Scores(game.renderer, viewportClose.getCamera());
         menu = new Menu(game);
-        menuInterface = new MenuInput(menu.bird, viewportClose);
+        menuInterface = new MenuInput(menu.birdButton, viewportClose);
 
 
 
@@ -67,16 +66,8 @@ public class MenuScreen implements Screen {
         renderer.end();
         Gdx.gl20.glDisable(GL20.GL_BLEND);
 
-        if (menu.bird.alpha == 1) {
-            work.hungrygnu.thefreebird.beings.Bird levelBird = game.level.bird;
-            levelBird.lastFramePosition.set(menu.bird.lastFramePosition);
-            levelBird.position.set(menu.bird.position);
-            levelBird.velocity.set(menu.bird.velocity);
-            // TODO: 9/14/2016 landCollider levelBird.r
-            levelBird.updateLandCollider();
-            levelBird.flying = true;
-            levelBird.inNest = false;
-            levelBird.recalculatePoints();
+        if (menu.birdButton.alpha == 1) {
+            game.level.bird = menu.birdButton.bird;
             game.startGame();
         }
 
@@ -85,7 +76,7 @@ public class MenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         viewportClose.update(width, height);
-        viewportClose.getCamera().position.set(menu.bird.position, 0f);
+        viewportClose.getCamera().position.set(menu.birdButton.bird.position, 0f);
     }
 
     @Override

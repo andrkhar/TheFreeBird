@@ -26,6 +26,8 @@ public class Bird extends DestructibleDynamicObject {
     public int poopedCatsCounter;
 
     // Draw Bird specific parameters -------
+    protected float alpha;
+
     protected Vector2 beakB;
 
     protected Vector2 eyeL;
@@ -79,6 +81,8 @@ public class Bird extends DestructibleDynamicObject {
     public Bird(Vector2 position, Level level) {
         super(level.renderer, position);
         this.level = level;
+
+        alpha = 1;
 
         beakB = new Vector2();
         eyeL = new Vector2();
@@ -285,7 +289,7 @@ public class Bird extends DestructibleDynamicObject {
         super.render();
         renderer.set(ShapeRenderer.ShapeType.Filled);
         // TAIL
-        renderer.setColor(BIRD_COLOR_TAIL);
+        renderer.setColor(BIRD_COLOR_TAIL.r, BIRD_COLOR_TAIL.g, BIRD_COLOR_TAIL.b, alpha);
         renderer.triangle(tailL.x, tailL.y, tailR.x, tailR.y, beakB.x, beakB.y);
         // BODY uses lastFramePosition for a cool dynamic effect
         renderer.setColor(BIRD_COLOR_BODY);
@@ -294,11 +298,11 @@ public class Bird extends DestructibleDynamicObject {
         // BEAK
         renderer.triangle(eyeL.x, eyeL.y, eyeR.x, eyeR.y, beakB.x, beakB.y, BIRD_COLOR_BODY, BIRD_COLOR_BODY, BIRD_COLOR_BEAK);
         // EYES
-        renderer.setColor(BIRD_COLOR_EYE);
+        renderer.setColor(BIRD_COLOR_EYE.r, BIRD_COLOR_EYE.g, BIRD_COLOR_EYE.b, alpha);
         renderer.circle(eyeL.x, eyeL.y, eyeRadius, BIRD_SEGMENTS);
         renderer.circle(eyeR.x, eyeR.y, eyeRadius, BIRD_SEGMENTS);
         // WINGS
-        renderer.setColor(BIRD_COLOR_WINGS);
+        renderer.setColor(BIRD_COLOR_WINGS.r, BIRD_COLOR_WINGS.g, BIRD_COLOR_WINGS.b, alpha);
         renderer.triangle(wingLT.x, wingLT.y, wingLB.x, wingLB.y, wingLL.x, wingLL.y);
         renderer.triangle(wingRT.x, wingRT.y, wingRB.x, wingRB.y, wingRR.x, wingRR.y);
 
@@ -418,6 +422,14 @@ public class Bird extends DestructibleDynamicObject {
     }
 
     public boolean getDirection(){ return direction; }
+
+    public void setAlpha(float alpha){
+        this.alpha = alpha;
+    }
+
+    public ShapeRenderer getRenderer(){
+        return renderer;
+    }
 
 
 }
