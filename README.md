@@ -1,4 +1,7 @@
 # TheFreeBird
+
+The commits after releases can be buggy. Use last release v1.07 to to play stable game.
+
 ![alt text](https://github.com/Hungry-Gnu/TheFreeBird/blob/master/BirdAndCat2.png "The bird and a cat")
 
 Google Play link: https://play.google.com/store/apps/details?id=work.hungrygnu.thefreebird
