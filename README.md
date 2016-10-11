@@ -1,6 +1,6 @@
 # TheFreeBird
 
-The commits after releases can be buggy. Use last release v1.07 to to play stable game.
+The commits after releases can be buggy. Use last release v1.07 to play stable game.
 
 ![alt text](https://github.com/Hungry-Gnu/TheFreeBird/blob/master/BirdAndCat2.png "The bird and a cat")
 
